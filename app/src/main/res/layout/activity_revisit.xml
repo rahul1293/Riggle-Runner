@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rk_tech.riggle_runner.ui.main.pending.orderdetails.revisit.RevisitActivityVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/toolbar_layout"
+            app:vm="@{vm}" />
+
+
+        <TextView
+            android:id="@+id/tvPending"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_medium"
+            android:gravity="center"
+            android:padding="12dp"
+            android:textColor="@color/black_54"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/header"
+            tools:text="Net Pending Amount" />
+
+
+        <TextView
+            android:id="@+id/tvChooseDeliverySLot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_medium"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Choose revisit date"
+            android:textColor="@color/black_54"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@+id/tvPending" />
+
+        <TextView
+            android:id="@+id/tvDeliverDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/round_4dp_border"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_medium"
+            android:gravity="center"
+            android:hint="YYYY-MM-DD"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:padding="12dp"
+            android:singleLine="true"
+            android:textColor="@color/black_85"
+            android:textColorHint="@color/black_54"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvChooseDeliverySLot" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/storeTypeSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/round_4dp_border"
+            android:gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDeliverDate" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_drop_down_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/storeTypeSpinner"
+            app:layout_constraintEnd_toEndOf="@+id/storeTypeSpinner"
+            app:layout_constraintTop_toTopOf="@+id/storeTypeSpinner"
+            app:tint="@color/black_85" />
+
+        <EditText
+            android:id="@+id/etReason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/round_4dp_border"
+            android:fontFamily="@font/font_regular"
+            android:gravity="top"
+            android:hint="Enter reason..."
+            android:inputType="textMultiLine"
+            android:maxLines="4"
+            android:minLines="3"
+            android:padding="12dp"
+            android:textColor="@color/black_85"
+            android:textColorHint="@color/black_18"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/storeTypeSpinner" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_proceed"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="40dp"
+            android:alpha="0.2"
+            android:background="@color/orange"
+            android:clickable="false"
+            android:fontFamily="@font/font_bold"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:text="Confirm Revisit"
+            android:textColor="@color/white"
+            app:cornerRadius="6dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

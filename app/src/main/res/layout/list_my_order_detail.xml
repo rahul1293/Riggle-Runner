@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="callback"
+            type="com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+
+        <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.response.Product" />
+
+        <variable
+            name="pos"
+            type="Integer" />
+
+        <import type="android.view.View" />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rlOrderProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="16dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImg"
+                logo_images="@{bean.products==null?bean.product.banner_image.image:bean.banner_image.image}"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:src="@mipmap/ic_app_launcher" />
+
+            <TextView
+                android:id="@+id/tvProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/ivImg"
+                android:fontFamily="@font/font_medium"
+                android:text="@{bean.products==null?bean.product.name:bean.name}"
+                android:textColor="@color/black_85"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvVariant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvProductName"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/ivImg"
+                android:fontFamily="@font/font_regular"
+                android:text="prduct variant"
+                android:textSize="12sp"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tvFreeProductName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvProductName"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/ivImg"
+                android:fontFamily="@font/font_regular"
+                android:text='@{bean.free_product_quantity+" Free, "+bean.free_product.name}'
+                android:textColor="@color/profit_color"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:visibility="@{bean.free_product==null?View.INVISIBLE:View.VISIBLE}"
+                tools:text="1 Free, Product Name" />
+
+            <TextView
+                android:id="@+id/tvMoq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvFreeProductName"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:layout_toEndOf="@+id/ivImg"
+                android:fontFamily="@font/font_medium"
+                android:text="@string/qty"
+                android:textAllCaps="false"
+                android:textColor="@color/black_38"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvProductQuant"
+                set_visibility="@{String.valueOf(bean.quantity)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvFreeProductName"
+                android:layout_marginTop="12dp"
+                android:layout_toEndOf="@+id/tvMoq"
+                android:fontFamily="@font/font_medium"
+                android:text='@{String.valueOf(bean.quantity)}'
+                android:textColor="@color/black_85"
+                android:textSize="12sp" />
+
+            <include
+                android:id="@+id/plusMinus"
+                layout="@layout/layout_plus_minus"
+                set_visibility_two="@{String.valueOf(bean.quantity)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvFreeProductName"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_toEndOf="@+id/tvMoq"
+                app:bean="@{bean}"
+                app:callback="@{callback}"
+                app:pos="@{pos}" />
+            <!--bean.quantity.toString()-->
+            <TextView
+                android:id="@+id/tvGrandPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvFreeProductName"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="12dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/font_medium"
+                android:maxLines="1"
+                android:text='@{String.format("₹%.2f", bean.amount)}'
+                android:textColor="@color/black_54"
+                android:textSize="14sp"
+                tools:text="@string/rupees_value" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</layout>
+

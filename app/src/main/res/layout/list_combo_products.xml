@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingTop="16dp">
+
+    <ImageView
+        android:id="@+id/ivCombo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="16dp"
+        android:padding="5dp"
+        android:src="@mipmap/ic_app_launcher"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/llQuantProfit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@id/moqLinearLayout"
+        android:layout_toRightOf="@+id/ivCombo"
+        android:gravity="start"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/font_medium"
+            android:text="hellasdasdla asd ads asd as sa sdlas "
+            android:textColor="@color/black_85"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvProfit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="0"
+            android:background="@drawable/btn_rounded_corner_10dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_medium"
+            android:maxLines="1"
+            android:paddingLeft="8dp"
+            android:paddingTop="2dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="2dp"
+            android:text="@string/rupees_value_profit"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llPriceDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llQuantProfit"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="16dp"
+        android:layout_toRightOf="@+id/ivCombo"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_bold"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_medium"
+            android:text="@string/mrp"
+            android:textColor="@color/black_38"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvMRP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/font_bold"
+            android:text="₹0.0"
+            android:textColor="@color/black_85"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/moqLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="12dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/llMOQ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_medium"
+                android:text="@string/moq"
+                android:textAllCaps="true"
+                android:textColor="@color/black_38"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvMOQ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_medium"
+                android:textColor="@color/black_68"
+                android:textSize="12sp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:id="@+id/tvAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_rounded_corner_6dp"
+            android:drawableStart="@drawable/ic_plus"
+            android:drawablePadding="8dp"
+            android:fontFamily="@font/font_medium"
+            android:paddingLeft="12dp"
+            android:paddingTop="2dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="2dp"
+            android:text="@string/add"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <include
+            layout="@layout/layout_plus_minus_item_value"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/llQuantProfit"
+        android:layout_marginTop="16dp"
+        android:background="@color/black_18" />
+</RelativeLayout>
+

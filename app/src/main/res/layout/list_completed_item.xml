@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="pos"
+            type="Integer" />
+
+        <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.response.Results" />
+
+        <variable
+            name="callback"
+            type="com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/ic_app_launcher"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--@{bean.retailer.name}-->
+        <TextView
+            android:id="@+id/tvCategoryName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="10dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_bold"
+            android:lines="1"
+            android:text="Sai Prasad Store"
+            android:textColor="@color/black_85"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/tvOrderStatus"
+            app:layout_constraintStart_toEndOf="@+id/ivLogo"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Sai Prasad Store" />
+
+        <TextView
+            android:id="@+id/tvOrderStatus"
+            update_status_color='@{"completed"}'
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/font_medium"
+            android:includeFontPadding="false"
+            android:textColor="@color/black_85"
+            android:textSize="12sp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_4dp_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Pending" />
+        <!--android:text="@{bean.status}"-->
+        <!--android:background="@drawable/rounded_4dp_border"-->
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/font_regular"
+            android:text="Akshya Nagar,\n1st Block 1st Cross, Rammurthy nagar, Bangalore-560016"
+            android:textColor="@color/black_68"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivLogo"
+            app:layout_constraintTop_toBottomOf="@+id/tvOrderStatus" />
+
+        <TextView
+            android:id="@+id/tvPhoneOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_call_icon"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTint="@color/black_theme"
+            android:fontFamily="@font/font_medium"
+            android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+            android:text='@{"+91 9374346983"}'
+            android:textColor="@color/black_theme"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/ivLogo"
+            app:layout_constraintTop_toBottomOf="@+id/tvAddress"
+            tools:text="+91 9876543456" />
+        <!--bean.retailer.admin.mobile-->
+        <androidx.constraintlayout.helper.widget.Flow
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            app:constraint_referenced_ids="tvPhone,tvDetails"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPhoneOne" />
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="10dp"
+            android:drawableLeft="@drawable/ic_log_in_icon"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTint="@color/call_store"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_medium"
+            android:lines="1"
+            android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+            android:text="@string/call_store"
+            android:textAllCaps="true"
+            android:textColor="@color/call_store"
+            android:textSize="14sp"
+            tools:text="Call Store" />
+
+        <TextView
+            android:id="@+id/tvDetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="10dp"
+            android:drawableLeft="@drawable/ic_log_in_icon"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTint="@color/orange"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_medium"
+            android:lines="1"
+            android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+            android:text="@string/view_details"
+            android:textAllCaps="true"
+            android:textColor="@color/orange"
+            android:textSize="14sp"
+            tools:text="View Details" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.MenuBean" />
+
+        <variable
+            name="pos"
+            type="Integer" />
+
+        <variable
+            name="callback"
+            type="com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:onClick="@{v->callback.onItemClick(v,bean,pos)}">
+
+        <View
+            android:id="@+id/viewBackground"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background='@{bean.check?@drawable/filled_shape_transparent_17:null}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivIcons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_home_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/viewBackground"
+            app:layout_constraintStart_toStartOf="@+id/viewBackground"
+            app:layout_constraintTop_toTopOf="@+id/viewBackground"
+            app:simpleRecourse="@{bean.image}" />
+
+        <TextView
+            style="@style/TextView.Regular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@{bean.name}"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/viewBackground"
+            app:layout_constraintStart_toEndOf="@+id/ivIcons"
+            app:layout_constraintTop_toTopOf="@+id/viewBackground" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

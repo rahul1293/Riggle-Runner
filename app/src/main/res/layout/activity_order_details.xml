@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.response.OrderDetailsResponse" />
+
+        <variable
+            name="vm"
+            type="com.rk_tech.riggle_runner.ui.main.pending.orderdetails.OrderDetailsActivityVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/toolbar_layout"
+            app:vm="@{vm}" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingTop="16dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvStoreName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_marginStart="12dp"
+                            android:layout_toLeftOf="@+id/tvOrderStatus"
+                            android:fontFamily="@font/font_bold"
+                            android:text="@string/ekveera_general_store"
+                            android:textColor="@color/black_85"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tvOrderStatus"
+                            update_status_color="@{bean.status}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="12dp"
+                            android:background="@drawable/rounded_4dp_border"
+                            android:fontFamily="@font/font_medium"
+                            android:includeFontPadding="false"
+                            android:padding="@dimen/_5sdp"
+                            android:textColor="@color/black_85"
+                            android:textSize="10sp"
+                            tools:text="Pending" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/orderIdTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:fontFamily="@font/font_regular"
+                            android:lineSpacingExtra="4sp"
+                            android:text='@{"Order ID: "+bean.code}'
+                            android:textColor="@color/black_85"
+                            android:textSize="12sp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tvDate"
+                            set_date_name="@{bean.delivery_date}"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="12dp"
+                            android:fontFamily="@font/font_regular"
+                            android:lineSpacingExtra="4sp"
+                            android:textColor="@color/black_85"
+                            android:textSize="14sp"
+                            android:textStyle="normal"
+                            android:visibility="invisible"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Date : DD/MM/YYYY" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/color_15AB87" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvProducts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/tvPriceDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_bold"
+                        android:text="@string/purchase_order_details"
+                        android:textColor="@color/black_85"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+                    <View
+                        android:id="@+id/viewPriceDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/tvPriceDetails"
+                        android:layout_marginTop="8dp"
+                        android:background="@color/black_18"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvPriceItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/viewPriceDetails"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/font_medium"
+                        android:text="Purchase order value"
+                        android:textColor="@color/black_85"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/viewPriceDetails"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/font_medium"
+                        android:text='@{"₹ "+bean.final_amount}'
+                        android:textColor="@color/black_85"
+                        android:textSize="12sp"
+                        tools:text="@string/rupees_value" />
+
+                    <TextView
+                        android:id="@+id/tvRiggleCoinsDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvPriceItems"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/font_medium"
+                        android:text="Riggle Coins Discount"
+                        android:textColor="@color/black_85"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvRiggleCoins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvPriceItems"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/font_medium"
+                        android:text='@{"₹ "+bean.redeemed_riggle_coins_amount}'
+                        android:textColor="@color/black_85"
+                        android:textSize="12sp"
+                        tools:text="@string/rupees_value" />
+
+                    <TextView
+                        android:id="@+id/tvPaidAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvRiggleCoinsDiscount"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/font_medium"
+                        android:text="Net paid amount"
+                        android:textColor="@color/black_85"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvPaintValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvRiggleCoinsDiscount"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/font_medium"
+                        android:text='@{"₹ "+bean.paid_amount}'
+                        android:textColor="@color/black_85"
+                        android:textSize="12sp"
+                        tools:text="@string/rupees_value" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tvCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:drawableLeft="@drawable/ic_cancel_icon"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:fontFamily="@font/font_bold"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/cancel_order"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_D64A5B"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/btnContinue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/btn_rounded_corner_6dp"
+                        android:fontFamily="@font/font_medium"
+                        android:onClick="@{v->vm.onClick(v)}"
+                        android:text="Collect Payment"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/tvPayableAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:fontFamily="@font/font_bold"
+            android:text="@string/total_payable_amount"
+            android:textColor="@color/black_85"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvPayableValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="12dp"
+            android:fontFamily="@font/font_bold"
+            android:text='@{"₹ "+bean.pending_amount}'
+            android:textColor="@color/black_85"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="@string/rupees_value" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

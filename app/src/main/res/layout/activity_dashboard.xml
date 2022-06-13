@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="type"
+            type="Integer" />
+
+        <variable
+            name="vm"
+            type="com.rk_tech.riggle_runner.ui.dashboard.DashboardActivityVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/drawer_color">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/v_alpha"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/white_day"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/mainContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="@color/white_day"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp">
+
+                <FrameLayout
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/basic_white" />
+
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:padding="16dp"
+                    android:src='@{type==0?@drawable/ic_menu_icon:@drawable/ic_white_menu_icon}'
+                    android:visibility='@{(type==0 || type==1)?View.VISIBLE:View.GONE}'
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ivBackPress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:foreground="?selectableItemBackground"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:padding="16dp"
+                    android:src="@drawable/ic_arrow_left"
+                    android:visibility='@{(type==0 || type==1)?View.GONE:View.VISIBLE}'
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/nv_one"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/drawerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/drawer_color">
+
+                    <ImageView
+                        android:id="@+id/ivClose"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_margin="16dp"
+                        android:alpha="0"
+                        android:onClick="@{v->vm.onClick(v)}"
+                        android:src="@drawable/ic_close_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/white" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/drawerItems"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivClose">
+
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/ivProfile"
+                            android:layout_width="@dimen/_50sdp"
+                            android:layout_height="@dimen/_50sdp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="@dimen/_25sdp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_profile_place_holder"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:shapeAppearanceOverlay="@style/CornerCircular" />
+
+                        <TextView
+                            android:id="@+id/tvProfileName"
+                            style="@style/TextView.Bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:text="All Gamal"
+                            android:textColor="@color/white"
+                            app:layout_constraintStart_toEndOf="@+id/ivProfile"
+                            app:layout_constraintTop_toTopOf="@+id/ivProfile" />
+
+                        <TextView
+                            android:id="@+id/tvStatus"
+                            style="@style/TextView.Regular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:drawableLeft="@drawable/ic_happy_icon"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_vertical"
+                            android:text="Good"
+                            android:textColor="#D9AE56"
+                            app:layout_constraintBottom_toBottomOf="@+id/ivProfile"
+                            app:layout_constraintStart_toEndOf="@+id/ivProfile" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvMenuList"
+                            android:layout_width="224dp"
+                            android:layout_height="0dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginBottom="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/ivProfile" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.navigation.NavigationView>
+
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+        <ImageView
+            android:id="@+id/ivCloseOne"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="16dp"
+            android:alpha="0"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:src="@drawable/ic_close_icon"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

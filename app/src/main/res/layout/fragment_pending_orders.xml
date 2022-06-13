@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rk_tech.riggle_runner.ui.main.pending.PendingOrdersFragmentVM" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".MainActivity">
+
+            <!--AppBarLayout helps the toolbar and other components to react on
+                scroll changes. I am using Dark theme for AppBarLayout.
+                Inside this AppBarLayout i
+                have used CollapsingToolbarLayout. -->
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                <!-- In CollapsingToolbarLayout sompe important attributes are:
+                 i)  app:layout_scrollFlags which is used to specify how collapsing
+                     layout behaves when content is scrolled.I have used
+                     app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+                     so it will scroll until it's is completely collapsed.
+                 ii) app:contentScrim="@color/green" that specifies the color
+                      of the collapsed toolbar -->
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:contentScrim="@color/black_theme"
+                    app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+                    <!--app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"-->
+                    <!--app:title="@string/app_name"-->
+
+                    <!--We are adding the image that we have added earlier
+                          in the drawable folder.The attribute app:layout_collapseMode="parallax"
+                          causes the image to move when user scrolls at a specific ratio. -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_top_image"
+                        app:layout_collapseMode="parallax" />
+
+                    <!-- The attribute app:layout_collapseMode="pin" is set so that
+                         sticks to the top when the user scrolls the view up-->
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="?attr/actionBarSize"
+                        app:layout_collapseMode="parallax">
+
+                        <TextView
+                            android:id="@+id/tvToday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/font_regular"
+                            android:maxLines="1"
+                            android:text="@string/today"
+                            android:textColor="@color/orange"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.constraintlayout.helper.widget.Flow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_40sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginEnd="@dimen/_40sdp"
+                            android:orientation="horizontal"
+                            app:constraint_referenced_ids="clOne,clTwo"
+                            app:flow_horizontalGap="@dimen/_40sdp"
+                            app:layout_constraintTop_toBottomOf="@+id/tvToday" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/clOne"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/ivOne"
+                                android:layout_width="@dimen/_24sdp"
+                                android:layout_height="@dimen/_24sdp"
+                                android:src="@drawable/ic_trips_icon"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvPending"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_7sdp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_regular"
+                                android:maxLines="1"
+                                android:text="@string/pending"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/ivOne"
+                                app:layout_constraintTop_toTopOf="@+id/ivOne" />
+
+                            <TextView
+                                android:id="@+id/tvTripsOne"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_7sdp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_regular"
+                                android:maxLines="1"
+                                android:text="@string/trips_"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/ivOne"
+                                app:layout_constraintTop_toBottomOf="@+id/tvPending" />
+
+                            <TextView
+                                android:id="@+id/tvCountOne"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_bold"
+                                android:maxLines="1"
+                                android:text="19"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/tvTripsOne"
+                                app:layout_constraintTop_toBottomOf="@+id/tvPending" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <View
+                            android:id="@+id/vOne"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@color/white"
+                            app:layout_constraintEnd_toEndOf="@+id/clOne"
+                            app:layout_constraintStart_toStartOf="@+id/clOne"
+                            app:layout_constraintTop_toBottomOf="@+id/clOne" />
+
+                        <TextView
+                            android:id="@+id/tvAmountValueOne"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/font_bold"
+                            android:maxLines="1"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:text="Rs. 0"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/_18sdp"
+                            app:layout_constraintEnd_toEndOf="@+id/vOne"
+                            app:layout_constraintStart_toStartOf="@+id/vOne"
+                            app:layout_constraintTop_toBottomOf="@+id/vOne" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/clTwo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/ivTwo"
+                                android:layout_width="@dimen/_24sdp"
+                                android:layout_height="@dimen/_24sdp"
+                                android:src="@drawable/ic_trips_icon"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvCompleted"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_7sdp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_regular"
+                                android:maxLines="1"
+                                android:text="@string/completed"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/ivTwo"
+                                app:layout_constraintTop_toTopOf="@+id/ivTwo" />
+
+                            <TextView
+                                android:id="@+id/tvTripsTwo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_7sdp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_regular"
+                                android:maxLines="1"
+                                android:text="@string/trips_"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/ivTwo"
+                                app:layout_constraintTop_toBottomOf="@+id/tvCompleted" />
+
+                            <TextView
+                                android:id="@+id/tvCountTwo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_bold"
+                                android:maxLines="1"
+                                android:text="02"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/tvTripsTwo"
+                                app:layout_constraintTop_toBottomOf="@+id/tvCompleted" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <View
+                            android:id="@+id/vTwo"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@color/white"
+                            app:layout_constraintEnd_toEndOf="@+id/clTwo"
+                            app:layout_constraintStart_toStartOf="@+id/clTwo"
+                            app:layout_constraintTop_toBottomOf="@+id/clTwo" />
+
+                        <TextView
+                            android:id="@+id/tvAmountValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/font_bold"
+                            android:maxLines="1"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:text="Rs. 0"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/_18sdp"
+                            app:layout_constraintEnd_toEndOf="@+id/vTwo"
+                            app:layout_constraintStart_toStartOf="@+id/vTwo"
+                            app:layout_constraintTop_toBottomOf="@+id/vTwo" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="@color/black_theme"
+                        app:layout_collapseMode="pin">
+
+                        <TextView
+                            android:id="@+id/tvServiceHub"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/font_bold"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="Deliverify Solutions"
+                            android:textSize="@dimen/_16sdp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/ic_account_icon" />
+
+                    </androidx.appcompat.widget.Toolbar>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!--Now add the NestedScollView-->
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+
+                    <com.google.android.material.appbar.AppBarLayout
+                        android:id="@+id/appBar"
+                        style="@style/DefaultAppBarLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:gravity="center"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp">
+
+                            <TextView
+                                android:id="@+id/tvDelivering"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_regular"
+                                android:maxLines="1"
+                                android:text="@string/riggle_hero"
+                                android:textColor="@color/black_85"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tvHeroName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvDelivering"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_bold"
+                                android:maxLines="1"
+                                android:text="S.K. Madhwan"
+                                android:textColor="@color/black_85"
+                                android:textSize="14sp" />
+
+                            <TextView
+                                android:id="@+id/tvServiceHubOne"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvHeroName"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_regular"
+                                android:maxLines="1"
+                                android:text="@string/riggle_hero"
+                                android:textColor="@color/profit_color"
+                                android:textSize="10sp" />
+
+                            <TextView
+                                android:id="@+id/tvOrderAmount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_regular"
+                                android:maxLines="1"
+                                android:text="Today's Revenue"
+                                android:textColor="@color/black_85"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:id="@+id/tvAmountValueTwo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/tvDelivering"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_bold"
+                                android:maxLines="1"
+                                android:onClick="@{v->vm.onClick(v)}"
+                                android:textColor="@color/black_85"
+                                android:textSize="16sp"
+                                tools:text="Rs. 0" />
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.appbar.AppBarLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:background="@color/black_theme"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                        android:id="@+id/srl"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:background="@color/white"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/appBar">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvOrders"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+                    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

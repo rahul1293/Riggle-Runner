@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">Riggle Runner</string>
+
+    <string name="session_expired">session_expired</string>
+    <string name="alert">Alert</string>
+    <string name="post_detail">Post Detail</string>
+    <string name="please_try_again">Please try again</string>
+    <string name="plz_wait">Plz wait</string>
+
+    <string name="the_food_place">The food place!</string>
+    <string name="welcome_to_riggle">Welcome To \nRiggle Runner</string>
+    <string name="restaurant_dashboard">Restaurant Dashboard</string>
+
+    <string name="new_here"><html>New Here? <font color='#442B7E'><b>JOIN NOW!</b></font></html></string>
+    <string name="sign_in">Sign In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="open">Open</string>
+    <string name="status">Status</string>
+    <string name="busy">Busy</string>
+    <string name="close">Close</string>
+    <string name="order_rejected">Order Rejected</string>
+    <string name="user_id">User Id</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_user_id">Enter User Id</string>
+    <string name="create_new_store">Create New Store</string>
+    <string name="create_store">Create Store</string>
+    <string name="enter_pin_code">Enter Pin Code</string>
+    <string name="enter_store_name">Enter Store Name</string>
+    <string name="enter_complete_address_here">Enter complete address</string>
+    <string name="store_type">Store Type</string>
+    <string name="order_for">Order for</string>
+    <string name="view_all">view all</string>
+    <string name="riggle_hero">Riggle Runner</string>
+    <string name="product_list">Product List</string>
+    <string name="brand_list">Brand Product List</string>
+    <string name="value_off">Value Off</string>
+
+    <string name="rupees_value">₹%d</string>
+    <string name="mrp">MRP</string>
+    <string name="rupees_value_profit">₹%d Profit</string>
+    <string name="add">ADD</string>
+    <string name="moq">Moq</string>
+    <string name="order_details">Order Details</string>
+    <string name="purchase_order_details">Purchase order details</string>
+    <string name="price_details">Price Details</string>
+    <string name="payment_details">Payment Details</string>
+    <string name="enter_gstn_number">Enter GSTN Number</string>
+
+    <string name="rupees_value_profits">₹%.2f Profit</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
+    <string name="qty">Qty:</string>
+    <string name="total_collection">Total Collection</string>
+    <string name="settlement_with_sp">Settlement with SP</string>
+    <string name="upi_scanner">UPI Scanner</string>
+    <string name="my_cart">My Cart</string>
+
+    <string name="price_value_items">Price (%d item)</string>
+    <string name="discount">Discount</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="your_cart_is_empty">Your cart is empty</string>
+    <string name="looks_like_you_have_no_orders_yet">Looks like you have no orders yet!</string>
+    <string name="riggle_karo">RIGGLE KARO</string>
+    <string name="riggle">Riggle</string>
+    <string name="for_runners">For Runners</string>
+    <string name="today">Today</string>
+    <string name="pending">Pending</string>
+    <string name="completed">Completed</string>
+    <string name="trips_">Trips - </string>
+    <string name="new_order">New Order</string>
+    <string name="settings">Settings</string>
+    <string name="get_direction">Get Direction</string>
+    <string name="call_store">Call Store</string>
+    <string name="view_details">View Details</string>
+    <string name="ekveera_general_store">Ekveera General Store</string>
+    <string name="retailer_orders">Retailer Orders</string>
+    <string name="cancel_order">Cancel Order</string>
+    <string name="total_payable_amount">Total payable amount</string>
+    <string name="payments_details">Payments Details</string>
+    <string name="collection_amount">Collection Amount</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="cheque">Cheque</string>
+    <string name="upi">UPI</string>
+    <string name="cash">Cash</string>
+    <string name="credit">Credit</string>
+    <string name="send_credit_otp">Send Credit Otp</string>
+    <string name="enter_riggle_credit_otp">Enter Riggle Credit OTP</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="upload_upi_image">Upload Upi Image</string>
+    <string name="done">Done</string>
+    <string name="delivery_complete">Delivery Complete!</string>
+
+</resources>

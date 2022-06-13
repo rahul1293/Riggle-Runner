@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="callback"
+            type="com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+
+        <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.MenuBean" />
+
+        <variable
+            name="pos"
+            type="Integer" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rlMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:onClick="@{v->callback.onItemClick(v,bean,pos)}">
+
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/TextView.MediumSemibold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@id/ivImg"
+            android:fontFamily="@font/font_medium"
+            android:text="@{bean.name}"
+            android:textColor="@color/black_85"
+            android:textSize="12sp"
+            tools:text="Retailer Name" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivImg"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/round_4dp_border_rec"
+            android:backgroundTint="@color/orange"
+            android:padding="2dp"
+            android:src="@drawable/ic_tick"
+            android:tint="@color/orange"
+            android:visibility="@{bean.check?View.VISIBLE:View.INVISIBLE}" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/ivImg"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@color/seperator_clr" />
+
+    </RelativeLayout>
+</layout>

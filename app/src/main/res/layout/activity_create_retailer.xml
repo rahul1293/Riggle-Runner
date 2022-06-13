@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rk_tech.riggle_runner.ui.main.neworder.create_retailer.CreateRetailerActivityVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/toolbar_layout"
+            app:vm="@{vm}" />
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivRetailer"
+                    android:layout_width="@dimen/_64sdp"
+                    android:layout_height="@dimen/_64sdp"
+                    android:layout_centerHorizontal="true"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:scaleType="centerCrop"
+                    android:theme="@style/CornerCircular"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_profile_place_holder" />
+
+                <EditText
+                    android:id="@+id/etPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivRetailer"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/round_4dp_border"
+                    android:fontFamily="@font/font_regular"
+                    android:hint="@string/enter_phone_number"
+                    android:inputType="phone"
+                    android:maxLength="10"
+                    android:padding="12dp"
+                    android:textColor="@color/black_85"
+                    android:textColorHint="@color/black_18"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etPinCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/etPhoneNumber"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/round_4dp_border"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:fontFamily="@font/font_regular"
+                    android:hint="@string/enter_pin_code"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:drawableRight="@drawable/ic_drop_down_icon"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:padding="12dp"
+                    android:textColor="@color/black_85"
+                    android:textColorHint="@color/black_18"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etStoreName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/etPinCode"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/round_4dp_border"
+                    android:fontFamily="@font/font_regular"
+                    android:hint="@string/enter_store_name"
+                    android:inputType="textCapSentences"
+                    android:padding="12dp"
+                    android:textColor="@color/black_85"
+                    android:textColorHint="@color/black_18"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etGstn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/etStoreName"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/round_4dp_border"
+                    android:fontFamily="@font/font_regular"
+                    android:hint="@string/enter_gstn_number"
+                    android:inputType="text"
+                    android:padding="12dp"
+                    android:visibility="gone"
+                    android:textColor="@color/black_85"
+                    android:textColorHint="@color/black_18"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/storeTypeSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/etGstn"
+                    android:layout_marginTop="20dp"
+                    android:visibility="gone"
+                    android:background="@drawable/round_4dp_border" />
+
+                <EditText
+                    android:id="@+id/etAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/storeTypeSpinner"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/round_4dp_border"
+                    android:fontFamily="@font/font_regular"
+                    android:gravity="top"
+                    android:hint="@string/enter_complete_address_here"
+                    android:inputType="textMultiLine"
+                    android:minLines="4"
+                    android:padding="12dp"
+                    android:visibility="gone"
+                    android:textColor="@color/black_85"
+                    android:textColorHint="@color/black_18"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/etLandMark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/etAddress"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/round_4dp_border"
+                    android:fontFamily="@font/font_regular"
+                    android:hint="Landmark"
+                    android:visibility="gone"
+                    android:inputType="textCapSentences"
+                    android:padding="12dp"
+                    android:textColor="@color/black_85"
+                    android:textColorHint="@color/black_18"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cbAtStore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/etLandMark"
+                    android:layout_marginTop="20dp"
+                    android:buttonTint="@color/black_54"
+                    android:drawablePadding="6dp"
+                    android:fontFamily="@font/font_medium"
+                    android:text="Are you at store?"
+                    android:checked="true"
+                    android:textColor="@color/black_85"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_below="@+id/cbAtStore"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/rounded_4dp_border"
+                    android:clickable="false"
+                    android:fontFamily="@font/font_bold"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:text="@string/create_store"
+                    android:textColor="@color/white"
+                    app:cornerRadius="6dp" />
+                <!--android:alpha="0.2"-->
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <!--<androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:alpha="0.2"
+            android:background="@drawable/rounded_4dp_border"
+            android:clickable="false"
+            android:fontFamily="@font/ubuntu_bold"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:text="@string/create_store"
+            android:textColor="@color/white"
+            app:cornerRadius="6dp"
+            app:layout_constraintBottom_toBottomOf="parent" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rk_tech.riggle_runner.ui.main.neworder.product_list.cart.CartActivityVM" />
+    </data>
+
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            style="@style/DefaultAppBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                android:fontFamily="@font/font_bold"
+                android:gravity="center_vertical"
+                android:text="@string/my_cart"
+                android:textColor="@color/black_85"
+                android:textSize="24sp" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nsvCart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/appBar">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/cartLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    tools:visibility="visible">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cvCart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginEnd="6dp"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="2dp"
+                        app:cardUseCompatPadding="true">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvCart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </androidx.cardview.widget.CardView>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/layout_bg"
+                        android:padding="16dp">
+
+                        <TextView
+                            android:id="@+id/tvPriceDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/font_bold"
+                            android:text="@string/price_details"
+                            android:textColor="@color/black_85"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:id="@+id/viewPriceDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/tvPriceDetails"
+                            android:layout_marginTop="8dp"
+                            android:background="@color/black_18" />
+
+                        <TextView
+                            android:id="@+id/tvPriceItems"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/viewPriceDetails"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text="@string/price_value_items"
+                            android:textColor="@color/black_85"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvCartPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/viewPriceDetails"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text="@string/rupees_value"
+                            android:textColor="@color/black_85"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvDiscount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvPriceItems"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text="@string/discount"
+                            android:textColor="@color/black_85"
+                            android:textSize="14sp"
+                            android:visibility="gone"
+                            tools:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/tvDiscountValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvPriceItems"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text="@string/rupees_value"
+                            android:textColor="@color/black_85"
+                            android:textSize="14sp"
+                            android:visibility="gone"
+                            tools:visibility="visible" />
+
+                        <View
+                            android:id="@+id/viewAvailableCoins"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@id/tvDiscount"
+                            android:layout_marginTop="12dp"
+                            android:background="@color/black_18" />
+
+                        <TextView
+                            android:id="@+id/tvTotalAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/viewAvailableCoins"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/font_bold"
+                            android:text="@string/total_amount"
+                            android:textColor="@color/black_85"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tvTotalAmountValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/viewAvailableCoins"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/font_bold"
+                            android:text="@string/rupees_value"
+                            android:textColor="@color/black_85"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tvCartProfit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#4A4aff3b"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center"
+                        android:paddingLeft="32dp"
+                        android:paddingTop="4dp"
+                        android:paddingRight="32dp"
+                        android:paddingBottom="4dp"
+                        android:textColor="@color/black_85"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="26dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:id="@+id/tvProceed"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorPrimary"
+                            android:fontFamily="@font/font_bold"
+                            android:gravity="center"
+                            android:text="Deliver and complete payment"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/emptyCartLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="120dp"
+                        android:src="@drawable/img_empty_cart" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="24dp"
+                        android:fontFamily="@font/font_medium"
+                        android:text="@string/your_cart_is_empty"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="48dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="48dp"
+                        android:fontFamily="@font/font_regular"
+                        android:gravity="center"
+                        android:text="Looks like you haven't added anything to your cart yet"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/btn_rounded_corner_6dp"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:elevation="4dp"
+                        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+                        android:gravity="center"
+                        android:minWidth="150dp"
+                        android:onClick="onLetsAddClicked"
+                        android:padding="8dp"
+                        android:text="Let's Add"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+</layout>

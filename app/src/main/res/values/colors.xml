@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#442B7E</color>
+    <color name="purple_700">#3B3A3C</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="grey">#898989</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="text_color">#442B7E</color>
+    <color name="text_color_333333">#333333</color>
+    <color name="text_color_333one">#333333</color>
+    <color name="edit_back_color">#F3F0FF</color>
+    <color name="stroke_color">#CED6E0</color>
+
+    <color name="stroke_color_one">#5CAC7D</color>
+
+    <color name="button_color">#5CAC7D</color>
+    <color name="button_color_30">#805CAC7D</color>
+
+    <color name="edit_text_color">#A2A2A2</color>
+    <color name="text_color_4D4D4D">#4D4D4D</color>
+    <color name="text_color_AFAFAF">#AFAFAF</color>
+    <color name="text_color_5CAC7D">#5CAC7D</color>
+    <color name="yellow_color">#FECF4C</color>
+    <color name="color_F1F4F3">#F1F4F3</color>
+    <color name="color_F1F4F3_two">#F1F4F3</color>
+    <color name="color_707070">#707070</color>
+    <color name="color_C4C4C4">#C4C4C4</color>
+    <color name="color_C4C4C4_one">#C4C4C4</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_999_one">#999999</color>
+    <color name="color_999_two">#999999</color>
+    <color name="color_5F5F5F">#5F5F5F</color>
+    <color name="color_17">#2BFFFFFF</color>
+    <color name="color_C6345C">#C6345C</color>
+    <color name="color_FD6A6A">#FD6A6A</color>
+
+    <color name="color_picked">#D9AE56</color>
+
+    <color name="color_FAFAFA">#FAFAFA</color>
+    <color name="color_F4F4F4">#F4F4F4</color>
+    <color name="color_FCA785">#FCA785</color>
+    <color name="color_FA5769">#FA5769</color>
+    <color name="color_686868">#686868</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="night_color">#ffffff</color>
+    <color name="night_color_one">#ffffff</color>
+
+    <color name="night_text_color">#333333</color>
+    <color name="night_text_c">#333333</color>
+    <color name="color_F1F4F3_night">#F4F4F4</color>
+    <color name="color_one_night">#F4F4F4</color>
+    <color name="color_card_night">#FFFFFF</color>
+    <color name="color_card_nightOne">#FFFFFF</color>
+
+    <color name="basic_white">#F5F5F5</color>
+    <color name="color_F8F8F8">#F8F8F8</color>
+
+    <color name="colorPrimaryPix">#442B7E</color>
+    <color name="colorPrimaryLightPix">#442B7E</color>
+    <color name="color_CED6E0">#CED6E0</color>
+    <color name="color_8B8B8E">#8B8B8E</color>
+
+    <color name="color_F1F4F3_one">#F1F4F3</color>
+
+    <color name="shimmer_color">#DDDDDD</color>
+    <color name="color_EAEAEA">#EAEAEA</color>
+    <color name="color_EAEAEAOne">#EAEAEA</color>
+    <color name="color_A5A5A5">#A5A5A5</color>
+
+    <color name="color_to_resturant">#5DC4CC</color>
+    <color name="color_to_picked">#D9AE56</color>
+    <color name="color_to_delivery">#5CAC7D</color>
+    <color name="color_done_delivery">#C6345C</color>
+
+    <color name="color_3E305F">#3E305F</color>
+    <color name="color_3E305FOne">#3E305F</color>
+    <color name="color_442B7E">#442B7E</color>
+    <color name="color_442B7EOne">#442B7E</color>
+
+    <color name="color_5DC4CC">#5DC4CC</color>
+    <color name="color_4DA8AF">#4DA8AF</color>
+
+    <color name="color_5CAC7D">#5CAC7D</color>
+    <color name="color_4E996D">#4E996D</color>
+
+    <color name="color_D9AE56">#D9AE56</color>
+    <color name="color_CF9723">#CF9723</color>
+    <color name="white_day">#FFFFFF</color>
+
+    <color name="drawer_color">#FFE16621</color>
+    <color name="wallet_color">#442B7E</color>
+
+    <color name="home_items">#FFFFFF</color>
+    <color name="home_price">#442B7E</color>
+    <color name="delivery_fee">#442B7E</color>
+    <color name="branch_color">#ffffff</color>
+    <color name="settings_divider">#FAFAFA</color>
+    <color name="transparent_one">#00000000</color>
+    <color name="divider">#DEDEDE</color>
+    <color name="please_confirm">#333333</color>
+    <color name="total_amount">#333333</color>
+    <color name="transparent_two">#00000000</color>
+    <color name="color_EEEEEE">#EEEEEE</color>
+
+    <color name="gallery">#E0E5EB</color>
+    <color name="gallery_stroke">#ffffff</color>
+
+    <color name="arrow_color">#A2A2A2</color>
+    <color name="review_name">#333333</color>
+
+    <color name="text_color_gray">#626262</color>
+    <color name="text_color_dark">#2A3436</color>
+
+    <!-- colors for tab and screent text -->
+
+    <color name="tab_indicator_gray">#c0c0c0</color>
+    <color name="intro_title_color">#000000</color>
+    <color name="intro_description_color">#656565</color>
+    <color name="colorGreyTrackingStatus">#dfdfdf</color>
+    <color name="colorGreyTrackingStatusBackground">#f3f3f3</color>
+
+
+    <color name="black_85">#D9000000</color>
+    <color name="black_68">#AD000000</color>
+    <color name="black_54">#8A000000</color>
+    <color name="black_38">#61000000</color>
+    <color name="black_18">#2E000000</color>
+    <color name="black_06">#0F000000</color>
+
+
+
+    <color name="orange_34">#59FC8C4D</color>
+    <color name="orange">#FC8C4D</color>
+    <color name="colorYellow">#ffd100</color>
+    <color name="colorYellow_34">#59ffd100</color>
+    <color name="colorYellow_30">#4DFFD100</color>
+    <color name="primary_09">#17ff4e00</color>
+    <color name="txt_disabled">#61000000</color>
+
+    <color name="profit_color">#2fca22</color>
+    <color name="layout_bg">#f6f6f6</color>
+    <color name="seperator_clr">#2E000000</color>
+    <color name="colorError">#ff0a0a</color>
+    <color name="colorSuccess_30">#4D27cb00</color>
+    <color name="colorSuccess_60">#9927cb00</color>
+    <color name="colorSuccess">#27cb00</color>
+    <color name="colorChipBackground">#fff2ec</color>
+    <color name="colorChipStroke">#ffcab2</color>
+
+    <color name="black_theme">#2A3436</color>
+    <color name="call_store">#F0AD00</color>
+    <color name="color_C7C7C7">#C7C7C7</color>
+    <color name="color_117AA7">#117AA7</color>
+    <color name="color_117AA7_30">#4D117AA7</color>
+    <color name="color_15AB87">#15AB87</color>
+    <color name="color_15AB87_30">#4D15AB87</color>
+    <color name="color_D64A5B">#D64A5B</color>
+
+</resources>

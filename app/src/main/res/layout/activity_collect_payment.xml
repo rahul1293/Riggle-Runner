@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="show"
+            type="Boolean" />
+
+        <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.response.OrderDetailsResponse" />
+
+        <variable
+            name="vm"
+            type="com.rk_tech.riggle_runner.ui.main.pending.orderdetails.collect_payment.CollectPaymentActivityVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/toolbar_layout_one"
+            app:vm="@{vm}" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rlPriceDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp">
+
+                    <RelativeLayout
+                        android:id="@+id/rlPaid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvPaid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/font_medium"
+                            android:text="Purchase order value"
+                            android:textColor="@color/black_85"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvPaidAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:fontFamily="@font/font_medium"
+                            android:text='@{"₹ "+bean.amount}'
+                            android:textColor="@color/black_85"
+                            android:textSize="14sp"
+                            tools:text="@string/rupees_value" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rlPending"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlPaid">
+
+                        <TextView
+                            android:id="@+id/tvPending"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text="Riggle Coins Discount"
+                            android:textColor="@color/black_85"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvPendingAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="@font/font_medium"
+                            android:text='@{"₹ "+bean.redeemed_riggle_coins_amount}'
+                            android:textColor="@color/black_85"
+                            android:textSize="14sp"
+                            tools:text="@string/rupees_value" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tvNetText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlPending"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/font_medium"
+                        android:text="Net Paid Amount"
+                        android:textColor="@color/black_85"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvNetValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlPending"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/font_medium"
+                        android:text='@{"₹ "+bean.paid_amount}'
+                        android:textColor="@color/black_85"
+                        android:textSize="14sp"
+                        tools:text="@string/rupees_value" />
+
+                    <TextView
+                        android:id="@+id/tvDiscount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvNetText"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/font_medium"
+                        android:text="Net payable amount"
+                        android:textColor="@color/black_85"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvDiscountValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvNetText"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/font_medium"
+                        android:text='@{"₹ "+bean.pending_amount}'
+                        android:textColor="@color/black_85"
+                        android:textSize="14sp"
+                        tools:text="@string/rupees_value" />
+
+                    <View
+                        android:id="@+id/vOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/tvDiscountValue"
+                        android:layout_marginTop="12dp"
+                        android:background="@color/black_18" />
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/llSectionOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/vOne"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                        </RelativeLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <View
+                        android:id="@+id/vCenter"
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/vOne"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:id="@+id/tvEnterAmount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/vOne"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_toLeftOf="@+id/vCenter"
+                        android:fontFamily="@font/font_medium"
+                        android:text="Collection Amount"
+                        android:textColor="@color/black_85"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/etReason"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvEnterAmount"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_toLeftOf="@+id/vCenter"
+                        android:background="@drawable/btn_rounded_corner_6dp"
+                        android:backgroundTint="@color/orange_34"
+                        android:drawableLeft="@drawable/ic_rupee"
+                        android:drawableTint="@color/orange"
+                        android:fontFamily="@font/font_bold"
+                        android:gravity="center_vertical"
+                        android:hint="Enter Amount"
+                        android:inputType="numberDecimal"
+                        android:lines="1"
+                        android:paddingStart="12dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="8dp"
+                        android:text='@{String.valueOf(bean.pending_amount)}'
+                        android:textColor="@color/orange"
+                        android:textColorHint="@color/orange"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/tvModeType"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/vOne"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_toRightOf="@+id/vCenter"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center_vertical"
+                        android:text="Payment Mode"
+                        android:textColor="@color/black_85"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvMode"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_below="@id/tvModeType"
+                        android:layout_alignTop="@+id/etReason"
+                        android:layout_alignBottom="@+id/etReason"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="6dp"
+                        android:layout_toRightOf="@+id/vCenter"
+                        android:background="@drawable/btn_rounded_corner_6dp"
+                        android:backgroundTint="@color/orange_34"
+                        android:drawableRight="@drawable/ic_drop_down_icon"
+                        android:drawableTint="@color/orange"
+                        android:fontFamily="@font/font_bold"
+                        android:foreground="?selectableItemBackground"
+                        android:gravity="center"
+                        android:hint=""
+                        android:onClick="@{v->vm.onClick(v)}"
+                        android:paddingEnd="10dp"
+                        android:text=""
+                        android:textColor="@color/orange"
+                        android:textColorHint="@color/orange_34"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black_18" />
+
+                <RelativeLayout
+                    android:id="@+id/rlSecond"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:visibility="gone">
+
+                    <View
+                        android:id="@+id/vCenterOne"
+                        android:layout_width="1dp"
+                        android:layout_height="1dp"
+                        android:layout_centerHorizontal="true" />
+
+                    <TextView
+                        android:id="@+id/tvPendingText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_toLeftOf="@+id/vCenterOne"
+                        android:fontFamily="@font/font_medium"
+                        android:text="Pending Amount"
+                        android:textColor="@color/black_85"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvPendingValue"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvPendingText"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_marginBottom="12dp"
+                        android:layout_toLeftOf="@+id/vCenterOne"
+                        android:background="@drawable/btn_rounded_corner_6dp"
+                        android:backgroundTint="@color/orange_34"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center_vertical"
+                        android:inputType="numberDecimal"
+                        android:lines="1"
+                        android:paddingStart="12dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="8dp"
+                        android:text="₹ 0.0"
+                        android:textColor="@color/orange"
+                        android:textColorHint="@color/orange"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvRevisit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_toRightOf="@+id/vCenterOne"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center_vertical"
+                        android:text="Revisit date"
+                        android:textColor="@color/black_85"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvRevisitValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvRevisit"
+                        android:layout_alignTop="@+id/tvPendingValue"
+                        android:layout_alignBottom="@+id/tvPendingValue"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="6dp"
+                        android:layout_toRightOf="@+id/vCenterOne"
+                        android:background="@drawable/btn_rounded_corner_6dp"
+                        android:backgroundTint="@color/orange_34"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center"
+                        android:hint="dd-MM-yyyy"
+                        android:onClick="@{v->vm.onClick(v)}"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp"
+                        android:textColor="@color/orange"
+                        android:textColorHint="@color/orange"
+                        android:textSize="16sp"
+                        tools:text="dd-MM-yyyy" />
+                    <!--set_date="@{bean.payment_rescheduled_to}"-->
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/storeTypeSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvRevisitValue"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/round_4dp_border"
+                        android:gravity="center_horizontal" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/storeTypeSpinner"
+                        android:layout_alignEnd="@+id/storeTypeSpinner"
+                        android:layout_alignBottom="@+id/storeTypeSpinner"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_drop_down_icon"
+                        app:tint="@color/black_85" />
+
+                    <EditText
+                        android:id="@+id/etReasonText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storeTypeSpinner"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/round_4dp_border"
+                        android:fontFamily="@font/font_regular"
+                        android:gravity="top"
+                        android:hint="Enter reason..."
+                        android:inputType="textMultiLine"
+                        android:maxLines="4"
+                        android:minLines="3"
+                        android:padding="12dp"
+                        android:textColor="@color/black_85"
+                        android:textColorHint="@color/black_18"
+                        android:textSize="16sp"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black_18" />
+
+                <RelativeLayout
+                    android:id="@+id/rlQrDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:padding="12dp"
+                    android:visibility="@{show?View.VISIBLE:View.GONE}">
+
+                    <ImageView
+                        android:id="@+id/ivQrCode"
+                        qr_code="@{bean.service_hub.qr_code_image}"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/qr_code" />
+
+                    <TextView
+                        android:id="@+id/tvSacnQr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_toRightOf="@+id/ivQrCode"
+                        android:layout_centerVertical="true"
+                        android:fontFamily="@font/font_bold"
+                        android:text="@string/upi_scanner"
+                        android:textColor="@color/black_85"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tvUpi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvSacnQr"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:layout_toRightOf="@+id/ivQrCode"
+                        android:fontFamily="@font/font_medium"
+                        android:text="+91 7236472356"
+                        android:visibility="gone"
+                        android:textColor="@color/black_85"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/black_18"
+                    android:visibility="@{show?View.VISIBLE:View.GONE}" />
+
+                <LinearLayout
+                    android:id="@+id/llThree"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_bold"
+                        android:text="Upload Image"
+                        android:textColor="@color/black_85"
+                        android:textSize="14sp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvImageList"
+                        android:layout_width="match_parent"
+                        android:layout_height="64dp" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="20dp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnContinue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:alpha="0.2"
+                        android:background="@drawable/btn_rounded_corner_6dp"
+                        android:clickable="false"
+                        android:enabled="false"
+                        android:fontFamily="@font/font_medium"
+                        android:onClick="@{v->vm.onClick(v)}"
+                        android:text="Complete Trip"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+                <!--<Button
+                    android:id="@+id/btnChooseRevisit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/btn_rounded_corner_6dp"
+                    android:fontFamily="@font/font_medium"
+                    android:onClick="@{v->vm.onClick(v)}"
+                    android:text="Choose Revisit"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />-->
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

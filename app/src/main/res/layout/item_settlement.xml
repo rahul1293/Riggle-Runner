@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.response.Settlement" />
+
+        <variable
+            name="pos"
+            type="Integer" />
+
+        <variable
+            name="callback"
+            type="com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+
+        <TextView
+            android:id="@+id/tvOrderAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_regular"
+            android:maxLines="1"
+            android:text="@{bean.payment_mode}"
+            android:textColor="@color/black_85"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvAmountValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvAmountValue"
+            tools:text="Mode" />
+
+        <TextView
+            android:id="@+id/tvAmountValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_bold"
+            android:maxLines="1"
+            android:text='@{"₹"+bean.unsettled_amount}'
+            android:textColor="@color/orange"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="₹ 45000" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

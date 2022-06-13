@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlProduct"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:elevation="2dp"
+    android:paddingTop="8dp">
+
+    <LinearLayout
+        android:id="@+id/ivImgLl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivImg"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:src="@mipmap/ic_app_launcher" />
+
+        <TextView
+            android:id="@+id/tvOff"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ivImg"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="-8dp"
+            android:background="@drawable/btn_rounded_corner_home_off_4dp"
+            android:fontFamily="@font/font_medium"
+            android:gravity="center"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:text="@string/value_off"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/ivImgLl"
+        android:ellipsize="end"
+        android:fontFamily="@font/font_medium"
+        android:maxLines="2"
+        android:text="Product Name"
+        android:textColor="@color/black_85"
+        android:textSize="14sp"
+        tools:text="Product Name" />
+
+    <LinearLayout
+        android:id="@+id/llMRP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvName"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/ivImgLl"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_bold"
+            android:maxLines="1"
+            android:text="@string/rupees_value"
+            android:textColor="@color/black_85"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:background="@color/grey" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/font_medium"
+            android:text="@string/mrp"
+            android:textColor="@color/black_38"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvMRP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/font_bold"
+            android:textColor="@color/black_85"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvProfit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/btn_rounded_corner_10dp"
+            android:backgroundTint="@color/orange"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_medium"
+            android:maxLines="1"
+            android:paddingLeft="8dp"
+            android:paddingTop="2dp"
+            android:paddingRight="8dp"
+            android:paddingBottom="2dp"
+            android:text="@string/rupees_value_profit"
+            android:textColor="@color/white"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvDeliveryIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llMRP"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@id/ivImgLl"
+        android:ellipsize="end"
+        android:fontFamily="@font/font_medium"
+        android:maxLines="2"
+        android:text="Delivery in 3 days"
+        android:textColor="@color/black_85"
+        android:textSize="12sp"
+        tools:text="Delivery in 3 days" />
+
+    <RelativeLayout
+        android:id="@+id/llPriceDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/llAdd"
+        android:layout_marginTop="15dp"
+        android:layout_toEndOf="@id/ivImgLl"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <!--<TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_medium"
+            android:maxLines="1"
+            android:text="@string/rupees_value"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />-->
+
+        <TextView
+            android:id="@+id/tvStrikePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="2dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_medium"
+            android:maxLines="1"
+            android:text="@string/rupees_value"
+            android:textColor="@color/black_54"
+            android:textSize="14sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvCombo"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/font_medium"
+            android:gravity="center"
+            android:text="Create Mix"
+            android:textColor="@color/profit_color"
+            android:textSize="12sp"
+            tools:text="Create Mix" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvServiceHub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImgLl"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="106dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/font_medium"
+        android:singleLine="true"
+        android:textColor="@color/profit_color"
+        android:textSize="11sp"
+        tools:text="Service by : Vivaan" />
+
+    <RelativeLayout
+        android:id="@+id/llAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImgLl"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp">
+
+        <TextView
+            android:id="@+id/tvCartCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/rlMOQ"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="16dp"
+            android:layout_toStartOf="@+id/rlMOQ"
+            android:background="@color/colorChipBackground"
+            android:drawableRight="@drawable/down_arrow_icon"
+            android:fontFamily="@font/font_medium"
+            android:gravity="center_vertical"
+            android:paddingLeft="12dp"
+            android:paddingTop="7dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="7dp"
+            android:text="Bulk Offer upto ₹9.58/pc"
+            android:textColor="@color/black_85"
+            android:textSize="12sp"
+            tools:text="Bulk Offer upto ₹9.58/pc" />
+
+        <LinearLayout
+            android:id="@+id/rlMOQ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/layout_plus_minus_item_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/llMOQ"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvAdd"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_rounded_corner_6dp"
+                android:drawableStart="@drawable/ic_plus"
+                android:drawablePadding="8dp"
+                android:fontFamily="@font/font_medium"
+                android:gravity="right"
+                android:paddingLeft="12dp"
+                android:paddingTop="2dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="2dp"
+                android:text="@string/add"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/llMOQ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/moq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_medium"
+                    android:text="@string/moq"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black_38"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvMOQ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/moq"
+                    android:fontFamily="@font/font_medium"
+                    android:textColor="@color/black_68"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/llAdd"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
+        android:background="@color/black_18" />
+
+</RelativeLayout>
+

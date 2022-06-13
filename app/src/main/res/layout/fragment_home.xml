@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="type"
+            type="Integer" />
+
+        <variable
+            name="count"
+            type="Integer" />
+
+        <variable
+            name="vm"
+            type="com.rk_tech.riggle_runner.ui.dashboard.home.HomeFragmentVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_card_night">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/toolbar_home_layout"
+            app:vm="@{vm}" />
+
+        <View
+            android:id="@+id/tabView"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/filled_shape"
+            android:backgroundTint="@color/color_one_night"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/vControlsPhoto"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="3dp"
+            app:constraint_referenced_ids="tabOne,tabTwo,tabThree"
+            app:flow_horizontalAlign="start"
+            app:flow_horizontalBias="0"
+            app:flow_horizontalGap="10dp"
+            app:flow_maxElementsWrap="3"
+            app:flow_verticalBias="0"
+            app:flow_verticalGap="0dp"
+            app:flow_wrapMode="chain"
+            app:layout_constraintBottom_toBottomOf="@+id/tabView"
+            app:layout_constraintEnd_toEndOf="@+id/tabView"
+            app:layout_constraintStart_toStartOf="@+id/tabView"
+            app:layout_constraintTop_toTopOf="@+id/tabView" />
+
+        <TextView
+            android:id="@+id/tabOne"
+            style="@style/TextView.Semibold"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background='@{type==0?@drawable/filled_white_shape:null}'
+            android:gravity="center"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:text="Waiting"
+            android:foreground="?selectableItemBackground"
+            android:textColor='@{type==0?@color/text_color_5CAC7D:@color/color_707070}'
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvPendingCount"
+            style="@style/TextView.Regular"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/ic_ellipse_icon"
+            android:backgroundTint="@color/color_picked"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="@color/white"
+            android:textSize="6sp"
+            android:visibility='@{(type==0 || count==0)?View.GONE:View.VISIBLE}'
+            app:layout_constraintBottom_toBottomOf="@+id/tabOne"
+            app:layout_constraintEnd_toEndOf="@+id/tabOne"
+            app:layout_constraintTop_toTopOf="@id/tabOne" />
+
+        <TextView
+            android:id="@+id/tabTwo"
+            style="@style/TextView.Semibold"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background='@{type==1?@drawable/filled_white_shape:null}'
+            android:gravity="center"
+            android:foreground="?selectableItemBackground"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:text="In-progress"
+            android:textColor='@{type==1?@color/text_color_5CAC7D:@color/color_707070}'
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tabThree"
+            style="@style/TextView.Semibold"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background='@{type==2?@drawable/filled_white_shape:null}'
+            android:gravity="center"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:text="Finished"
+            android:foreground="?selectableItemBackground"
+            android:textColor='@{type==2?@color/text_color_5CAC7D:@color/color_707070}'
+            android:textSize="12sp" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPagerHome"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:saveEnabled="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rk_tech.riggle_runner.ui.main.settings.SettingsFragmentVM" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvDelivering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_regular"
+            android:maxLines="1"
+            android:text="@string/riggle_hero"
+            android:textColor="@color/black_85"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvHeroName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDelivering"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_bold"
+            android:maxLines="1"
+            android:text="S.K. Madhwan"
+            android:textColor="@color/black_85"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvServiceHub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvHeroName"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_regular"
+            android:maxLines="1"
+            android:text="@string/riggle_hero"
+            android:textColor="@color/profit_color"
+            android:textSize="10sp" />
+
+
+        <TextView
+            android:id="@+id/tvSettlement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvServiceHub"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/round_4dp_border"
+            android:drawableStart="@drawable/ic_rupee_icon"
+            android:drawablePadding="24dp"
+            android:drawableTint="#7b7b7b"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:padding="14dp"
+            android:text="Settlement with SP"
+            android:textColor="@color/black_85"
+            android:textSize="16sp"
+            app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+        <TextView
+            android:id="@+id/tvCallSp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSettlement"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/round_4dp_border"
+            android:drawablePadding="24dp"
+            android:drawableTint="#7b7b7b"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:padding="14dp"
+            android:text="Call SP"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:textColor="@color/black_85"
+            android:textSize="16sp"
+            app:drawableEndCompat="@drawable/ic_arrow_right"
+            app:drawableStartCompat="@drawable/ic_phone" />
+
+        <TextView
+            android:id="@+id/tvContactUs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvCallSp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/round_4dp_border"
+            android:drawablePadding="24dp"
+            android:drawableTint="#7b7b7b"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:padding="14dp"
+            android:text="Call Riggle Care"
+            android:textColor="@color/black_85"
+            android:textSize="16sp"
+            app:drawableEndCompat="@drawable/ic_arrow_right"
+            app:drawableStartCompat="@drawable/ic_phone" />
+
+        <TextView
+            android:id="@+id/tvLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvContactUs"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/round_4dp_border"
+            android:drawablePadding="24dp"
+            android:drawableTint="#7b7b7b"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:padding="14dp"
+            android:text="Log Out"
+            android:textColor="@color/black_85"
+            android:textSize="16sp"
+            app:drawableEndCompat="@drawable/ic_arrow_right"
+            app:drawableStartCompat="@drawable/ic_logout" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tvWhereHouse"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="100dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_bold"
+            android:maxLines="1"
+            android:text="Address"
+            android:visibility="gone"
+            android:textColor="@color/black_85"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tvWhereHouse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_alignStart="@+id/tvAddress"
+            android:fontFamily="@font/font_regular"
+            android:text="@string/riggle_hero"
+            android:visibility="gone"
+            android:textColor="@color/black_85"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+</layout>

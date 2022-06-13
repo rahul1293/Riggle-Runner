@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rk_tech.riggle_runner.ui.main.pending.payment_details.PaymentDetailsActivityVM" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/toolbar_layout"
+            app:vm="@{vm}" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header">
+
+            <TextView
+                android:id="@+id/tvDeliveryExecutive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/font_bold"
+                android:maxLines="1"
+                android:text="Delivery Hero Name"
+                android:textColor="@color/black_85"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvStoreName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/font_regular"
+                android:maxLines="1"
+                app:layout_constraintEnd_toStartOf="@+id/tvAmountValue"
+                android:text="Vivan Enterprises"
+                android:textColor="@color/black_85"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDeliveryExecutive" />
+
+            <TextView
+                android:id="@+id/tvOrderAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@+id/tvDeliveryExecutive"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/font_regular"
+                android:maxLines="1"
+                android:text="@string/total_collection"
+                android:textColor="@color/black_85"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvAmountValue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tvOrderAmount"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:onClick="@{v->vm.onClick(v)}"
+                android:fontFamily="@font/font_bold"
+                android:maxLines="1"
+                android:text="₹ 45000"
+                android:textColor="@color/black_85"
+                android:textSize="16sp" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/paymentDetails"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btnSettelAmount"
+                app:layout_constraintTop_toBottomOf="@+id/tvStoreName" />
+
+            <Button
+                android:id="@+id/btnSettelAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:background="@drawable/rounded_4dp_border_primary_clr"
+                android:fontFamily="@font/font_medium"
+                android:text="Settel Amount"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
