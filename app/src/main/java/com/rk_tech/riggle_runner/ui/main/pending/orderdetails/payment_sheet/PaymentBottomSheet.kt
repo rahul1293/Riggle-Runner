@@ -94,12 +94,29 @@ class PaymentBottomSheet : BottomSheetDialogFragment() {
                 }
             }
             clCenter.visibility = View.GONE
-            clSuccess.visibility = View.VISIBLE
+            clSuccess.visibility = View.GONE
+            clConfirm.visibility = View.VISIBLE
+            cvTop.visibility = View.GONE
         }
 
         btnDone.setOnClickListener {
 
         }
+
+        btnBack.setOnClickListener {
+            clCenter.visibility = View.VISIBLE
+            clSuccess.visibility = View.GONE
+            clConfirm.visibility = View.GONE
+            cvTop.visibility = View.VISIBLE
+        }
+
+        btnConfirm.setOnClickListener {
+            clCenter.visibility = View.GONE
+            clSuccess.visibility = View.VISIBLE
+            clConfirm.visibility = View.GONE
+            cvTop.visibility = View.VISIBLE
+        }
+
         setUpRecyclerView()
     }
 

@@ -89,5 +89,9 @@
     <string name="upload_upi_image">Upload Upi Image</string>
     <string name="done">Done</string>
     <string name="delivery_complete">Delivery Complete!</string>
+    <string name="confirm_payment_collection">Confirm Payment Collection</string>
+    <string name="you_are_about_to_collect_2_700_n_through_cheque_from_janta_general_store">You are about to collect <b>2,700</b> \n through <b>cheque</b> from <b>Janta General Store</b></string>
+    <string name="confirm">Confirm</string>
+    <string name="back">Back</string>
 
 </resources>
