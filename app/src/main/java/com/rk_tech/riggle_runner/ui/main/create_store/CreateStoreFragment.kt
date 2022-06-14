@@ -15,12 +15,13 @@ import com.rk_tech.riggle_runner.ui.base.BaseViewModel
 import com.rk_tech.riggle_runner.ui.main.cart_fragment.CartFragment
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.ui.main.neworder.NewOrderFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>() {
 
 
-    private val mainActivity: MainActivity? = null
+    private var mainActivity: MainActivity? = null
     private val viewModel: CreateStoreVM by viewModels()
 
     companion object {
@@ -43,6 +44,7 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>() {
     }
 
     override fun onCreateView(view: View) {
+        mainActivity = activity as MainActivity
         viewModel.onClick.observe(requireActivity()) {
             when (it.id) {
                 R.id.card_cart -> {

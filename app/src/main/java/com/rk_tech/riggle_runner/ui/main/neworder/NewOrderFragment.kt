@@ -143,7 +143,7 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
 
     private var mixtureAdpater: SimpleRecyclerViewAdapter<DummyData, ListOfMixtureBinding>? = null
     private fun initMixAdapter() {
-        mixtureAdpater = SimpleRecyclerViewAdapter(R.layout.bs_create_mix, BR.bean) { i, v, pos ->
+        mixtureAdpater = SimpleRecyclerViewAdapter(R.layout.list_of_mixture, BR.bean) { i, v, pos ->
         }
         val dummyList = ArrayList<DummyData>()
         dummyList.add(DummyData("", ""))

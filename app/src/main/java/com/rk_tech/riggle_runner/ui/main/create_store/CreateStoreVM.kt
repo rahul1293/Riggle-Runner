@@ -6,5 +6,5 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class CreateStoreVM @Inject constructor(private val apiHelper: ApiHelper) :BaseViewModel(){
+class CreateStoreVM @Inject constructor(private val apiHelper: ApiHelper) : BaseViewModel() {
 }

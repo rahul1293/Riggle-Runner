@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.rk_tech.riggle_runner.ui.main.search_store.SearchStoreVM" />
+            type="com.rk_tech.riggle_runner.ui.main.create_store.CreateStoreVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -138,8 +138,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/bg_round_gray_solid"
-            android:padding="@dimen/_7sdp"
             android:drawableEnd="@drawable/ic_arrow_down"
+            android:padding="@dimen/_7sdp"
             android:paddingStart="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -162,9 +162,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_5sdp"
-
             android:padding="@dimen/_5sdp"
             android:text="I am at the store right now"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/ivCheck"
             app:layout_constraintStart_toEndOf="@+id/ivCheck"
             app:layout_constraintTop_toTopOf="@+id/ivCheck" />

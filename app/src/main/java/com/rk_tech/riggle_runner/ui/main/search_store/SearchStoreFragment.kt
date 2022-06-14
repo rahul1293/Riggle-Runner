@@ -18,6 +18,7 @@ import com.rk_tech.riggle_runner.ui.base.BaseViewModel
 import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
 import com.rk_tech.riggle_runner.ui.login.LoginActivity
 import com.rk_tech.riggle_runner.ui.main.cart_fragment.CartFragment
+import com.rk_tech.riggle_runner.ui.main.create_store.CreateStoreFragment
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.ui.main.neworder.NewOrderFragment
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.list_of_search_items.view.*
 @AndroidEntryPoint
 class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>() {
 
-    private val mainActivity: MainActivity? = null
+    private var mainActivity: MainActivity? = null
     private val viewModel: SearchStoreVM by viewModels()
 
     companion object {
@@ -49,6 +50,7 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>() {
 
     override fun onCreateView(view: View) {
         setUpRecyclerView()
+        mainActivity = activity as MainActivity
         binding.etSearchStore.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -61,6 +63,7 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>() {
                     binding.rvSearchAdapter.visibility = View.GONE
                 } else {
                     binding.rvSearchAdapter.visibility = View.VISIBLE
+
                     searchAdapter?.list = filterList(binding.etSearchStore.text.toString())
                     binding.rvSearchAdapter.adapter = searchAdapter
                 }
@@ -76,20 +79,21 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>() {
 
                 }
                 R.id.tvNewStore -> {
-                    val dialog =
+                    mainActivity?.addSubFragment("SearchStoreFragment", CreateStoreFragment())
+                    /*val dialog =
                         BottomSheetDialog(requireActivity(), R.style.CustomBottomSheetDialogTheme)
                     val view = layoutInflater.inflate(R.layout.bs_order_created, null)
                     val bt = view.findViewById<TextView>(R.id.tvCollectPayment)
                     bt.setOnClickListener {
                         dialog.dismiss()
                     }
-                   /* val btcanel = view.findViewById<TextView>(R.id.tvCancel)
+                   *//* val btcanel = view.findViewById<TextView>(R.id.tvCancel)
                     btcanel.setOnClickListener {
                         dialog.dismiss()
-                    }*/
+                    }*//*
                     dialog.setCancelable(true)
                     dialog.setContentView(view)
-                    dialog.show()
+                    dialog.show()*/
 
                 }
             }
@@ -105,7 +109,7 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>() {
         val list = ArrayList<DummyData>()
         nameList?.let {
             for (i in nameList?.indices!!) {
-                if (nameList?.get(i)?.name == text) {
+                if (nameList?.get(i)?.name?.contains(text, true) == true) {
                     list.add(nameList?.get(i)!!)
                 }
             }
