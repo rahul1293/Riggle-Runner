@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/bg_transparent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_centerHorizontal="true"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                android:elevation="@dimen/_10sdp"
+                android:padding="@dimen/_5sdp"
+                app:cardCornerRadius="@dimen/_15sdp">
+
+
+                <ImageView
+                    android:id="@+id/iv"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/cross_svg"
+
+                    />
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white">
+
+            <RelativeLayout
+                android:id="@+id/chooseOwmer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
+
+
+                <TextView
+                    android:id="@+id/tvHead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/font_bold"
+                    android:text="Are you sure you want to logout?"
+                    android:textColor="@color/black_85"
+                    android:textSize="14sp" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/tvHead"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:background="@color/colorGreyTrackingStatus" />
+
+                <TextView
+                    android:id="@+id/tv_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/gilroy_medium"
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_5sdp"
+                    android:text="You will need to sign in again to gain access to your Riggle account."
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black_85"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tvLogout"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_text"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/_35sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:background="@drawable/bg_orange_stroke_round_border"
+                    android:fontFamily="@font/font_medium"
+                    android:includeFontPadding="false"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Logout"
+                    android:textAlignment="center"
+                    android:textColor="@color/orange"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/tvCancel"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_text"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="@dimen/_35sdp"
+                    android:layout_marginBottom="@dimen/_15sdp"
+                    android:background="@drawable/rounded_4dp_border"
+                    android:fontFamily="@font/font_medium"
+                    android:includeFontPadding="false"
+                    android:padding="@dimen/_5sdp"
+                    android:text="Cancel"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</layout>

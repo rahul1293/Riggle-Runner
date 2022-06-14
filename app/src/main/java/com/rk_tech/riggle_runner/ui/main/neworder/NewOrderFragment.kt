@@ -9,34 +9,45 @@ import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.gson.Gson
 import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
+import com.rk_tech.riggle_runner.data.model.response.DummyData
 import com.rk_tech.riggle_runner.data.model.response.RetailerDetails
 import com.rk_tech.riggle_runner.databinding.FragmentNewOrdersBinding
+import com.rk_tech.riggle_runner.databinding.LayoutOrderDetailsBinding
+import com.rk_tech.riggle_runner.databinding.ListOfRetailersBinding
 import com.rk_tech.riggle_runner.databinding.ListRetailerItemBinding
 import com.rk_tech.riggle_runner.ui.base.BaseFragment
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
 import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
+import com.rk_tech.riggle_runner.ui.main.cart_fragment.CartFragment
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.ui.main.neworder.brand_category.BrandCategoryFragment
 import com.rk_tech.riggle_runner.ui.main.neworder.create_retailer.CreateRetailerActivity
+import com.rk_tech.riggle_runner.ui.main.search_store.SearchStoreFragment
+import com.rk_tech.riggle_runner.utils.event.SingleLiveEvent
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
     val viewModel: NewOrderFragmentVM by viewModels()
 
+
     private var mainActivity: MainActivity? = null
     private var searchHandler: Handler = Handler(Looper.getMainLooper())
 
     companion object {
+        var secondAdapterSet: Boolean = false
+        val createMixClick = SingleLiveEvent<String>()
         fun newInstance(): Fragment {
             return NewOrderFragment()
         }
@@ -54,51 +65,86 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
 
     override fun onCreateView(view: View) {
         mainActivity = requireActivity() as MainActivity
-        val startForResult =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    val intent = result.data
-                    openSubFragment(
-                        Gson().fromJson(
-                            intent?.getStringExtra("data"),
-                            RetailerDetails::class.java
-                        )
-                    )
-                }
+
+        createMixClick.observe(requireActivity()){
+            val dialog =
+                BottomSheetDialog(requireActivity(), R.style.CustomBottomSheetDialogTheme)
+            val view = layoutInflater.inflate(R.layout.bs_create_mix, null)
+            val bt = view.findViewById<CardView>(R.id.card)
+            //    view.rvContact.adapter = sheetAdapter
+            bt.setOnClickListener {
+                dialog.dismiss()
             }
-        viewModel.onClick.observe(viewLifecycleOwner) {
-            when (it?.id) {
-                R.id.tvCreateNew -> {
-                    val intent = CreateRetailerActivity.newIntent(requireActivity())
-                    startForResult.launch(intent)
+            dialog.setCancelable(true)
+            dialog.setContentView(view)
+            dialog.show()
+        }
+        viewModel.onClick.observe(requireActivity()) {
+            when (it.id) {
+                R.id.card_cart -> {
+                    mainActivity?.addSubFragment(TAG, CartFragment())
                 }
+                R.id.iv_back -> {
+                    if (secondAdapterSet) {
+                        changeAdpter()
+                    } else {
+                        mainActivity?.onBackPressed()
+                    }
+
+                }
+                R.id.tvCreateNew -> {
+                    mainActivity?.addSubFragment(TAG, SearchStoreFragment())
+                }
+
             }
         }
+        /*  val startForResult =
+              registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+                  if (result.resultCode == Activity.RESULT_OK) {
+                      val intent = result.data
+                      openSubFragment(
+                          Gson().fromJson(
+                              intent?.getStringExtra("data"),
+                              RetailerDetails::class.java
+                          )
+                      )
+                  }
+              }
+          viewModel.onClick.observe(viewLifecycleOwner) {
+              when (it?.id) {
+                  R.id.tvCreateNew -> {
+                      val intent = CreateRetailerActivity.newIntent(requireActivity())
+                      startForResult.launch(intent)
+                  }
+              }
+          }
 
-        viewModel.obrRetailerList.observe(viewLifecycleOwner, Observer {
-            when (it?.status) {
-                Status.LOADING -> {
-                    //showHideLoader(true)
-                }
-                Status.SUCCESS -> {
-                    showHideLoader(false)
-                    searchAdapter?.list = it.data
-                }
-                Status.WARN -> {
-                    showHideLoader(false)
-                }
-                Status.ERROR -> {
-                    showHideLoader(false)
-                }
-            }
-        })
-
-        searchView()
+          viewModel.obrRetailerList.observe(viewLifecycleOwner, Observer {
+              when (it?.status) {
+                  Status.LOADING -> {
+                      //showHideLoader(true)
+                  }
+                  Status.SUCCESS -> {
+                      showHideLoader(false)
+                    //  searchAdapter?.list = it.data
+                  }
+                  Status.WARN -> {
+                      showHideLoader(false)
+                  }
+                  Status.ERROR -> {
+                      showHideLoader(false)
+                  }
+              }
+          })
+  */
+        //searchView()
+        setUpProductAdatper()
         setUpRecyclerView()
     }
 
     private fun openSubFragment(retailer: RetailerDetails?) {
         mainActivity?.addSubFragment(TAG, BrandCategoryFragment(retailer))
+
     }
 
     private fun searchView() {
@@ -141,23 +187,59 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
         if (queryString.length < 3) {
             return
         }
-        viewModel.getRetailerList(getAuthorization(), queryString)
+        //viewModel.getRetailerList(getAuthorization(), queryString)
     }
 
-    var searchAdapter: SimpleRecyclerViewAdapter<RetailerDetails, ListRetailerItemBinding>? = null
-    private fun setUpRecyclerView() {
-        val layoutManager = LinearLayoutManager(requireContext())
-        searchAdapter = SimpleRecyclerViewAdapter<RetailerDetails, ListRetailerItemBinding>(
-            R.layout.list_retailer_item, BR.bean
+    // new product details adapter
+
+
+    var dummyAdapter: SimpleRecyclerViewAdapter<DummyData, LayoutOrderDetailsBinding>? = null
+    private fun setUpProductAdatper() {
+        dummyAdapter = SimpleRecyclerViewAdapter<DummyData, LayoutOrderDetailsBinding>(
+            R.layout.layout_order_details, BR.bean
         ) { v, m, pos ->
             when (v.id) {
                 R.id.rlMain -> {
-                    openSubFragment(m)
+
+                }
+            }
+        }
+
+        val layoutManager = LinearLayoutManager(requireContext())
+        binding.rvRetailerList.layoutManager = layoutManager
+        binding.rvRetailerList.adapter = dummyAdapter
+        val dummyList = ArrayList<DummyData>()
+        dummyList.add(DummyData("", ""))
+        dummyAdapter?.list = dummyList
+    }
+
+
+    var searchAdapter: SimpleRecyclerViewAdapter<DummyData, ListOfRetailersBinding>? = null
+    private fun setUpRecyclerView() {
+        val layoutManager = LinearLayoutManager(requireContext())
+        searchAdapter = SimpleRecyclerViewAdapter<DummyData, ListOfRetailersBinding>(
+            R.layout.list_of_retailers, BR.bean
+        ) { v, m, pos ->
+            when (v.id) {
+                R.id.rlMain -> {
+                    binding.tvCreateNew.visibility = View.VISIBLE
+                    binding.rvRetailerList.adapter = dummyAdapter
+                    secondAdapterSet = true
                 }
             }
         }
         binding.rvRetailerList.layoutManager = layoutManager
         binding.rvRetailerList.adapter = searchAdapter
+        val dummyList = ArrayList<DummyData>()
+        dummyList.add(DummyData("", ""))
+        dummyList.add(DummyData("", ""))
+        searchAdapter?.list = dummyList
+    }
+
+    fun changeAdpter() {
+        binding.rvRetailerList.adapter = searchAdapter
+        secondAdapterSet = false
+        binding.tvCreateNew.visibility = View.GONE
     }
 
 }

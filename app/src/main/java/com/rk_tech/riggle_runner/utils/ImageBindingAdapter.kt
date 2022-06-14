@@ -8,14 +8,46 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
+import com.rk_tech.riggle_runner.data.model.response.DummyData
+import com.rk_tech.riggle_runner.databinding.ListOfProductBinding
+import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
+import com.rk_tech.riggle_runner.ui.main.neworder.NewOrderFragment
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 object ImageBindingAdapter {
+
+
+    @JvmStatic
+    @BindingAdapter(value = ["setAdapter"])
+    fun setAdapter(recyclerView: RecyclerView, dummyData: DummyData) {
+        val productAdpater = SimpleRecyclerViewAdapter<DummyData, ListOfProductBinding>(
+            R.layout.list_of_product, BR.bean
+        ) { v, m, pos ->
+            when (v.id) {
+                R.id.rlMain -> {
+
+                }
+                R.id.tv_createMix -> {
+                    NewOrderFragment.createMixClick.value = ""
+                }
+            }
+        }
+        recyclerView.adapter = productAdpater
+        val dummyList = ArrayList<DummyData>()
+        dummyList.add(DummyData("", ""))
+        dummyList.add(DummyData("", ""))
+        dummyList.add(DummyData("", ""))
+        dummyList.add(DummyData("", ""))
+        dummyList.add(DummyData("", ""))
+        productAdpater.list = dummyList
+    }
 
     @JvmStatic
     @BindingAdapter(value = ["simpleRecourse"])

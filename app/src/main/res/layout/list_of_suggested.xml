@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="pos"
+            type="Integer" />
+
+        <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.response.DummyData" />
+
+        <variable
+            name="callback"
+            type="com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rlProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="2dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="@dimen/_5sdp">
+
+        <TextView
+            android:id="@+id/tvSuggestedName"
+            style="@style/TextView.GilroyBold_DarkGray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Ekveera General Store"
+            android:textColor="@color/black_85"
+            android:textSize="@dimen/_13ssp" />
+
+
+        <TextView
+            android:id="@+id/tvDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvSuggestedName"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/gilroy_medium"
+            android:maxLines="1"
+            android:text="Saat rasta, Byculla - 400012"
+            android:textColor="@color/dark_gray"
+            android:textSize="@dimen/_9ssp" />
+
+
+    </RelativeLayout>
+
+</layout>

@@ -7,6 +7,9 @@
     <string name="please_try_again">Please try again</string>
     <string name="plz_wait">Plz wait</string>
 
+    <string name="order_fake_created">Order created for Shree Sai General Store amounting to <B> 23,849</B></string>
+    <string name="empty_cart_text">You do not have any items in the cart to create a new order</string>
+
     <string name="the_food_place">The food place!</string>
     <string name="welcome_to_riggle">Welcome To \nRiggle Runner</string>
     <string name="restaurant_dashboard">Restaurant Dashboard</string>
@@ -93,5 +96,6 @@
     <string name="you_are_about_to_collect_2_700_n_through_cheque_from_janta_general_store">You are about to collect <b>2,700</b> \n through <b>cheque</b> from <b>Janta General Store</b></string>
     <string name="confirm">Confirm</string>
     <string name="back">Back</string>
+    <string name="create_order">Create Order</string>
 
 </resources>

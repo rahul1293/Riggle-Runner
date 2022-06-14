@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="pos"
+            type="Integer" />
+
+        <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.response.DummyData" />
+
+        <variable
+            name="callback"
+            type="com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter.SimpleCallback" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rlMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:onClick="@{v->callback.onItemClick(v,bean,pos)}">
+
+
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/TextView.GilroySemiBold_DarkGray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+            android:textColor="@color/black_85"
+            android:textSize="@dimen/_15ssp"
+            android:text="Anand Joshi" />
+
+        <TextView
+            android:id="@+id/tv_number"
+            style="@style/TextView.GilroyRegular_DarkGray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvName"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:textColor="@color/black_85"
+            android:textSize="@dimen/_13ssp"
+            android:text="Phone : 78452842188" />
+
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/view"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:drawableLeft="@drawable/ic_call_svg"
+            android:drawablePadding="@dimen/_5sdp"
+            android:drawableTint="@color/call_store"
+            android:ellipsize="end"
+            android:fontFamily="@font/gilroy_bold"
+            android:lines="1"
+            android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+            android:text="Call"
+            android:textAllCaps="true"
+            android:textColor="@color/call_store"
+            android:textSize="14sp" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/tv_number"
+            android:background="@color/black" />
+
+
+    </RelativeLayout>
+</layout>
+
