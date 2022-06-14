@@ -22,10 +22,7 @@ import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.data.model.response.DummyData
 import com.rk_tech.riggle_runner.data.model.response.RetailerDetails
-import com.rk_tech.riggle_runner.databinding.FragmentNewOrdersBinding
-import com.rk_tech.riggle_runner.databinding.LayoutOrderDetailsBinding
-import com.rk_tech.riggle_runner.databinding.ListOfRetailersBinding
-import com.rk_tech.riggle_runner.databinding.ListRetailerItemBinding
+import com.rk_tech.riggle_runner.databinding.*
 import com.rk_tech.riggle_runner.ui.base.BaseFragment
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
 import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
@@ -36,6 +33,8 @@ import com.rk_tech.riggle_runner.ui.main.neworder.create_retailer.CreateRetailer
 import com.rk_tech.riggle_runner.ui.main.search_store.SearchStoreFragment
 import com.rk_tech.riggle_runner.utils.event.SingleLiveEvent
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.bottom_sheet_call_deliverify.view.*
+import kotlinx.android.synthetic.main.bs_create_mix.view.*
 
 @AndroidEntryPoint
 class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
@@ -65,13 +64,13 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
 
     override fun onCreateView(view: View) {
         mainActivity = requireActivity() as MainActivity
-
-        createMixClick.observe(requireActivity()){
+        initMixAdapter()
+        createMixClick.observe(requireActivity()) {
             val dialog =
                 BottomSheetDialog(requireActivity(), R.style.CustomBottomSheetDialogTheme)
             val view = layoutInflater.inflate(R.layout.bs_create_mix, null)
             val bt = view.findViewById<CardView>(R.id.card)
-            //    view.rvContact.adapter = sheetAdapter
+            view.rvMixture.adapter = mixtureAdpater!!
             bt.setOnClickListener {
                 dialog.dismiss()
             }
@@ -140,6 +139,18 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
         //searchView()
         setUpProductAdatper()
         setUpRecyclerView()
+    }
+
+    private var mixtureAdpater: SimpleRecyclerViewAdapter<DummyData, ListOfMixtureBinding>? = null
+    private fun initMixAdapter() {
+        mixtureAdpater = SimpleRecyclerViewAdapter(R.layout.bs_create_mix, BR.bean) { i, v, pos ->
+        }
+        val dummyList = ArrayList<DummyData>()
+        dummyList.add(DummyData("", ""))
+        dummyList.add(DummyData("", ""))
+        mixtureAdpater?.list = dummyList
+
+
     }
 
     private fun openSubFragment(retailer: RetailerDetails?) {

@@ -74,7 +74,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:fontFamily="@font/gilroy_medium"
             android:padding="@dimen/_5sdp"
-            android:text="Search for new Store"
+            android:text="Shop Name"
             android:textColor="@color/dark_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/header" />
@@ -93,30 +93,81 @@
             app:layout_constraintWidth_percent=".9" />
 
         <TextView
-            android:id="@+id/tvSuggested"
+            android:id="@+id/tvOwnerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/gilroy_medium"
             android:padding="@dimen/_5sdp"
-            android:text="Suggested Stores"
+            android:text="Owner Number"
             android:textColor="@color/dark_gray"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etSearchStore" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSuggested"
-            android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/etOwnerName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:paddingStart="@dimen/_15sdp"
-            android:paddingEnd="@dimen/_15sdp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/bg_round_gray_solid"
+            android:drawableStart="@drawable/ic_nineone"
+            android:padding="@dimen/_7sdp"
+            android:paddingStart="@dimen/_10sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvOwnerName"
+            app:layout_constraintWidth_percent=".9" />
 
-            app:layout_constraintTop_toBottomOf="@+id/tvSuggested" />
+        <TextView
+            android:id="@+id/tvPincode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/gilroy_medium"
+            android:padding="@dimen/_5sdp"
+            android:text="Pincode"
+            android:textColor="@color/dark_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etOwnerName" />
+
+        <EditText
+            android:id="@+id/etPincode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/bg_round_gray_solid"
+            android:padding="@dimen/_7sdp"
+            android:drawableEnd="@drawable/ic_arrow_down"
+            android:paddingStart="@dimen/_10sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPincode"
+            app:layout_constraintWidth_percent=".9" />
+
+
+        <ImageView
+            android:id="@+id/ivCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:src="@drawable/ic_check_box"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etPincode" />
+
+        <TextView
+            android:id="@+id/tv_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+
+            android:padding="@dimen/_5sdp"
+            android:text="I am at the store right now"
+            app:layout_constraintBottom_toBottomOf="@+id/ivCheck"
+            app:layout_constraintStart_toEndOf="@+id/ivCheck"
+            app:layout_constraintTop_toTopOf="@+id/ivCheck" />
 
         <TextView
             android:id="@+id/tvNewStore"
@@ -128,9 +179,8 @@
             android:fontFamily="@font/font_medium"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:onClick="@{v->vm.onClick(v)}"
             android:padding="@dimen/_5sdp"
-            android:text="New Store"
+            android:text="Create New Store"
             android:textColor="@color/orange"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -138,19 +188,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent=".9" />
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSearchAdapter"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:padding="@dimen/_10sdp"
-            android:visibility="gone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etSearchStore"
-            tools:itemCount="2"
-            tools:listitem="@layout/list_of_retailers" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -98,12 +98,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_text"
-
                     android:padding="@dimen/_5sdp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="2"
-                    tools:listitem="@layout/list_of_mixture"
-                    />
+                    tools:listitem="@layout/list_of_mixture" />
 
 
                 <TextView
