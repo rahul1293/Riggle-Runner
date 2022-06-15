@@ -99,5 +99,6 @@
     <string name="create_order">Create Order</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="purchase_order_value">Purchase order value</string>
 
 </resources>

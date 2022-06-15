@@ -71,11 +71,11 @@
                             android:layout_marginTop="@dimen/_15sdp"
                             android:ellipsize="end"
                             android:fontFamily="@font/font_regular"
-                            android:maxLines="1"
                             android:foreground="?selectableItemBackground"
-                            android:text="@string/today"
-                            android:padding="@dimen/_5sdp"
+                            android:maxLines="1"
                             android:onClick="@{v->vm.onClick(v)}"
+                            android:padding="@dimen/_5sdp"
+                            android:text="@string/today"
                             android:textColor="@color/orange"
                             android:textSize="12sp"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -83,20 +83,24 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
+                            android:id="@+id/ivPrevious"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:rotation="90"
                             android:layout_marginEnd="@dimen/_50sdp"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:rotation="90"
                             android:src="@drawable/ic_drop_down_icon"
                             app:layout_constraintBottom_toBottomOf="@+id/tvToday"
                             app:layout_constraintEnd_toStartOf="@+id/tvToday"
                             app:layout_constraintTop_toTopOf="@+id/tvToday" />
 
                         <ImageView
+                            android:id="@+id/ivNext"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:rotation="-90"
                             android:layout_marginStart="@dimen/_50sdp"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:rotation="-90"
                             android:src="@drawable/ic_drop_down_icon"
                             app:layout_constraintBottom_toBottomOf="@+id/tvToday"
                             app:layout_constraintStart_toEndOf="@+id/tvToday"

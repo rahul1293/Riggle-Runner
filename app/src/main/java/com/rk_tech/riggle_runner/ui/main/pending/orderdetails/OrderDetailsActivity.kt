@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
+import com.rk_tech.riggle_runner.data.model.MenuBean
 import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.data.model.request.VariantUpdate
 import com.rk_tech.riggle_runner.data.model.response.ComboProducts
@@ -38,7 +39,6 @@ import com.rk_tech.riggle_runner.utils.event.SingleRequestEvent
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.blurry.Blurry
-import java.util.ArrayList
 
 @AndroidEntryPoint
 class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), LocationResultListener {
@@ -76,7 +76,8 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
     }
 
     override fun onCreateView(view: View) {
-        //Blurry.with(context).radius(25).sampling(2).onto(binding.clMain)
+        //Blurry.with(activity).radius(25).sampling(2).onto(binding.clMain)
+
         checkLocation()
         binding.header.tvTitle.text = getString(R.string.retailer_orders)
         arguments?.getString("store_name")?.let {
@@ -393,7 +394,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
     }
 
     private fun setUpAdapter(products: List<Product>?) {
-        productAdapter?.list = products
+        //productAdapter?.list = products
     }
 
     private fun openMenu(view: View) {
@@ -422,22 +423,15 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
         menu.show()
     }
 
-    var productAdapter: SimpleRecyclerViewAdapter<Product, ListMyOrderDetailBinding>? = null
+    var productAdapter: SimpleRecyclerViewAdapter<MenuBean, ListMyOrderDetailBinding>? = null
     private fun setUpOrderProductList() {
-        productAdapter = SimpleRecyclerViewAdapter<Product, ListMyOrderDetailBinding>(
+        productAdapter = SimpleRecyclerViewAdapter<MenuBean, ListMyOrderDetailBinding>(
             R.layout.list_my_order_detail,
             BR.bean
         ) { v, m, pos ->
             when (v?.id) {
                 R.id.ivMinus -> {
-                    if (m.products != null) {
-                        /*if (m.quantity > 0) {
-                            if (m.quantity - m.product_combo.step < 0)
-                                return@SimpleRecyclerViewAdapter
-                            m.quantity = m.quantity - m.product_combo.step
-                        }
-                        productAdapter?.notifyDataSetChanged()
-                        viewModel.editProductQty(getAuthorization(), orderId, m.id, m.quantity)*/
+                    /*if (m.products != null) {
                         showComboSheet(m)
                     } else {
                         if (m.quantity > 0) {
@@ -445,26 +439,32 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                         }
                         productAdapter?.notifyDataSetChanged()
                         viewModel.editProductQty(getAuthorization(), orderId, m.id, m.quantity)
-                    }
+                    }*/
                 }
                 R.id.ivPlus, R.id.tvAdd -> {
-                    if (m.products != null) {
-                        /*m.quantity = m.quantity + m.product_combo.step
-                        productAdapter?.notifyDataSetChanged()
-                        viewModel.editProductQty(getAuthorization(), orderId, m.id, m.quantity)*/
+                    /*if (m.products != null) {
                         showComboSheet(m)
                     } else {
                         m.quantity = m.quantity + m.product?.retailer_step!!
                         productAdapter?.notifyDataSetChanged()
                         viewModel.editProductQty(getAuthorization(), orderId, m.id, m.quantity)
-                    }
+                    }*/
                 }
             }
         }
         val layoutManager = LinearLayoutManager(requireActivity())
         binding.rvProducts.layoutManager = layoutManager
         binding.rvProducts.adapter = productAdapter
-        //productAdapter.list = getListOne()
+        productAdapter?.list = getListOne()
+    }
+
+    private fun getListOne(): ArrayList<MenuBean> {
+        val dataList = ArrayList<MenuBean>()
+        dataList.add(MenuBean(1, "Product Name", 0, false))
+        dataList.add(MenuBean(1, "Product Name", 0, false))
+        dataList.add(MenuBean(1, "Product Name", 0, false))
+        dataList.add(MenuBean(1, "Product Name", 0, false))
+        return dataList
     }
 
     private fun showComboSheet(m: Product?) {

@@ -68,6 +68,12 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
                 R.id.tvToday -> {
                     showDatePicker()
                 }
+                R.id.ivPrevious -> {
+
+                }
+                R.id.ivNext -> {
+
+                }
             }
         }
         details?.let {
@@ -152,7 +158,7 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
             BR.bean
         ) { v, m, pos ->
             when (v?.id) {
-                R.id.tvDetails->{
+                R.id.tvDetails -> {
                     mainActivity?.addSubFragment(
                         PendingOrdersFragment.TAG,
                         OrderDetailsActivity.newInstance(m.id, m.retailer.name)
