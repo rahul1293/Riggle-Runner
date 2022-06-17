@@ -40,6 +40,7 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
     val viewModel: CompletedFragmentVM by viewModels()
     private lateinit var mVerticalPagination: VerticalPagination
     private var mainActivity: MainActivity? = null
+    private var count = 0
 
     companion object {
         fun newInstance(): Fragment {
@@ -69,10 +70,16 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
                     showDatePicker()
                 }
                 R.id.ivPrevious -> {
-
+                    count--
+                    cal.timeInMillis = today.timeInMillis + (count * 24 * 60 * 60 * 1000)
+                    updateDate(cal)
                 }
                 R.id.ivNext -> {
-
+                    if (cal.time.equals(today.time))
+                        return@observe
+                    count++
+                    cal.timeInMillis = today.timeInMillis + (count * 24 * 60 * 60 * 1000)
+                    updateDate(cal)
                 }
             }
         }
@@ -85,6 +92,8 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
             viewModel.getTripList(getAuthorization(), page.toString())
             binding.srl.isRefreshing = false
         }
+
+        updateDate(cal)
 
         viewModel.obrTripList.observe(viewLifecycleOwner, Observer {
             when (it?.status) {
@@ -138,6 +147,16 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
         })
 
         setUpRecyclerView()
+    }
+
+    private fun updateDate(cal: Calendar) {
+        if (today.time.equals(cal.time)) {
+            binding.tvToday.text = "today"
+        } else {
+            val myFormat = "dd-MMM-yyyy" // mention the format you need
+            val sdf = SimpleDateFormat(myFormat, Locale.US)
+            binding.tvToday.text = sdf.format(cal.time)
+        }
     }
 
     override fun onResume() {
@@ -252,6 +271,7 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
     }
 
     private var cal = Calendar.getInstance()
+    private var today = Calendar.getInstance()
     private val dateSetListener =
         DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             cal.set(Calendar.YEAR, year)

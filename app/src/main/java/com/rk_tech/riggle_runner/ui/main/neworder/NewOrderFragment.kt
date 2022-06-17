@@ -2,6 +2,7 @@ package com.rk_tech.riggle_runner.ui.main.neworder
 
 import android.app.Activity
 import android.graphics.PorterDuff
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
@@ -22,6 +23,7 @@ import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.data.model.response.DummyData
 import com.rk_tech.riggle_runner.data.model.response.RetailerDetails
+import com.rk_tech.riggle_runner.data.model.response.Schemes
 import com.rk_tech.riggle_runner.databinding.*
 import com.rk_tech.riggle_runner.ui.base.BaseFragment
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
@@ -30,6 +32,8 @@ import com.rk_tech.riggle_runner.ui.main.cart_fragment.CartFragment
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.ui.main.neworder.brand_category.BrandCategoryFragment
 import com.rk_tech.riggle_runner.ui.main.neworder.create_retailer.CreateRetailerActivity
+import com.rk_tech.riggle_runner.ui.main.neworder.product_list.scheme_sheet.ProductChooseListener
+import com.rk_tech.riggle_runner.ui.main.neworder.product_list.scheme_sheet.SchemeBottomSheet
 import com.rk_tech.riggle_runner.ui.main.search_store.SearchStoreFragment
 import com.rk_tech.riggle_runner.utils.event.SingleLiveEvent
 import dagger.hilt.android.AndroidEntryPoint
@@ -232,10 +236,22 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
             R.layout.list_of_retailers, BR.bean
         ) { v, m, pos ->
             when (v.id) {
-                R.id.rlMain -> {
+                R.id.tvDetails -> {
                     binding.tvCreateNew.visibility = View.VISIBLE
                     binding.rvRetailerList.adapter = dummyAdapter
                     secondAdapterSet = true
+                }
+                R.id.tvBulkOffer -> {
+                    val sheet = SchemeBottomSheet()
+                    val bundle = Bundle()
+                    bundle.putInt("product_id", id)
+                    sheet.arguments = bundle
+                    sheet.show(childFragmentManager, sheet.tag)
+                    sheet.setListener(object : ProductChooseListener {
+                        override fun itemUpdated(scheme: Schemes, pos: Int) {
+
+                        }
+                    })
                 }
             }
         }

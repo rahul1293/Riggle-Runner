@@ -66,13 +66,14 @@
 
                         <TextView
                             android:id="@+id/tvToday"
-                            android:layout_width="wrap_content"
+                            android:layout_width="@dimen/_150sdp"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:ellipsize="end"
                             android:fontFamily="@font/font_regular"
                             android:foreground="?selectableItemBackground"
                             android:maxLines="1"
+                            android:gravity="center"
                             android:onClick="@{v->vm.onClick(v)}"
                             android:padding="@dimen/_5sdp"
                             android:text="@string/today"
@@ -84,11 +85,12 @@
 
                         <ImageView
                             android:id="@+id/ivPrevious"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/_50sdp"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:layout_marginEnd="@dimen/_20sdp"
                             android:onClick="@{v->vm.onClick(v)}"
                             android:rotation="90"
+                            android:padding="@dimen/_7sdp"
                             android:src="@drawable/ic_drop_down_icon"
                             app:layout_constraintBottom_toBottomOf="@+id/tvToday"
                             app:layout_constraintEnd_toStartOf="@+id/tvToday"
@@ -96,11 +98,12 @@
 
                         <ImageView
                             android:id="@+id/ivNext"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_50sdp"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:layout_marginStart="@dimen/_20sdp"
                             android:onClick="@{v->vm.onClick(v)}"
                             android:rotation="-90"
+                            android:padding="@dimen/_7sdp"
                             android:src="@drawable/ic_drop_down_icon"
                             app:layout_constraintBottom_toBottomOf="@+id/tvToday"
                             app:layout_constraintStart_toEndOf="@+id/tvToday"

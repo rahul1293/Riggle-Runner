@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
@@ -41,7 +43,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.blurry.Blurry
 
 @AndroidEntryPoint
-class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), LocationResultListener {
+class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), LocationResultListener,
+    CallBackBlurry {
     val viewModel: OrderDetailsActivityVM by viewModels()
     private var locationHandler: LocationHandler? = null
     private var mCurrentLocation: Location? = null
@@ -76,7 +79,6 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
     }
 
     override fun onCreateView(view: View) {
-        //Blurry.with(activity).radius(25).sampling(2).onto(binding.clMain)
 
         checkLocation()
         binding.header.tvTitle.text = getString(R.string.retailer_orders)
@@ -115,6 +117,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                         }
                     }*/
                     val paymentSheet = PaymentBottomSheet()
+                    paymentSheet.setListener(this)
                     val bundle = Bundle()
                     arguments?.getInt("order_id", 0)?.let { id ->
                         bundle.putInt("order_id", id)
@@ -122,9 +125,14 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                     paymentSheet.arguments = bundle
                     paymentSheet.show(childFragmentManager, paymentSheet.tag)
                     paymentSheet.isCancelable = true
+                    index = binding.clMain.childCount
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        Blurry.with(activity).sampling(1).onto(binding.clMain)
+                    }, 500)
                 }
                 R.id.ivNotification, R.id.tvCancel -> {
                     val sheet = CancelOrderSheet()
+                    sheet.setListener(this)
                     val bundle = Bundle()
                     arguments?.getInt("order_id", 0)?.let { id ->
                         bundle.putInt("order_id", id)
@@ -132,6 +140,10 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                     sheet.arguments = bundle
                     sheet.show(childFragmentManager, sheet.tag)
                     sheet.isCancelable = false
+                    index = binding.clMain.childCount
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        Blurry.with(activity).sampling(1).onto(binding.clMain)
+                    }, 500)
                 }
             }
         }
@@ -545,6 +557,13 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
 
     override fun getLocation(location: Location) {
         this.mCurrentLocation = location
+    }
+
+    var index = 0
+    override fun isExpand(isOpen: Boolean) {
+        if (index < binding.clMain.childCount) {
+            binding.clMain.removeViewAt(index)
+        }
     }
 
 }

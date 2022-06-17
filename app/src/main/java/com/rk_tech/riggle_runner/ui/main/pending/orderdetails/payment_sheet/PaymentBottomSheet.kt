@@ -18,6 +18,7 @@ import com.rk_tech.riggle_runner.data.model.MenuBean
 import com.rk_tech.riggle_runner.databinding.BottomSheetPaymentBinding
 import com.rk_tech.riggle_runner.databinding.ItemImageListBinding
 import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
+import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.CallBackBlurry
 import com.rk_tech.riggle_runner.utils.FileUtil
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,6 +32,7 @@ class PaymentBottomSheet : BottomSheetDialogFragment() {
     lateinit var binding: BottomSheetPaymentBinding
     private var uploadFile: File? = null
     private var isImageSelected = ""
+    private var mlistener: CallBackBlurry? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,6 +47,7 @@ class PaymentBottomSheet : BottomSheetDialogFragment() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     dismiss()
+                } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                 }
             }
 
@@ -72,7 +75,10 @@ class PaymentBottomSheet : BottomSheetDialogFragment() {
             e.printStackTrace()
         }
         binding.type = 3
-        ivCross.setOnClickListener { dismiss() }
+        ivCross.setOnClickListener {
+            mlistener?.isExpand(false)
+            dismiss()
+        }
 
         tvUpi.setOnClickListener {
             binding.type = 1
@@ -154,6 +160,9 @@ class PaymentBottomSheet : BottomSheetDialogFragment() {
         return dataList
     }
 
+    fun setListener(listener: CallBackBlurry) {
+        this.mlistener = listener
+    }
 
     private val launcher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

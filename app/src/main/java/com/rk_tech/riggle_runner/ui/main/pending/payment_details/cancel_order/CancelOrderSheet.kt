@@ -17,6 +17,7 @@ import com.rk_tech.riggle_runner.data.model.MenuBean
 import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.databinding.ItemCancelListBinding
 import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
+import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.CallBackBlurry
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import com.rk_tech.riggle_runner.utils.extension.showSuccessToast
@@ -29,6 +30,7 @@ class CancelOrderSheet : BottomSheetDialogFragment() {
     val viewModel: CancelOrderSheetVM by viewModels()
     val cancelReason = getListData()
     private var reason = ""
+    private var mlistener: CallBackBlurry? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -80,6 +82,10 @@ class CancelOrderSheet : BottomSheetDialogFragment() {
         return dataList
     }
 
+    fun setListener(listener: CallBackBlurry) {
+        this.mlistener = listener
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -93,6 +99,7 @@ class CancelOrderSheet : BottomSheetDialogFragment() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     dismiss()
+                } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                 }
             }
 
@@ -139,7 +146,10 @@ class CancelOrderSheet : BottomSheetDialogFragment() {
         })
 
         setRecyclerView()
-        ivCross.setOnClickListener { dismiss() }
+        ivCross.setOnClickListener {
+            mlistener?.isExpand(false)
+            dismiss()
+        }
         btnContinue.setOnClickListener {
             arguments?.getInt("order_id", 0)?.let { id ->
                 SharedPrefManager.getSavedUser()?.let { user ->

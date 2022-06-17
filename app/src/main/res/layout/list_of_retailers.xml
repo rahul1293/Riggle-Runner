@@ -57,7 +57,6 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_toEndOf="@+id/card_iv"
-
             android:text="Anand Joshi"
             android:textColor="@color/black_85"
             android:textSize="@dimen/_15ssp" />
@@ -80,7 +79,26 @@
             android:text="@string/create_order"
             android:textAllCaps="true"
             android:textColor="@color/orange"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvBulkOffer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvName"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="10dp"
+            android:layout_toEndOf="@+id/tvDetails"
+            android:drawableLeft="@drawable/ic_bulk_offer"
+            android:drawablePadding="@dimen/_5sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_medium"
+            android:lines="1"
+            android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+            android:text="@string/view_offer"
+            android:textAllCaps="true"
+            android:textColor="@color/call_store"
+            android:textSize="12sp" />
 
         <View
             android:id="@+id/view"

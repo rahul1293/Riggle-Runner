@@ -79,11 +79,11 @@ class SchemeBottomSheet : BottomSheetDialogFragment(),
         val bundle = arguments
         if (bundle != null) {
             product_id = bundle.getInt("product_id", 0)
-            product_name = bundle.getString("product_name").toString()
+            /*product_name = bundle.getString("product_name").toString()
             schemeList = Gson().fromJson(
                 bundle.getString("scheme"),
                 object : TypeToken<ArrayList<Schemes>>() {}.type
-            )
+            )*/
         }
         view.ivCross?.setOnClickListener { dismiss() }
         populateRecyclerView()

@@ -52,7 +52,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true">
 
-
                 <TextView
                     android:id="@+id/tvTitle"
                     android:layout_width="wrap_content"
@@ -62,33 +61,18 @@
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    android:fontFamily="@font/font_bold"
+                    android:fontFamily="@font/font_medium"
                     android:text="Choose an Owner to Call..."
                     android:textColor="@color/black_85"
-                    android:textSize="14sp" />
-
+                    android:textSize="16sp" />
 
             </RelativeLayout>
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/chooseOwmer"
-                android:background="@color/colorGreyTrackingStatus" />
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/black_18" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvContact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view"
+                android:layout_below="@+id/chooseOwmer"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:fadeScrollbars="false"
                 android:paddingStart="@dimen/_10sdp"
