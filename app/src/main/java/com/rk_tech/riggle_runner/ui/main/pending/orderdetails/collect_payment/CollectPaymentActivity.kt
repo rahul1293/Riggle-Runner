@@ -3,7 +3,6 @@ package com.rk_tech.riggle_runner.ui.main.pending.orderdetails.collect_payment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.text.TextUtils
@@ -35,8 +34,6 @@ import com.rk_tech.riggle_runner.ui.base.BaseViewModel
 import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.ui.main.neworder.create_retailer.StoreTypeAdapter
-import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.revisit.RevisitActivity
-import com.rk_tech.riggle_runner.utils.Constants
 import com.rk_tech.riggle_runner.utils.FileUtil
 import com.rk_tech.riggle_runner.utils.extension.hideKeyboard
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
@@ -209,7 +206,9 @@ class CollectPaymentActivity : BaseActivity<ActivityCollectPaymentBinding>() {
                         intent.putExtra("pending_amount", remainAmount)
                         startActivity(intent)
                     } else {*/
-                    val intent = MainActivity.newIntent(this)
+                    val intent = MainActivity.newIntent(
+                        this
+                    )
                     startActivity(intent)
                     finishAffinity()
                     /*}*/

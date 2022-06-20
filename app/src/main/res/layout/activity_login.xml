@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -79,15 +80,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_25ssp"
-                    android:text="@string/user_id"
+                    android:text="@string/phone_number"
                     android:textColor="@color/text_color_dark"
                     android:textSize="@dimen/_12sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvTitleTwo" />
 
-                <EditText
-                    android:id="@+id/etEmail"
-                    style="@style/EditText"
+                <LinearLayout
+                    android:id="@+id/llPhone"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_42sdp"
                     android:layout_marginStart="@dimen/_16sdp"
@@ -96,17 +96,49 @@
                     android:background="@drawable/filled_shape"
                     android:backgroundTint="#F0EDEA"
                     android:gravity="center_vertical"
-                    android:hint="@string/enter_user_id"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:padding="10dp"
-                    android:text=""
-                    android:textColor="@color/text_color_333333"
-                    android:textColorHint="@color/grey"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvEmail" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvEmail">
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.85"
+                        android:padding="12dp"
+                        android:text="+91"
+                        style="@style/TextView"
+                        android:textColor="@color/text_color_333333"
+                        android:textSize="16sp" />
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:alpha="0.18"
+                        android:background="@color/black" />
+
+                    <EditText
+                        android:id="@+id/etEmail"
+                        style="@style/EditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="@string/enter_phone_number"
+                        android:imeOptions="actionDone"
+                        android:inputType="number"
+                        android:lineSpacingExtra="3sp"
+                        android:maxLength="10"
+                        android:padding="12dp"
+                        android:text="8840937268"
+                        android:textColor="@color/text_color_333333"
+                        android:textColorHint="@color/grey"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+                <!--android:hint="@string/enter_user_id"-->
 
                 <TextView
                     android:id="@+id/tvPassword"
@@ -118,8 +150,9 @@
                     android:text="@string/password"
                     android:textColor="@color/text_color_dark"
                     android:textSize="@dimen/_12sdp"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+                    app:layout_constraintTop_toBottomOf="@+id/llPhone" />
 
                 <EditText
                     android:id="@+id/etPassword"
@@ -137,6 +170,7 @@
                     android:inputType="textPassword"
                     android:padding="10dp"
                     android:text=""
+                    android:visibility="gone"
                     android:textColor="@color/text_color_333333"
                     android:textColorHint="@color/grey"
                     app:layout_constraintEnd_toEndOf="parent"

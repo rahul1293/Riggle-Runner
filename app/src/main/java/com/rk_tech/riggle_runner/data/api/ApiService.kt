@@ -3,7 +3,13 @@ package com.rk_tech.riggle_runner.data.api
 import com.rk_tech.riggle_runner.data.model.User
 import com.rk_tech.riggle_runner.data.model.request.LoginRequest
 import com.rk_tech.riggle_runner.data.model.request.OrderRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.VerifyOtpRequest
 import com.rk_tech.riggle_runner.data.model.response.*
+import com.rk_tech.riggle_runner.data.model.response_v2.GetDashBoardResponse
+import com.rk_tech.riggle_runner.data.model.response_v2.PendingCompleteResponse
+import com.rk_tech.riggle_runner.data.model.response_v2.SendOtpResponse
+import com.rk_tech.riggle_runner.data.model.response_v2.UserLoginResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -12,6 +18,43 @@ import retrofit2.http.*
 
 interface ApiService {
 
+    /**
+     * New api's
+     */
+
+    @Headers("x-app-name:runner")
+    @POST("user/auth/send_otp/")
+    suspend fun sendOtp(@Body request: SendOtpRequest): Response<SendOtpResponse>
+
+    @Headers("x-app-name:runner")
+    @POST("user/auth/verify_otp/")
+    suspend fun verifyOtp(@Body request: VerifyOtpRequest): Response<UserLoginResponse>
+
+    @Headers("x-app-name:runner")
+    @GET("user/auth/ping/")
+    suspend fun getAuthPing(
+        @Header("Authorization") header: String
+    ): Response<UserLoginResponse>
+
+    @Headers("x-app-name:runner")
+    @GET("core/companies/{id}/dashboard/")
+    suspend fun getDashboardData(
+        @Header("Authorization") header: String,
+        @Path("id") id: Int,
+        @Query("date") date: String
+    ): Response<GetDashBoardResponse>
+
+    @Headers("x-app-name:runner")
+    @GET("core/orders/?")
+    suspend fun getPendingCompleted(
+        @Header("Authorization") header: String,
+        @QueryMap query: Map<String, String>
+    ): Response<PendingCompleteResponse>
+
+
+    /**
+     * Old api's
+     */
     @GET("users")
     suspend fun getUsers(): Response<List<User>>
 

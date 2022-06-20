@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.rk_tech.riggle_runner.App
 import com.rk_tech.riggle_runner.BR
-import com.rk_tech.riggle_runner.data.model.response.LoginResponseDetails
+import com.rk_tech.riggle_runner.data.model.response_v2.UserLoginResponse
 import com.rk_tech.riggle_runner.databinding.ViewProgressSheetBinding
 import com.rk_tech.riggle_runner.ui.base.connectivity.ConnectivityProvider
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
@@ -32,7 +32,7 @@ abstract class BaseActivity<Binding : ViewDataBinding> : AppCompatActivity(),
     val app: App
         get() = application as App
 
-    var details: LoginResponseDetails? = null
+    var details: UserLoginResponse? = null
 
     @Inject
     lateinit var connectivityProvider: ConnectivityProvider

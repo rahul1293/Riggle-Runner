@@ -17,6 +17,7 @@ import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.data.model.response.Admin
 import com.rk_tech.riggle_runner.data.model.response.Results
 import com.rk_tech.riggle_runner.data.model.response.Retailer
+import com.rk_tech.riggle_runner.data.model.response_v2.Result
 import com.rk_tech.riggle_runner.databinding.FragmentCompletedBinding
 import com.rk_tech.riggle_runner.databinding.ListCompletedItemBinding
 import com.rk_tech.riggle_runner.ui.base.BaseFragment
@@ -27,6 +28,7 @@ import com.rk_tech.riggle_runner.ui.main.pending.PendingOrdersFragment
 import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.OrderDetailsActivity
 import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.collect_payment.CollectPaymentActivity
 import com.rk_tech.riggle_runner.ui.main.pending.payment_details.PaymentDetailsActivity
+import com.rk_tech.riggle_runner.utils.Constants
 import com.rk_tech.riggle_runner.utils.VerticalPagination
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,6 +75,7 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
                     count--
                     cal.timeInMillis = today.timeInMillis + (count * 24 * 60 * 60 * 1000)
                     updateDate(cal)
+                    getDashBoardData(cal.time)
                 }
                 R.id.ivNext -> {
                     if (cal.time.equals(today.time))
@@ -80,11 +83,12 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
                     count++
                     cal.timeInMillis = today.timeInMillis + (count * 24 * 60 * 60 * 1000)
                     updateDate(cal)
+                    getDashBoardData(cal.time)
                 }
             }
         }
         details?.let {
-            binding.tvServiceHub.text = it.user.service_hub.name
+            //binding.tvServiceHub.text = it.user.service_hub.name
         }
 
         binding.srl.setOnRefreshListener {
@@ -130,12 +134,14 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
             }
         })
 
-        viewModel.obrPaymentHistory.observe(viewLifecycleOwner, Observer {
+        viewModel.obrDashboard.observe(viewLifecycleOwner, Observer {
             when (it?.status) {
                 Status.LOADING -> {
                 }
                 Status.SUCCESS -> {
-                    binding.tvAmountValue.text = "₹ " + it.data?.order_value
+                    it.data?.let { data ->
+                        binding.bean = data
+                    }
                 }
                 Status.WARN -> {
                     showErrorToast(it.message)
@@ -162,17 +168,31 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
     override fun onResume() {
         super.onResume()
         page = 1
-        viewModel.getTripList(getAuthorization(), page.toString())
-        details?.user?.service_hub?.id?.let {
-            viewModel.settlementHistory(getAuthorization(), it)
-        }
+        getDashBoardData(today.time)
     }
 
-    private var ordersAdapter: SimpleRecyclerViewAdapter<Results, ListCompletedItemBinding>? = null
-    private var result: Results? = null
+    private fun getDashBoardData(time: Date) {
+        details?.let {
+            viewModel.getDashBoard(
+                getAuthorization(),
+                it.user.company.id,
+                SimpleDateFormat("yyyy-dd-MM").format(time)
+            )
+        }
+
+        val query = HashMap<String, String>()
+        query["tab_name"] = Constants.completed
+        query["expand"] = "buyer.admin"
+        query["fields"] =
+            "id,final_amount,status,buyer.full_address,buyer.name,buyer.admin.mobile"
+        viewModel.getCompletedList(getAuthorization(), query)
+    }
+
+    private var ordersAdapter: SimpleRecyclerViewAdapter<Result, ListCompletedItemBinding>? = null
+    private var result: Result? = null
     private fun setUpRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
-        ordersAdapter = SimpleRecyclerViewAdapter<Results, ListCompletedItemBinding>(
+        ordersAdapter = SimpleRecyclerViewAdapter<Result, ListCompletedItemBinding>(
             R.layout.list_completed_item,
             BR.bean
         ) { v, m, pos ->
@@ -180,12 +200,12 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
                 R.id.tvDetails -> {
                     mainActivity?.addSubFragment(
                         PendingOrdersFragment.TAG,
-                        OrderDetailsActivity.newInstance(m.id, m.retailer.name)
+                        OrderDetailsActivity.newInstance(m.id, m.buyer.name)
                     )
                 }
                 R.id.ivNavigate -> {
                     result = m
-                    result?.let {
+                    /*result?.let {
                         it.retailer.store_location.let { d ->
                             if (d.isNotEmpty()) {
                                 val navigationIntentUri =
@@ -197,18 +217,18 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
 
                             }
                         }
-                    }
+                    }*/
                 }
                 R.id.tvPhone -> {
-                    if (m.retailer.admin.mobile.startsWith("+91")) {
+                    if (m.buyer.admin.mobile.startsWith("+91")) {
                         val intentDial =
-                            Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + m.retailer.admin.mobile))
+                            Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + m.buyer.admin.mobile))
                         requireActivity().startActivity(intentDial)
                     } else {
                         val intentDial =
                             Intent(
                                 Intent.ACTION_DIAL,
-                                Uri.parse("tel:" + "+91" + m.retailer.admin.mobile)
+                                Uri.parse("tel:" + "+91" + m.buyer.admin.mobile)
                             )
                         requireActivity().startActivity(intentDial)
                     }
@@ -235,7 +255,7 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
 
         binding.rvOrders.layoutManager = layoutManager
         binding.rvOrders.adapter = ordersAdapter
-        ordersAdapter?.list = getListData()
+        //ordersAdapter?.list = getListData()
         val dividerItemDecoration = DividerItemDecoration(
             requireContext(),
             layoutManager.orientation
@@ -253,7 +273,13 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
 
     private var page = 1
     override fun onLoadMore() {
-        viewModel.getTripList(getAuthorization(), page.toString())
+        //viewModel.getTripList(getAuthorization(), page.toString())
+        val query = HashMap<String, String>()
+        query["tab_name"] = Constants.completed
+        query["expand"] = "buyer.admin"
+        query["fields"] =
+            "id,final_amount,status,buyer.full_address,buyer.name,buyer.admin.mobile"
+        viewModel.getCompletedList(getAuthorization(), query)
     }
 
     private fun showDatePicker() {
@@ -280,436 +306,7 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
             val myFormat = "dd-MMM-yyyy" // mention the format you need
             val sdf = SimpleDateFormat(myFormat, Locale.US)
             binding.tvToday.text = sdf.format(cal.time)
+            getDashBoardData(cal.time)
         }
-
-    private fun getListData(): ArrayList<Results> {
-        return ArrayList<Results>().apply {
-            add(
-                Results(
-                    0.0,
-                    0.0,
-                    0.0,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    0.0,
-                    0,
-                    0.0,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    0.0,
-                    "",
-                    0,
-                    Retailer(
-                        "",
-                        "",
-                        Admin(
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            0,
-                            "",
-                            false,
-                            false,
-                            false,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            null,
-                            0,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            ""
-                        ),
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        0,
-                        0,
-                        false,
-                        false,
-                        false,
-                        false,
-                        "",
-                        "",
-                        "",
-                        0,
-                        "",
-                        "",
-                        "",
-                        ""
-                    ),
-                    0,
-                    0,
-                    "",
-                    "",
-                    ""
-                )
-            )
-            add(
-                Results(
-                    0.0,
-                    0.0,
-                    0.0,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    0.0,
-                    0,
-                    0.0,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    0.0,
-                    "",
-                    0,
-                    Retailer(
-                        "",
-                        "",
-                        Admin(
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            0,
-                            "",
-                            false,
-                            false,
-                            false,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            null,
-                            0,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            ""
-                        ),
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        0,
-                        0,
-                        false,
-                        false,
-                        false,
-                        false,
-                        "",
-                        "",
-                        "",
-                        0,
-                        "",
-                        "",
-                        "",
-                        ""
-                    ),
-                    0,
-                    0,
-                    "",
-                    "",
-                    ""
-                )
-            )
-            add(
-                Results(
-                    0.0,
-                    0.0,
-                    0.0,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    0.0,
-                    0,
-                    0.0,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    0.0,
-                    "",
-                    0,
-                    Retailer(
-                        "",
-                        "",
-                        Admin(
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            0,
-                            "",
-                            false,
-                            false,
-                            false,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            null,
-                            0,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            ""
-                        ),
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        0,
-                        0,
-                        false,
-                        false,
-                        false,
-                        false,
-                        "",
-                        "",
-                        "",
-                        0,
-                        "",
-                        "",
-                        "",
-                        ""
-                    ),
-                    0,
-                    0,
-                    "",
-                    "",
-                    ""
-                )
-            )
-            add(
-                Results(
-                    0.0,
-                    0.0,
-                    0.0,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    0.0,
-                    0,
-                    0.0,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    0.0,
-                    "",
-                    0,
-                    Retailer(
-                        "",
-                        "",
-                        Admin(
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            0,
-                            "",
-                            false,
-                            false,
-                            false,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            null,
-                            0,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            ""
-                        ),
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        0,
-                        0,
-                        false,
-                        false,
-                        false,
-                        false,
-                        "",
-                        "",
-                        "",
-                        0,
-                        "",
-                        "",
-                        "",
-                        ""
-                    ),
-                    0,
-                    0,
-                    "",
-                    "",
-                    ""
-                )
-            )
-            add(
-                Results(
-                    0.0,
-                    0.0,
-                    0.0,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    0.0,
-                    0,
-                    0.0,
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    0.0,
-                    "",
-                    0,
-                    Retailer(
-                        "",
-                        "",
-                        Admin(
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            0,
-                            "",
-                            false,
-                            false,
-                            false,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            null,
-                            0,
-                            "",
-                            "",
-                            "",
-                            "",
-                            "",
-                            ""
-                        ),
-                        "",
-                        "",
-                        "",
-                        "",
-                        "",
-                        0,
-                        0,
-                        false,
-                        false,
-                        false,
-                        false,
-                        "",
-                        "",
-                        "",
-                        0,
-                        "",
-                        "",
-                        "",
-                        ""
-                    ),
-                    0,
-                    0,
-                    "",
-                    "",
-                    ""
-                )
-            )
-        }
-    }
 
 }

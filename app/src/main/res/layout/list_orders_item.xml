@@ -13,7 +13,7 @@
 
         <variable
             name="bean"
-            type="com.rk_tech.riggle_runner.data.model.response.Results" />
+            type="com.rk_tech.riggle_runner.data.model.response_v2.Result" />
 
         <variable
             name="callback"
@@ -43,7 +43,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/font_bold"
             android:lines="1"
-            android:text="Sai Prasad Store"
+            android:text="@{bean.buyer.name}"
             android:textColor="@color/black_85"
             android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@+id/tvOrderStatus"
@@ -75,7 +75,7 @@
             android:layout_marginStart="8dp"
             android:fontFamily="@font/font_medium"
             android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
-            android:text="@{bean.retailer.admin.mobile}"
+            android:text="@{bean.buyer.admin.mobile}"
             android:textColor="@color/profit_color"
             android:textSize="14sp"
             android:visibility="gone"
@@ -93,8 +93,9 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivLogo"
-            app:layout_constraintTop_toBottomOf="@+id/tvPhoneOne"
-            android:text="Akshya Nagar,\n1st Block 1st Cross, Rammurthy nagar, Bangalore-560016" />
+            app:layout_constraintTop_toBottomOf="@+id/tvOrderStatus"
+            android:text="@{bean.buyer.full_address}"
+            tools:text="Akshya Nagar,\n1st Block 1st Cross, Rammurthy nagar, Bangalore-560016" />
         <!--android:text="@{bean.retailer.address}"-->
         <ImageView
             android:id="@+id/ivWatch"
@@ -108,7 +109,6 @@
 
         <TextView
             android:id="@+id/tvTime"
-            set_date="@{bean.payment_rescheduled_to==null?bean.delivery_date:bean.payment_rescheduled_to}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -120,7 +120,7 @@
             app:layout_constraintStart_toEndOf="@+id/ivWatch"
             app:layout_constraintTop_toTopOf="@+id/ivWatch"
             tools:text="09:00 AM - 07:00 PM" />
-
+        <!--set_date="@{bean.payment_rescheduled_to==null?bean.delivery_date:bean.payment_rescheduled_to}"-->
         <androidx.constraintlayout.helper.widget.Flow
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -188,11 +188,11 @@
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="16sp"
+            android:background="@color/color_C7C7C7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDetails"
-            app:set_alpha='@{bean.retailer.store_location}'
             tools:text="Get Direction" />
-
+        <!--app:set_alpha='@{bean.retailer.store_location}'-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

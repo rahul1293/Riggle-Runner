@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.rk_tech.riggle_runner.App
-import com.rk_tech.riggle_runner.data.model.response.LoginResponseDetails
+import com.rk_tech.riggle_runner.data.model.response_v2.UserLoginResponse
 
 object SharedPrefManager {
 
@@ -27,15 +27,15 @@ object SharedPrefManager {
         const val APPEARANCE_KEY = "appearance_key"
     }
 
-    fun saveUser(bean: LoginResponseDetails) {
+    fun saveUser(bean: UserLoginResponse) {
         val editor = preferences.edit()
         editor.putString(KEY.USER, gson.toJson(bean))
         editor.apply()
     }
 
-    fun getSavedUser(): LoginResponseDetails? {
+    fun getSavedUser(): UserLoginResponse? {
         val s: String? = preferences.getString(KEY.USER, null)
-        return gson.fromJson(s, LoginResponseDetails::class.java)
+        return gson.fromJson(s, UserLoginResponse::class.java)
     }
 
     fun saveUserId(userId: String) {

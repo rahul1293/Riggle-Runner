@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.response_v2.GetDashBoardResponse" />
+
+        <variable
             name="vm"
             type="com.rk_tech.riggle_runner.ui.main.pending.PendingOrdersFragmentVM" />
 
@@ -142,7 +146,7 @@
                                 android:ellipsize="end"
                                 android:fontFamily="@font/font_bold"
                                 android:maxLines="1"
-                                android:text="19"
+                                android:text='@{String.valueOf(bean.pending_orders.count)}'
                                 android:textColor="@color/white"
                                 android:textSize="12sp"
                                 app:layout_constraintStart_toEndOf="@+id/tvTripsOne"
@@ -170,7 +174,7 @@
                             android:fontFamily="@font/font_bold"
                             android:maxLines="1"
                             android:onClick="@{v->vm.onClick(v)}"
-                            android:text="Rs. 0"
+                            android:text='@{"Rs. "+bean.pending_orders.amount}'
                             android:textColor="@color/orange"
                             android:textSize="@dimen/_18sdp"
                             app:layout_constraintEnd_toEndOf="@+id/vOne"
@@ -229,7 +233,7 @@
                                 android:ellipsize="end"
                                 android:fontFamily="@font/font_bold"
                                 android:maxLines="1"
-                                android:text="02"
+                                android:text='@{String.valueOf(bean.completed_orders.count)}'
                                 android:textColor="@color/white"
                                 android:textSize="12sp"
                                 app:layout_constraintStart_toEndOf="@+id/tvTripsTwo"
@@ -257,7 +261,7 @@
                             android:fontFamily="@font/font_bold"
                             android:maxLines="1"
                             android:onClick="@{v->vm.onClick(v)}"
-                            android:text="Rs. 0"
+                            android:text='@{"Rs. "+bean.completed_orders.amount}'
                             android:textColor="@color/orange"
                             android:textSize="@dimen/_18sdp"
                             app:layout_constraintEnd_toEndOf="@+id/vTwo"
@@ -305,8 +309,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
+                    android:layout_height="wrap_content">
 
                     <com.google.android.material.appbar.AppBarLayout
                         android:id="@+id/appBar"
@@ -405,8 +408,8 @@
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_marginLeft="@dimen/_20sdp"
-                        android:background="@color/white"
                         android:layout_marginRight="@dimen/_20sdp"
+                        android:background="@color/white"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

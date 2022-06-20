@@ -108,7 +108,9 @@ class RevisitActivity : BaseActivity<ActivityRevisitBinding>() {
                 Status.SUCCESS -> {
                     showHideLoader(false)
                     showSuccessToast("Rescheduled payment")
-                    val intent = MainActivity.newIntent(this)
+                    val intent = MainActivity.newIntent(
+                        this
+                    )
                     startActivity(intent)
                     finishAffinity()
                 }

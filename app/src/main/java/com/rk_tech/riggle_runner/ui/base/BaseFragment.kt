@@ -8,7 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.rk_tech.riggle_runner.BR
-import com.rk_tech.riggle_runner.data.model.response.LoginResponseDetails
+import com.rk_tech.riggle_runner.data.model.response_v2.UserLoginResponse
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import com.rk_tech.riggle_runner.utils.extension.hideKeyboard
 import com.rk_tech.riggle_runner.utils.view.LoadingDialog
@@ -19,7 +19,7 @@ abstract class BaseFragment<Binding : ViewDataBinding> : Fragment() {
         get() = activity as? BaseActivity<*>
 
     private var loaderDialog: LoadingDialog? = null
-    var details: LoginResponseDetails? = null
+    var details: UserLoginResponse? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

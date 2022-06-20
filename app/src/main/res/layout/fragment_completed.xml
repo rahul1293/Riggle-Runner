@@ -6,6 +6,10 @@
     <data>
 
         <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.response_v2.GetDashBoardResponse" />
+
+        <variable
             name="vm"
             type="com.rk_tech.riggle_runner.ui.main.completed.CompletedFragmentVM" />
 
@@ -72,8 +76,8 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/font_regular"
                             android:foreground="?selectableItemBackground"
-                            android:maxLines="1"
                             android:gravity="center"
+                            android:maxLines="1"
                             android:onClick="@{v->vm.onClick(v)}"
                             android:padding="@dimen/_5sdp"
                             android:text="@string/today"
@@ -89,8 +93,8 @@
                             android:layout_height="@dimen/_24sdp"
                             android:layout_marginEnd="@dimen/_20sdp"
                             android:onClick="@{v->vm.onClick(v)}"
-                            android:rotation="90"
                             android:padding="@dimen/_7sdp"
+                            android:rotation="90"
                             android:src="@drawable/ic_drop_down_icon"
                             app:layout_constraintBottom_toBottomOf="@+id/tvToday"
                             app:layout_constraintEnd_toStartOf="@+id/tvToday"
@@ -102,8 +106,8 @@
                             android:layout_height="@dimen/_24sdp"
                             android:layout_marginStart="@dimen/_20sdp"
                             android:onClick="@{v->vm.onClick(v)}"
-                            android:rotation="-90"
                             android:padding="@dimen/_7sdp"
+                            android:rotation="-90"
                             android:src="@drawable/ic_drop_down_icon"
                             app:layout_constraintBottom_toBottomOf="@+id/tvToday"
                             app:layout_constraintStart_toEndOf="@+id/tvToday"
@@ -171,7 +175,7 @@
                                 android:ellipsize="end"
                                 android:fontFamily="@font/font_bold"
                                 android:maxLines="1"
-                                android:text="19"
+                                android:text='@{String.valueOf(bean.completed_orders.count)}'
                                 android:textColor="@color/white"
                                 android:textSize="12sp"
                                 app:layout_constraintStart_toEndOf="@+id/tvTripsOne"
@@ -199,7 +203,7 @@
                             android:fontFamily="@font/font_bold"
                             android:maxLines="1"
                             android:onClick="@{v->vm.onClick(v)}"
-                            android:text="Rs. 0"
+                            android:text='@{"Rs. "+bean.completed_orders.amount}'
                             android:textColor="@color/orange"
                             android:textSize="@dimen/_18sdp"
                             app:layout_constraintEnd_toEndOf="@+id/vOne"

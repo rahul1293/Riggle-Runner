@@ -53,8 +53,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         showBottomSheet()
         details?.let {
             binding.tvHeroName.text = it.user.full_name
-            binding.tvServiceHub.text = it.user.service_hub.name
-            binding.tvWhereHouse.text = it.user.service_hub.warehouse_address
+            //binding.tvServiceHub.text = it.user.service_hub.name
+            //binding.tvWhereHouse.text = it.user.service_hub.warehouse_address
         }
 
         viewModel.onClick.observe(viewLifecycleOwner) {
@@ -160,9 +160,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             }
         })
 
-        details?.user?.service_hub?.id?.let {
+        /*details?.user?.service_hub?.id?.let {
             viewModel.getServiceHubDetails(getAuthorization(), it.toString())
-        }
+        }*/
     }
 
     private fun showBottomSheet() {

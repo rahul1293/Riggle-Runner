@@ -11,6 +11,7 @@ import com.rk_tech.riggle_runner.data.model.request.LoginRequest
 import com.rk_tech.riggle_runner.databinding.ActivityLoginBinding
 import com.rk_tech.riggle_runner.ui.base.BaseActivity
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
+import com.rk_tech.riggle_runner.ui.login.otp.EnterOtpActivity
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
@@ -47,17 +48,20 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             when (it?.id) {
                 R.id.tvStarted -> {
                     //val intent = DashboardActivity.newIntent(this)
-                    val intent = MainActivity.newIntent(this)
+                    /*val intent = MainActivity.newIntent(this)
                     startActivity(intent)
-                    finishAffinity()
-                    /*if (isEmptyView()) {
-                        viewModel.login(
+                    finishAffinity()*/
+                    if (isEmptyView()) {
+                        /*viewModel.login(
                             LoginRequest(
                                 binding.etEmail.text.toString().trim(),
                                 binding.etPassword.text.toString().trim()
                             )
-                        )
-                    }*/
+                        )*/
+                        val intent =
+                            EnterOtpActivity.newIntent(this, binding.etEmail.text.toString().trim())
+                        startActivity(intent)
+                    }
                 }
             }
         }
@@ -70,9 +74,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 Status.SUCCESS -> {
                     showHideLoader(false)
                     it.data?.let { data ->
-                        SharedPrefManager.saveUser(data)
+                        //SharedPrefManager.saveUser(data)
                     }
-                    val intent = MainActivity.newIntent(this)
+                    val intent = MainActivity.newIntent(
+                        this
+                    )
                     startActivity(intent)
                     finishAffinity()
                 }
@@ -89,14 +95,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     private fun isEmptyView(): Boolean {
-        if (TextUtils.isEmpty(binding.etEmail.text.toString().trim())) {
-            binding.etEmail.error = "User id must not be empty"
+        if (TextUtils.isEmpty(
+                binding.etEmail.text.toString().trim()
+            ) || binding.etEmail.text.toString().trim().length < 10
+        ) {
+            binding.etEmail.error = "Enter Valid Phone Number"
             return false
         }
-        if (TextUtils.isEmpty(binding.etPassword.text.toString().trim())) {
+        /*if (TextUtils.isEmpty(binding.etPassword.text.toString().trim())) {
             binding.etPassword.error = "Password must not be empty"
             return false
-        }
+        }*/
         return true
     }
 

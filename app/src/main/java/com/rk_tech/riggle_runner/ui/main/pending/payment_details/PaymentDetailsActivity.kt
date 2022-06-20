@@ -47,7 +47,7 @@ class PaymentDetailsActivity : BaseActivity<ActivityPaymentDetailsBinding>() {
 
         details?.let {
             binding.tvDeliveryExecutive.text = it.user.full_name
-            binding.tvStoreName.text = it.user.service_hub.name
+            //binding.tvStoreName.text = it.user.service_hub.name
         }
 
         viewModel.onClick.observe(this) {
@@ -81,9 +81,9 @@ class PaymentDetailsActivity : BaseActivity<ActivityPaymentDetailsBinding>() {
             }
         })
 
-        details?.user?.service_hub?.id?.let {
+        /*details?.user?.service_hub?.id?.let {
             viewModel.settlementHistory(getAuthorization(), it)
-        }
+        }*/
     }
 
     private fun setUpAdapter(settlements: List<Settlement>) {

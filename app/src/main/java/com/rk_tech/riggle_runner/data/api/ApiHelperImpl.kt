@@ -3,14 +3,54 @@ package com.rk_tech.riggle_runner.data.api
 import com.rk_tech.riggle_runner.data.model.User
 import com.rk_tech.riggle_runner.data.model.request.LoginRequest
 import com.rk_tech.riggle_runner.data.model.request.OrderRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.VerifyOtpRequest
 import com.rk_tech.riggle_runner.data.model.response.*
+import com.rk_tech.riggle_runner.data.model.response_v2.GetDashBoardResponse
+import com.rk_tech.riggle_runner.data.model.response_v2.PendingCompleteResponse
+import com.rk_tech.riggle_runner.data.model.response_v2.SendOtpResponse
+import com.rk_tech.riggle_runner.data.model.response_v2.UserLoginResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
+import retrofit2.http.QueryMap
 import javax.inject.Inject
 
 class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : ApiHelper {
+    /**
+     * New implementation
+     */
+    override suspend fun sendOtp(request: SendOtpRequest): Response<SendOtpResponse> {
+        return apiService.sendOtp(request)
+    }
 
+    override suspend fun verifyOtp(request: VerifyOtpRequest): Response<UserLoginResponse> {
+        return apiService.verifyOtp(request)
+    }
+
+    override suspend fun getAuthPing(header: String): Response<UserLoginResponse> {
+        return apiService.getAuthPing(header)
+    }
+
+    override suspend fun getDashboardData(
+        header: String,
+        id: Int,
+        date: String
+    ): Response<GetDashBoardResponse> {
+        return apiService.getDashboardData(header, id, date)
+    }
+
+    override suspend fun getPendingCompleted(
+        header: String,
+        query: Map<String, String>
+    ): Response<PendingCompleteResponse> {
+        return apiService.getPendingCompleted(header, query)
+    }
+
+
+    /**
+     * Old implementation
+     */
     override suspend fun getUsers(): Response<List<User>> = apiService.getUsers()
 
     override suspend fun login(request: LoginRequest): Response<LoginResponseDetails> {

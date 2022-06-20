@@ -163,9 +163,9 @@ class CreateRetailerActivity : BaseActivity<ActivityCreateRetailerBinding>(),
 
         setUpSpinner()
 
-        details?.user?.service_hub?.id?.let {
+        /*details?.user?.service_hub?.id?.let {
             viewModel.getPinCodes(getAuthorization(), it)
-        }
+        }*/
 
     }
 

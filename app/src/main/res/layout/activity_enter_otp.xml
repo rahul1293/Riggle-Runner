@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.rk_tech.riggle_runner.ui.login.otp.EnterOtpActivityVM" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:id="@+id/tvOtpSent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivBack"
+            android:layout_marginTop="22dp"
+            android:alpha="0.85"
+            android:fontFamily="@font/font_bold"
+            android:text="@string/otp_sent"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tvEnterOtp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvOtpSent"
+            android:layout_marginTop="8dp"
+            android:alpha="0.85"
+            android:fontFamily="@font/font_regular"
+            android:text="@string/please_enter_otp"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvEnterOtp"
+            android:alpha="0.28"
+            android:fontFamily="@font/font_medium"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <in.aabhasjindal.otptextview.OtpTextView
+            android:id="@+id/otp_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPhone"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:textColor="@color/black"
+            app:bar_enabled="true"
+            app:bar_height="2dp"
+            app:height="40dp"
+            app:length="6"
+            app:otp_text_size="20dp"
+            app:width="40dp" />
+
+        <TextView
+            android:id="@+id/tvCountDown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/otp_view"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/font_regular"
+            android:text=""
+            android:textColor="@color/black_85"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvResend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/otp_view"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/font_medium"
+            android:foreground="?selectableItemBackground"
+            android:padding="10dp"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:text="Resend"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_verify"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
+            android:alpha="0.2"
+            android:background="@drawable/btn_rounded_corner_6dp"
+            android:clickable="false"
+            android:onClick="@{v->vm.onClick(v)}"
+            android:fontFamily="@font/font_bold"
+            android:text="@string/verify"
+            android:textColor="@color/white"
+            app:cornerRadius="6dp" />
+    </RelativeLayout>
+</layout>
