@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.rk_tech.riggle_runner.data.api.ApiHelper
 import com.rk_tech.riggle_runner.data.model.helper.Resource
 import com.rk_tech.riggle_runner.data.model.response.*
+import com.rk_tech.riggle_runner.data.model.response_v2.OrderDetailResponse
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
 import com.rk_tech.riggle_runner.utils.event.SingleRequestEvent
 import com.rk_tech.riggle_runner.utils.extension.parseException
@@ -16,22 +17,18 @@ import javax.inject.Inject
 class OrderDetailsActivityVM @Inject constructor(private val apiHelper: ApiHelper) :
     BaseViewModel() {
 
-    var obrOrderDetails = SingleRequestEvent<OrderDetailsResponse>()
+    var obrOrderDetails = SingleRequestEvent<OrderDetailResponse>()
     var obrOrderDelivery = SingleRequestEvent<DeliveryOrderResponse>()
     var obrEditProduct = SingleRequestEvent<ProductResponse>()
     var obrEditMixBox = SingleRequestEvent<List<ComboUpdateResponse>>()
     fun getOrderDetails(authorization: String, orderId: Int) {
         val query = HashMap<String, String>()
-        //query["expand"] = "service_hub,products.product,products.free_product"
-        query["expand"] =
-            "service_hub,products.product.banner_image,products.free_product,products.product_combo.products"
-        query["edit_view"] = "true"
-        //data.put("expand", "schemes.free_product,banner_image,combo_products.products,service_hub")
+        query["expand"] = "buyer,products.product,products.free_product"
         //https://stag.api.riggleapp.in/api/v1/core/orders/429/?expand=service_hub%2Cproducts.product.banner_image%2Cproducts.free_product%2Cproducts.product_combo
         viewModelScope.launch {
             obrOrderDetails.postValue(Resource.loading(null))
             try {
-                apiHelper.getOrderDetails(authorization, orderId, query).let {
+                apiHelper.getOrderDetailsApi(authorization, orderId, query).let {
                     if (it.isSuccessful) {
                         it.body()?.let { results ->
                             obrOrderDetails.postValue(Resource.success(results, "Success"))

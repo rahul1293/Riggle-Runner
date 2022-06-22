@@ -83,7 +83,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
         checkLocation()
         binding.header.tvTitle.text = getString(R.string.retailer_orders)
         arguments?.getString("store_name")?.let {
-            //binding.tvStoreName.text = it
+            binding.tvStoreName.text = it
         }
         binding.header.type = 0
         viewModel.onClick.observe(viewLifecycleOwner) {
@@ -405,7 +405,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
         viewModel.editComboProductItem(getAuthorization(), orderId, RequestComboUpdate(data))
     }
 
-    private fun setUpAdapter(products: List<Product>?) {
+    private fun setUpAdapter(products: List<com.rk_tech.riggle_runner.data.model.response_v2.Product>?) {
         //productAdapter?.list = products
     }
 
@@ -551,7 +551,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
         super.onStart()
         arguments?.getInt("order_id", 0)?.let {
             orderId = it
-            //viewModel.getOrderDetails(getAuthorization(), it)
+            viewModel.getOrderDetails(getAuthorization(), it)
         }
     }
 

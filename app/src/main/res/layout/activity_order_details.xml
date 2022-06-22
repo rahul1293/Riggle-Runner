@@ -7,7 +7,7 @@
 
         <variable
             name="bean"
-            type="com.rk_tech.riggle_runner.data.model.response.OrderDetailsResponse" />
+            type="com.rk_tech.riggle_runner.data.model.response_v2.OrderDetailResponse" />
 
         <variable
             name="vm"
@@ -171,7 +171,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/font_medium"
-                        android:text='@{"₹ "+bean.final_amount}'
+                        android:text='@{"₹ "+bean.product_amount}'
                         android:textColor="@color/black_85"
                         android:textSize="12sp"
                         tools:text="@string/rupees_value" />
@@ -195,7 +195,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="12dp"
                         android:fontFamily="@font/font_medium"
-                        android:text='@{"₹ "+bean.redeemed_riggle_coins_amount}'
+                        android:text='@{"₹ "+bean.total_discount_amount}'
                         android:textColor="@color/black_85"
                         android:textSize="12sp"
                         tools:text="@string/rupees_value" />

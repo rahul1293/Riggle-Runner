@@ -6,10 +6,7 @@ import com.rk_tech.riggle_runner.data.model.request.OrderRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.VerifyOtpRequest
 import com.rk_tech.riggle_runner.data.model.response.*
-import com.rk_tech.riggle_runner.data.model.response_v2.GetDashBoardResponse
-import com.rk_tech.riggle_runner.data.model.response_v2.PendingCompleteResponse
-import com.rk_tech.riggle_runner.data.model.response_v2.SendOtpResponse
-import com.rk_tech.riggle_runner.data.model.response_v2.UserLoginResponse
+import com.rk_tech.riggle_runner.data.model.response_v2.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -37,6 +34,12 @@ interface ApiHelper {
         header: String,
         query: Map<String, String>
     ): Response<PendingCompleteResponse>
+
+    suspend fun getOrderDetailsApi(
+        header: String,
+        id: Int,
+        query: Map<String, String>
+    ): Response<OrderDetailResponse>
 
     /**
      * Old Calls

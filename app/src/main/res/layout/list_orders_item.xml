@@ -188,6 +188,7 @@
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="16sp"
+            app:set_alpha='@{bean.buyer.lat}'
             android:background="@color/color_C7C7C7"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

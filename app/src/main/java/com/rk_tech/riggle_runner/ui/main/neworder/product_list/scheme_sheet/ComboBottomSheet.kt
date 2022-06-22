@@ -161,7 +161,9 @@ class ComboBottomSheet : BottomSheetDialogFragment(),
                 }
             }
 
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

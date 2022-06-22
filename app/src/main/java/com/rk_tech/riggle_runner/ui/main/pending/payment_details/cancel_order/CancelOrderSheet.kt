@@ -98,6 +98,7 @@ class CancelOrderSheet : BottomSheetDialogFragment() {
         object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    mlistener?.isExpand(false)
                     dismiss()
                 } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                 }

@@ -151,7 +151,7 @@ class PendingOrdersFragment : BaseFragment<FragmentPendingOrdersBinding>(),
         query["tab_name"] = Constants.pending
         query["expand"] = "buyer.admin"
         query["fields"] =
-            "id,final_amount,status,buyer.full_address,buyer.name,buyer.admin.mobile"
+            "id,final_amount,status,buyer.full_address,buyer.name,buyer.admin.mobile,buyer.lat,buyer.long"
         viewModel.getPendingList(getAuthorization(), query)
     }
 
@@ -166,11 +166,12 @@ class PendingOrdersFragment : BaseFragment<FragmentPendingOrdersBinding>(),
             when (v?.id) {
                 R.id.ivNavigate -> {
                     result = m
-                    /*result?.let {
-                        it.retailer.store_location.let { d ->
+                    result?.let {
+                        it.buyer.lat.let { d ->
                             if (d.isNotEmpty()) {
+                                val location = d + "," + it.buyer.long
                                 val navigationIntentUri =
-                                    Uri.parse("google.navigation:q=$d")
+                                    Uri.parse("google.navigation:q=$location")
                                 val intent = Intent(Intent.ACTION_VIEW, navigationIntentUri)
                                 intent.setPackage("com.google.android.apps.maps")
                                 startActivity(intent)
@@ -178,7 +179,7 @@ class PendingOrdersFragment : BaseFragment<FragmentPendingOrdersBinding>(),
                                 //showInfoToast("location not updated..")
                             }
                         }
-                    }*/
+                    }
                     //checkLocation()
                 }
                 R.id.tvPhone -> {
@@ -248,7 +249,7 @@ class PendingOrdersFragment : BaseFragment<FragmentPendingOrdersBinding>(),
         query["tab_name"] = Constants.pending
         query["expand"] = "buyer.admin"
         query["fields"] =
-            "id,final_amount,status,buyer.full_address,buyer.name,buyer.admin.mobile"
+            "id,final_amount,status,buyer.full_address,buyer.name,buyer.admin.mobile,buyer.lat,buyer.long"
         viewModel.getPendingList(getAuthorization(), query)
     }
 
