@@ -11,7 +11,7 @@
 
         <variable
             name="bean"
-            type="com.rk_tech.riggle_runner.data.model.response.DummyData" />
+            type="com.rk_tech.riggle_runner.data.model.response_v2.BrandResult" />
 
         <variable
             name="callback"
@@ -43,6 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                image_uri="@{bean.image}"
                 android:scaleType="centerInside" />
         </androidx.cardview.widget.CardView>
 
@@ -57,7 +58,7 @@
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
             android:layout_toEndOf="@+id/card_iv"
-            android:text="Anand Joshi"
+            android:text="@{bean.name}"
             android:textColor="@color/black_85"
             android:textSize="@dimen/_15ssp" />
 

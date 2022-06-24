@@ -15,6 +15,7 @@ import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.MenuBean
 import com.rk_tech.riggle_runner.data.model.helper.Status
+import com.rk_tech.riggle_runner.data.model.response_v2.RunnerOrderCancellationReason
 import com.rk_tech.riggle_runner.databinding.ItemCancelListBinding
 import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
 import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.CallBackBlurry
@@ -29,42 +30,46 @@ class CancelOrderSheet : BottomSheetDialogFragment() {
 
     val viewModel: CancelOrderSheetVM by viewModels()
     val cancelReason = getListData()
+    var cancelReasonOne = ArrayList<RunnerOrderCancellationReason>()
     private var reason = ""
     private var mlistener: CallBackBlurry? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
 
-    var reasonAdapter: SimpleRecyclerViewAdapter<MenuBean, ItemCancelListBinding>? = null
+    var reasonAdapter: SimpleRecyclerViewAdapter<RunnerOrderCancellationReason, ItemCancelListBinding>? =
+        null
+
     private fun setRecyclerView() {
-        reasonAdapter = SimpleRecyclerViewAdapter<MenuBean, ItemCancelListBinding>(
-            R.layout.item_cancel_list,
-            BR.bean
-        ) { v, m, pos ->
-            for (index in cancelReason) {
-                if (index.id == m.id) {
-                    index.check = true
-                    if (index.id == 8) {
-                        etReason.visibility = View.VISIBLE
-                        /*if (index.check) {
+        reasonAdapter =
+            SimpleRecyclerViewAdapter<RunnerOrderCancellationReason, ItemCancelListBinding>(
+                R.layout.item_cancel_list,
+                BR.bean
+            ) { v, m, pos ->
+                for (index in cancelReasonOne) {
+                    if (index.name == m.name) {
+                        index.check = true
+                        if (index.name.equals("Others", true)) {
                             etReason.visibility = View.VISIBLE
+                            /*if (index.check) {
+                                etReason.visibility = View.VISIBLE
+                            } else {
+                                etReason.visibility = View.GONE
+                            }*/
                         } else {
                             etReason.visibility = View.GONE
-                        }*/
+                        }
+                        reason = m.name
                     } else {
-                        etReason.visibility = View.GONE
+                        index.check = false
                     }
-                    reason = m.name
-                } else {
-                    index.check = false
                 }
+                reasonAdapter?.notifyDataSetChanged()
             }
-            reasonAdapter?.notifyDataSetChanged()
-        }
         val layoutManager = LinearLayoutManager(requireContext())
         rvVariants.layoutManager = layoutManager
         rvVariants.adapter = reasonAdapter
-        reasonAdapter?.list = cancelReason
+        //reasonAdapter?.list = cancelReason
     }
 
     private fun getListData(): MutableList<MenuBean> {
@@ -146,6 +151,26 @@ class CancelOrderSheet : BottomSheetDialogFragment() {
             }
         })
 
+        viewModel.obrReason.observe(viewLifecycleOwner, Observer {
+            when (it?.status) {
+                Status.LOADING -> {
+
+                }
+                Status.SUCCESS -> {
+                    it?.data?.let { list ->
+                        cancelReasonOne = list as ArrayList<RunnerOrderCancellationReason>
+                    }
+                    reasonAdapter?.list = it.data
+                }
+                Status.WARN -> {
+                    showErrorToast(it.message)
+                }
+                Status.ERROR -> {
+                    showErrorToast(it.message)
+                }
+            }
+        })
+
         setRecyclerView()
         ivCross.setOnClickListener {
             mlistener?.isExpand(false)
@@ -173,6 +198,9 @@ class CancelOrderSheet : BottomSheetDialogFragment() {
                     }
                 }
             }
+        }
+        SharedPrefManager.getSavedUser()?.let { user ->
+            viewModel.getCancellationReason(user.session_id)
         }
     }
 

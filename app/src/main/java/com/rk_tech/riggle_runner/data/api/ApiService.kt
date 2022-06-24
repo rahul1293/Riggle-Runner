@@ -56,6 +56,34 @@ interface ApiService {
         @QueryMap query: Map<String, String>
     ): Response<OrderDetailResponse>
 
+    @Headers("x-app-name:runner")
+    @GET("core/constants/?")
+    suspend fun getCoreConstant(
+        @Header("Authorization") header: String
+    ): Response<CoreConstants>
+
+    @Headers("x-app-name:runner")
+    @FormUrlEncoded
+    @PATCH("core/orders/{id}/cancel/")
+    suspend fun cancelOrder(
+        @Header("Authorization") header: String,
+        @Path("id") page: Int,
+        @FieldMap data: Map<String, String>
+    ): Response<CancelOrderResponse>
+
+    @Headers("x-app-name:runner")
+    @GET("core/brands/?")
+    suspend fun getBrandList(
+        @Header("Authorization") header: String,
+        @QueryMap query: Map<String, String>
+    ): Response<BrandResponse>
+
+    @Headers("x-app-name:runner")
+    @GET("core/offers/?")
+    suspend fun getBrandOffer(
+        @Header("Authorization") header: String,
+        @QueryMap query: Map<String, String>
+    ): Response<BrandOfferResponse>
 
     /**
      * Old api's
@@ -72,12 +100,6 @@ interface ApiService {
         @Header("Authorization") header: String,
         @QueryMap query: Map<String, String>
     ): Response<PendingOrdersResponse>
-
-    @GET("core/brands/")
-    suspend fun getBrandList(
-        @Header("Authorization") header: String,
-        @QueryMap query: Map<String, String>
-    ): Response<BrandListResponse>
 
     @GET("user/retailers?")
     suspend fun searchRetailers(
@@ -104,14 +126,6 @@ interface ApiService {
         @Path("id") page: Int,
         @QueryMap query: Map<String, String>
     ): Response<OrderDetailsResponse>
-
-    @FormUrlEncoded
-    @POST("core/orders/{id}/cancel/")
-    suspend fun cancelOrder(
-        @Header("Authorization") header: String,
-        @Path("id") page: Int,
-        @FieldMap data: Map<String, String>
-    ): Response<CancelOrderResponse>
 
     @FormUrlEncoded
     @POST("core/orders/{id}/reschedule_payment/")

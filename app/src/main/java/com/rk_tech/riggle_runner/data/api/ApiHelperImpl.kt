@@ -52,6 +52,23 @@ class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : Ap
         return apiService.getOrderDetailsApi(header, id, query)
     }
 
+    override suspend fun getCoreConstant(header: String): Response<CoreConstants> {
+        return apiService.getCoreConstant(header)
+    }
+
+    override suspend fun getBrandList(
+        header: String,
+        query: Map<String, String>
+    ): Response<BrandResponse> {
+        return apiService.getBrandList(header, query)
+    }
+
+    override suspend fun getBrandOffer(
+        header: String,
+        query: Map<String, String>
+    ): Response<BrandOfferResponse> {
+        return apiService.getBrandOffer(header, query)
+    }
 
     /**
      * Old implementation
@@ -67,13 +84,6 @@ class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : Ap
         query: Map<String, String>
     ): Response<PendingOrdersResponse> {
         return apiService.getTripList(header, query)
-    }
-
-    override suspend fun getBrandList(
-        header: String,
-        query: Map<String, String>
-    ): Response<BrandListResponse> {
-        return apiService.getBrandList(header, query)
     }
 
     override suspend fun searchRetailers(

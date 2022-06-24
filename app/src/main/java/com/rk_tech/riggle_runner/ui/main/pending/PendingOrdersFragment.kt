@@ -167,7 +167,7 @@ class PendingOrdersFragment : BaseFragment<FragmentPendingOrdersBinding>(),
                 R.id.ivNavigate -> {
                     result = m
                     result?.let {
-                        it.buyer.lat.let { d ->
+                        it.buyer.lat?.let { d ->
                             if (d.isNotEmpty()) {
                                 val location = d + "," + it.buyer.long
                                 val navigationIntentUri =

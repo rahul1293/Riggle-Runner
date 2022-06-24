@@ -10,7 +10,6 @@ import com.rk_tech.riggle_runner.data.model.response_v2.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.*
 
 interface ApiHelper {
 
@@ -41,6 +40,20 @@ interface ApiHelper {
         query: Map<String, String>
     ): Response<OrderDetailResponse>
 
+    suspend fun getCoreConstant(
+        header: String
+    ): Response<CoreConstants>
+
+    suspend fun getBrandList(
+        header: String,
+        query: Map<String, String>
+    ): Response<BrandResponse>
+
+    suspend fun getBrandOffer(
+        header: String,
+        query: Map<String, String>
+    ): Response<BrandOfferResponse>
+
     /**
      * Old Calls
      */
@@ -52,11 +65,6 @@ interface ApiHelper {
         header: String,
         query: Map<String, String>
     ): Response<PendingOrdersResponse>
-
-    suspend fun getBrandList(
-        header: String,
-        query: Map<String, String>
-    ): Response<BrandListResponse>
 
     suspend fun searchRetailers(
         header: String,

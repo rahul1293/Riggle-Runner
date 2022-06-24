@@ -18,8 +18,8 @@ data class Buyer(
     val admin: Admin,
     val full_address: String,
     val name: String,
-    val lat:String,
-    val long:String
+    val lat:String?,
+    val long:String?
 )
 
 data class Admin(

@@ -50,7 +50,7 @@ class BrandCategoryFragment constructor(val retailer: RetailerDetails?) :
                 }
                 Status.SUCCESS -> {
                     showHideLoader(false)
-                    brandAdapter?.list = it.data
+                    //brandAdapter?.list = it.data
                 }
                 Status.WARN -> {
                     showHideLoader(false)

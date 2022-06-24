@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BrandCategoryFragmentVM @Inject constructor(private val apiHelper: ApiHelper) :
     BaseViewModel() {
-    var obrBrandList = SingleRequestEvent<List<BrandResults>>()
+    var obrBrandList = SingleRequestEvent<List<Any>>()
     fun getBrandList(authorization: String, is_active: String) {
         val query = HashMap<String, String>()
         query["is_active"] = is_active

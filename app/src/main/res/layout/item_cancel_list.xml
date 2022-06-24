@@ -12,7 +12,7 @@
 
         <variable
             name="bean"
-            type="com.rk_tech.riggle_runner.data.model.MenuBean" />
+            type="com.rk_tech.riggle_runner.data.model.response_v2.RunnerOrderCancellationReason" />
 
         <variable
             name="pos"

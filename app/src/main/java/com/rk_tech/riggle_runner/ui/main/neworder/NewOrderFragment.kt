@@ -1,14 +1,11 @@
 package com.rk_tech.riggle_runner.ui.main.neworder
 
-import android.app.Activity
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.widget.ImageView
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
@@ -17,13 +14,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.gson.Gson
 import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.data.model.response.DummyData
 import com.rk_tech.riggle_runner.data.model.response.RetailerDetails
 import com.rk_tech.riggle_runner.data.model.response.Schemes
+import com.rk_tech.riggle_runner.data.model.response_v2.BrandResult
 import com.rk_tech.riggle_runner.databinding.*
 import com.rk_tech.riggle_runner.ui.base.BaseFragment
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
@@ -31,13 +28,11 @@ import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
 import com.rk_tech.riggle_runner.ui.main.cart_fragment.CartFragment
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.ui.main.neworder.brand_category.BrandCategoryFragment
-import com.rk_tech.riggle_runner.ui.main.neworder.create_retailer.CreateRetailerActivity
 import com.rk_tech.riggle_runner.ui.main.neworder.product_list.scheme_sheet.ProductChooseListener
 import com.rk_tech.riggle_runner.ui.main.neworder.product_list.scheme_sheet.SchemeBottomSheet
 import com.rk_tech.riggle_runner.ui.main.search_store.SearchStoreFragment
 import com.rk_tech.riggle_runner.utils.event.SingleLiveEvent
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.bottom_sheet_call_deliverify.view.*
 import kotlinx.android.synthetic.main.bs_create_mix.view.*
 
 @AndroidEntryPoint
@@ -140,9 +135,29 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
               }
           })
   */
+
+        viewModel.obrBrandData.observe(viewLifecycleOwner, Observer {
+            when (it?.status) {
+                Status.LOADING -> {
+                    showHideLoader(true)
+                }
+                Status.SUCCESS -> {
+                    showHideLoader(false)
+                    searchAdapter?.list = it.data
+                }
+                Status.WARN -> {
+                    showHideLoader(false)
+                }
+                Status.ERROR -> {
+                    showHideLoader(false)
+                }
+            }
+        })
+
         //searchView()
         setUpProductAdatper()
         setUpRecyclerView()
+        viewModel.getBrandList(getAuthorization())
     }
 
     private var mixtureAdpater: SimpleRecyclerViewAdapter<DummyData, ListOfMixtureBinding>? = null
@@ -229,10 +244,10 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
     }
 
 
-    var searchAdapter: SimpleRecyclerViewAdapter<DummyData, ListOfRetailersBinding>? = null
+    var searchAdapter: SimpleRecyclerViewAdapter<BrandResult, ListOfRetailersBinding>? = null
     private fun setUpRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
-        searchAdapter = SimpleRecyclerViewAdapter<DummyData, ListOfRetailersBinding>(
+        searchAdapter = SimpleRecyclerViewAdapter<BrandResult, ListOfRetailersBinding>(
             R.layout.list_of_retailers, BR.bean
         ) { v, m, pos ->
             when (v.id) {
@@ -257,10 +272,7 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
         }
         binding.rvRetailerList.layoutManager = layoutManager
         binding.rvRetailerList.adapter = searchAdapter
-        val dummyList = ArrayList<DummyData>()
-        dummyList.add(DummyData("", ""))
-        dummyList.add(DummyData("", ""))
-        searchAdapter?.list = dummyList
+        //searchAdapter?.list = dummyList
     }
 
     fun changeAdpter() {
