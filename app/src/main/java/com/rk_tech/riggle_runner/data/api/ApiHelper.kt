@@ -4,6 +4,7 @@ import com.rk_tech.riggle_runner.data.model.User
 import com.rk_tech.riggle_runner.data.model.request.LoginRequest
 import com.rk_tech.riggle_runner.data.model.request.OrderRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.EditProductRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.RevisitRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.VerifyOtpRequest
 import com.rk_tech.riggle_runner.data.model.response.*
@@ -91,6 +92,17 @@ interface ApiHelper {
         header: String,
         data: Map<String, String>
     ): Response<CreateRetailerResponse>
+
+    suspend fun setRevisitDate(
+        header: String,
+        id: Int,
+        data: RevisitRequest
+    ): Response<CancelOrderResponse>
+
+    suspend fun getActivePinCodes(
+        header: String,
+        id: Int
+    ): Response<List<String>>
 
     /**
      * Old Calls

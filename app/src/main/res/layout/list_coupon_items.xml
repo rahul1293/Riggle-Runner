@@ -34,7 +34,7 @@
                 android:id="@+id/ivImg"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@mipmap/ic_app_launcher"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -50,12 +50,13 @@
                 android:paddingTop="@dimen/_2sdp"
                 android:paddingEnd="@dimen/_5sdp"
                 android:paddingBottom="@dimen/_2sdp"
-                android:text="@{bean.code}"
+                android:text="@{bean.title}"
                 android:textColor="@color/black_85"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/ivImg"
-                app:layout_constraintTop_toTopOf="@id/ivImg" />
+                app:layout_constraintTop_toTopOf="@id/ivImg"
+                tools:ignore="SmallSp" />
 
             <TextView
                 android:id="@+id/tvName"
@@ -64,7 +65,6 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:ellipsize="end"
                 android:fontFamily="@font/font_medium"
-                android:hint="Coupon name"
                 android:maxLines="2"
                 android:text="@{bean.title}"
                 android:textColor="@color/black_85"
@@ -81,12 +81,12 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:ellipsize="end"
                 android:fontFamily="@font/font_regular"
-                android:hint="Offer line"
                 android:maxLines="2"
                 android:text="@{bean.description}"
                 android:textColor="@color/black_68"
                 android:textSize="12sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivImg"
                 app:layout_constraintTop_toBottomOf="@id/tvName" />
 
@@ -105,12 +105,14 @@
                 android:paddingTop="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:paddingBottom="@dimen/_5sdp"
-                android:text="Apply"
+                android:text="@string/apply"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textSize="10sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="SmallSp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

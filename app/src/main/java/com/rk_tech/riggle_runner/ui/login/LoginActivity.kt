@@ -7,19 +7,16 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
-import com.rk_tech.riggle_runner.data.model.request.LoginRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
 import com.rk_tech.riggle_runner.databinding.ActivityLoginBinding
 import com.rk_tech.riggle_runner.ui.base.BaseActivity
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
 import com.rk_tech.riggle_runner.ui.login.otp.EnterOtpActivity
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
-import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import com.rk_tech.riggle_runner.utils.extension.showInfoToast
 import com.rk_tech.riggle_runner.utils.extension.successToast
 import dagger.hilt.android.AndroidEntryPoint
-import jp.wasabeef.blurry.Blurry
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLoginBinding>() {
@@ -43,16 +40,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
     }
 
     override fun onCreateView() {
-
-        //Blurry.with(this@LoginActivity).sampling(2).onto(binding.slView)
-
         viewModel.onClick.observe(this) {
             when (it?.id) {
                 R.id.tvStarted -> {
-                    //val intent = DashboardActivity.newIntent(this)
-                    /*val intent = MainActivity.newIntent(this)
-                    startActivity(intent)
-                    finishAffinity()*/
                     if (isEmptyView()) {
                         /*viewModel.login(
                             LoginRequest(
@@ -97,9 +87,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                 }
                 Status.SUCCESS -> {
                     showHideLoader(false)
-                    it.data?.let { data ->
-                        //SharedPrefManager.saveUser(data)
-                    }
+//                    it.data?.let { data ->
+//                        SharedPrefManager.saveUser(data)
+//                    }
                     val intent = MainActivity.newIntent(
                         this
                     )
@@ -126,10 +116,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
             binding.etEmail.error = "Enter Valid Phone Number"
             return false
         }
-        /*if (TextUtils.isEmpty(binding.etPassword.text.toString().trim())) {
-            binding.etPassword.error = "Password must not be empty"
-            return false
-        }*/
+//        if (TextUtils.isEmpty(binding.etPassword.text.toString().trim())) {
+//            binding.etPassword.error = "Password must not be empty"
+//            return false
+//        }
         return true
     }
 

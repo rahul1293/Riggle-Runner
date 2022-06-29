@@ -131,7 +131,7 @@
                         android:lineSpacingExtra="3sp"
                         android:maxLength="10"
                         android:padding="12dp"
-                        android:text="8840937268"
+                        android:text="9000000042"
                         android:textColor="@color/text_color_333333"
                         android:textColorHint="@color/grey"
                         android:textSize="16sp" />

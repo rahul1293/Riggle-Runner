@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -21,8 +21,7 @@
         android:id="@+id/rlMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:onClick="@{v->callback.onItemClick(v,bean,pos)}">
+        android:background="@color/white">
 
 
         <TextView
@@ -36,9 +35,9 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
+            android:text="@{bean.full_name}"
             android:textColor="@color/black_85"
-            android:textSize="@dimen/_15ssp"
-            android:text="@{bean.full_name}" />
+            android:textSize="@dimen/_15ssp" />
 
         <TextView
             android:id="@+id/tv_number"
@@ -50,10 +49,9 @@
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginEnd="60dp"
             android:layout_marginBottom="@dimen/_10sdp"
+            android:text='@{"Phone : "+bean.mobile}'
             android:textColor="@color/black_85"
-            android:textSize="@dimen/_13ssp"
-            android:text='@{"Phone : "+bean.mobile}'/>
-
+            android:textSize="@dimen/_13ssp" />
 
         <TextView
             android:id="@+id/tvPhone"
@@ -63,17 +61,17 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/_10sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:drawableLeft="@drawable/ic_call_svg"
             android:drawablePadding="@dimen/_5sdp"
-            android:drawableTint="@color/call_store"
             android:ellipsize="end"
             android:fontFamily="@font/gilroy_bold"
             android:lines="1"
             android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
-            android:text="Call"
+            android:text="@string/call"
             android:textAllCaps="true"
             android:textColor="@color/call_store"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:drawableLeftCompat="@drawable/ic_call_svg"
+            app:drawableTint="@color/call_store" />
 
         <View
             android:id="@+id/view"
@@ -81,7 +79,6 @@
             android:layout_height="1dp"
             android:layout_below="@+id/tv_number"
             android:background="@color/black" />
-
 
     </RelativeLayout>
 </layout>

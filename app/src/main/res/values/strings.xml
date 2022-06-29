@@ -107,5 +107,11 @@
     <string name="verify">Verify</string>
     <string name="you_do_not_have_any_trips_nassigned_on_this_day">You do not have any trips\nassigned on this day</string>
     <string name="create_mix">Create Mix</string>
+    <string name="call">Call</string>
+    <string name="apply">Apply</string>
+    <string name="i_am_at_the_store_right_now">I am at the store right now</string>
+    <string name="pincode">Pincode</string>
+    <string name="owner_number">Owner Number</string>
+    <string name="shop_name">Shop Name</string>
 
 </resources>

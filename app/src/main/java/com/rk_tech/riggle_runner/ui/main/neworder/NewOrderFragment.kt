@@ -181,7 +181,6 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>(), CallBackBlurr
     }
 
     private fun searchView() {
-
         val searchIcon: ImageView =
             binding.etSearch.findViewById(androidx.appcompat.R.id.search_mag_icon)
         val searchCloseIcon: ImageView =
@@ -255,18 +254,7 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>(), CallBackBlurr
         ) { v, m, pos ->
             when (v.id) {
                 R.id.tvDetails -> {
-                    /*binding.tvCreateNew.visibility = View.VISIBLE
-                    binding.rvRetailerList.adapter = dummyAdapter
-                    secondAdapterSet = true*/
                     mainActivity?.addSubFragment(TAG, ProductListActivity.newIntent(m.id, m.name))
-                    /*val intent = ProductListActivity.newIntent(requireActivity())
-                    intent.putExtra("brand_id",m.id)
-                    intent.putExtra("brand_name",m.name)
-                    *//*retailer?.let {
-                        intent.putExtra("retailer_id",it.id)
-                        intent.putExtra("retailer_name",it.name)
-                    }*//*
-                    startActivity(intent)*/
                 }
                 R.id.tvBulkOffer -> {
                     val sheet = SchemeBottomSheet()
@@ -275,11 +263,6 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>(), CallBackBlurr
                     bundle.putInt("brand_id", m.id)
                     sheet.arguments = bundle
                     sheet.show(childFragmentManager, sheet.tag)
-                    /*sheet.setListener(object : ProductChooseListener {
-                        override fun itemUpdated(scheme: Schemes, pos: Int) {
-
-                        }
-                    })*/
                     sheet.isCancelable = false
                     index = binding.clMain.childCount
                     Blurry.with(activity).sampling(1).onto(binding.clMain)

@@ -8,8 +8,6 @@ import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
 import com.rk_tech.riggle_runner.data.model.response.LoginResponseDetails
 import com.rk_tech.riggle_runner.data.model.response_v2.SendOtpResponse
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
-import com.rk_tech.riggle_runner.ui.base.connectivity.ConnectivityProvider
-import com.rk_tech.riggle_runner.utils.event.SingleLiveEvent
 import com.rk_tech.riggle_runner.utils.event.SingleRequestEvent
 import com.rk_tech.riggle_runner.utils.extension.parseException
 import dagger.hilt.android.lifecycle.HiltViewModel

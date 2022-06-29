@@ -29,13 +29,9 @@ import kotlinx.android.synthetic.main.bottom_sheet_cancel.*
 class CancelOrderSheet : BottomSheetDialogFragment() {
 
     val viewModel: CancelOrderSheetVM by viewModels()
-    val cancelReason = getListData()
     var cancelReasonOne = ArrayList<RunnerOrderCancellationReason>()
     private var reason = ""
     private var mlistener: CallBackBlurry? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     var reasonAdapter: SimpleRecyclerViewAdapter<RunnerOrderCancellationReason, ItemCancelListBinding>? =
         null
@@ -70,21 +66,6 @@ class CancelOrderSheet : BottomSheetDialogFragment() {
         rvVariants.layoutManager = layoutManager
         rvVariants.adapter = reasonAdapter
         //reasonAdapter?.list = cancelReason
-    }
-
-    private fun getListData(): MutableList<MenuBean> {
-        val dataList = ArrayList<MenuBean>()
-        dataList.apply {
-            add(MenuBean(1, "Shop Closed", 1, false))
-            add(MenuBean(2, "Owner not available", 1, false))
-            add(MenuBean(3, "Credit issue", 1, false))
-            add(MenuBean(4, "Wrong stock", 1, false))
-            add(MenuBean(5, "Damage stock", 1, false))
-            add(MenuBean(6, "Other brand", 1, false))
-            add(MenuBean(7, "Shop not available", 1, false))
-            add(MenuBean(8, "Others", 1, false))
-        }
-        return dataList
     }
 
     fun setListener(listener: CallBackBlurry) {

@@ -13,21 +13,14 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
-import com.rk_tech.riggle_runner.data.model.response.Schemes
-import com.rk_tech.riggle_runner.data.model.response_v2.BrandResult
 import com.rk_tech.riggle_runner.data.model.response_v2.OfferResult
 import com.rk_tech.riggle_runner.databinding.BottomSheetSchemeBinding
 import com.rk_tech.riggle_runner.databinding.ListCouponItemsBinding
-import com.rk_tech.riggle_runner.databinding.ListOfRetailersBinding
 import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
-import com.rk_tech.riggle_runner.ui.main.neworder.NewOrderFragment
-import com.rk_tech.riggle_runner.ui.main.neworder.product_list.ProductListActivity
 import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.CallBackBlurry
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
-import com.rk_tech.riggle_runner.utils.extension.showSuccessToast
 import dagger.hilt.android.AndroidEntryPoint
-import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.bottom_sheet_scheme.view.*
 
 @AndroidEntryPoint
@@ -35,18 +28,13 @@ class SchemeBottomSheet : BottomSheetDialogFragment() {
     val viewModel: SchemeBottomSheetVM by viewModels()
     private var mlistener: CallBackBlurry? = null
     private var brand_id = 0
-    private var product_name: String = ""
-    var schemeList = ArrayList<Schemes>()
     lateinit var binding: BottomSheetSchemeBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = BottomSheetSchemeBinding.inflate(inflater)
         return binding.root//inflater.inflate(R.layout.bottom_sheet_scheme, container, false)
     }
@@ -118,7 +106,7 @@ class SchemeBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    var offerAdapter: SimpleRecyclerViewAdapter<OfferResult, ListCouponItemsBinding>? = null
+    private var offerAdapter: SimpleRecyclerViewAdapter<OfferResult, ListCouponItemsBinding>? = null
     private fun populateRecyclerView() {
 
         view?.rootView?.let { rootView ->
@@ -127,8 +115,7 @@ class SchemeBottomSheet : BottomSheetDialogFragment() {
                 offerAdapter = SimpleRecyclerViewAdapter<OfferResult, ListCouponItemsBinding>(
                     R.layout.list_coupon_items, BR.bean
                 ) { v, m, pos ->
-                    when (v.id) {
-                    }
+
                 }
                 rootView.rvVariants?.layoutManager = LinearLayoutManager(activity)
                 rootView.rvVariants?.adapter = offerAdapter

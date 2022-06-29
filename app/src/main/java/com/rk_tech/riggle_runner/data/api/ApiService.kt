@@ -4,6 +4,7 @@ import com.rk_tech.riggle_runner.data.model.User
 import com.rk_tech.riggle_runner.data.model.request.LoginRequest
 import com.rk_tech.riggle_runner.data.model.request.OrderRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.EditProductRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.RevisitRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.VerifyOtpRequest
 import com.rk_tech.riggle_runner.data.model.response.*
@@ -138,6 +139,21 @@ interface ApiService {
         @Header("Authorization") header: String,
         @FieldMap data: Map<String, String>
     ): Response<CreateRetailerResponse>
+
+    @Headers("x-app-name:runner")
+    @PATCH("core/orders/{id}/reschedule_visit/")
+    suspend fun setRevisitDate(
+        @Header("Authorization") header: String,
+        @Path("id") id: Int,
+        @Body data: RevisitRequest
+    ): Response<CancelOrderResponse>
+
+    @Headers("x-app-name:runner")
+    @GET("core/companies/{id}/active_pincodes/")
+    suspend fun getActivePinCodes(
+        @Header("Authorization") header: String,
+        @Path("id") id: Int
+    ): Response<List<String>>
 
     /**
      * Old api's

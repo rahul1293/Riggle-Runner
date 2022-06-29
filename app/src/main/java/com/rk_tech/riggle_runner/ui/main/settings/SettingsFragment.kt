@@ -1,4 +1,5 @@
 package com.rk_tech.riggle_runner.ui.main.settings
+
 import android.content.Intent
 import android.net.Uri
 import android.view.View
@@ -12,7 +13,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
-import com.rk_tech.riggle_runner.data.model.response.Admin
 import com.rk_tech.riggle_runner.data.model.response.DummyData
 import com.rk_tech.riggle_runner.data.model.response_v2.ResultDeliverify
 import com.rk_tech.riggle_runner.databinding.BottomSheetCallDeliverifyBinding
@@ -20,7 +20,6 @@ import com.rk_tech.riggle_runner.databinding.FragmentSettingsBinding
 import com.rk_tech.riggle_runner.databinding.ListCallDeliverifyBinding
 import com.rk_tech.riggle_runner.ui.base.*
 import com.rk_tech.riggle_runner.ui.login.LoginActivity
-import com.rk_tech.riggle_runner.ui.main.neworder.product_list.scheme_sheet.ComboBottomSheet
 import com.rk_tech.riggle_runner.ui.main.pending.payment_details.PaymentDetailsActivity
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
@@ -35,6 +34,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     val viewModel: SettingsFragmentVM by viewModels()
     private var admins: List<ResultDeliverify>? = null
     var index = 0
+
     companion object {
         fun newInstance(): Fragment {
             return SettingsFragment()
@@ -98,8 +98,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                         startActivity(intent)
                         requireActivity().finishAffinity()
                     }
-                    val btcanel = view.findViewById<TextView>(R.id.tvCancel)
-                    btcanel.setOnClickListener {
+                    val btCancel = view.findViewById<TextView>(R.id.tvCancel)
+                    btCancel.setOnClickListener {
                         dialog.dismiss()
                     }
                     dialog.setCancelable(true)
@@ -168,45 +168,21 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             }
         })
         viewModel.getServiceHubDetails(getAuthorization())
-        /*details?.user?.service_hub?.id?.let {
-            viewModel.getServiceHubDetails(getAuthorization(), it.toString())
-        }*/
     }
 
     private fun showBottomSheet() {
-       /* val bottomSheet =
-            BottomSheet<BottomSheetCallDeliverifyBinding>(R.layout.bottom_sheet_call_deliverify)
-*/
         sheetAdapter =
             SimpleRecyclerViewAdapter<ResultDeliverify, ListCallDeliverifyBinding>(
                 R.layout.list_call_deliverify, BR.bean
             ) { v, m, pos ->
                 when (v.id) {
-                    R.id.rlMain -> {
-
-                    }
-
-                }
-            }
-        bottomSheet?.binding?.rvContact?.adapter = sheetAdapter
-        //   bottomSheet.show(parentFragmentManager, "")
-    }
-
-
-    private var bottomSheet: BaseCustomBottomSheet<BottomSheetCallDeliverifyBinding>? = null
-    private fun inItBottomSheet() {
-        bottomSheet =
-            BaseCustomBottomSheet(
-                requireActivity(), R.layout.bottom_sheet_call_deliverify
-            ) {
-                when (it.id) {
-                    R.id.ivCancel -> {
-
+                    R.id.tvPhone -> {
+                        val intentDial =
+                            Intent(Intent.ACTION_DIAL, Uri.parse("tel:+91" + m.mobile))
+                        requireActivity().startActivity(intentDial)
                     }
                 }
             }
-        bottomSheet?.binding?.rvContact?.adapter = sheetAdapter
-        bottomSheet?.show()
     }
 
     private fun lists(): ArrayList<DummyData> {
