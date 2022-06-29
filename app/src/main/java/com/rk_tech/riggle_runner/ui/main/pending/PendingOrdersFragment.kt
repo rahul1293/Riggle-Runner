@@ -13,9 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
-import com.rk_tech.riggle_runner.data.model.response.Admin
-import com.rk_tech.riggle_runner.data.model.response.Results
-import com.rk_tech.riggle_runner.data.model.response.Retailer
 import com.rk_tech.riggle_runner.data.model.response_v2.Result
 import com.rk_tech.riggle_runner.databinding.FragmentPendingOrdersBinding
 import com.rk_tech.riggle_runner.databinding.ListOrdersItemBinding
@@ -31,7 +28,6 @@ import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 @AndroidEntryPoint
@@ -89,6 +85,7 @@ class PendingOrdersFragment : BaseFragment<FragmentPendingOrdersBinding>(),
                 }
                 Status.SUCCESS -> {
                     showHideLoader(false)
+
                     if (page == 1)
                         ordersAdapter?.clearList()
 
@@ -99,17 +96,29 @@ class PendingOrdersFragment : BaseFragment<FragmentPendingOrdersBinding>(),
                         page = 1
                     }
                     ordersAdapter?.addToList(it.data)
+
+                    if (ordersAdapter?.list?.isEmpty() == true)
+                        binding.flowEmpty.visibility = View.VISIBLE
+                    else
+                        binding.flowEmpty.visibility = View.GONE
+
                 }
                 Status.WARN -> {
                     showHideLoader(false)
+                    if (ordersAdapter?.list?.isEmpty() == true)
+                        binding.flowEmpty.visibility = View.VISIBLE
                     //showErrorToast(it.message)
                 }
                 Status.ERROR -> {
                     showHideLoader(false)
+                    if (ordersAdapter?.list?.isEmpty() == true)
+                        binding.flowEmpty.visibility = View.VISIBLE
                     //showErrorToast(it.message)
                 }
                 else -> {
                     showHideLoader(false)
+                    if (ordersAdapter?.list?.isEmpty() == true)
+                        binding.flowEmpty.visibility = View.VISIBLE
                 }
             }
         })

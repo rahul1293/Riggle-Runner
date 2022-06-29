@@ -54,13 +54,14 @@ data class Product(
     val id: Int,
     val order: Int,
     val ordered_quantity: Int,
-    val original_rate: Int,
-    val product: ProductX,
+    val original_rate: Float,
+    val product: ProductX?,
     val product_combo: Any,
-    val quantity: Int,
-    val rate: Int,
+    var quantity: Int,
+    val rate: Float,
     val update_url: String,
-    val updated_at: String
+    val updated_at: String,
+    val products: Any
 )
 
 data class ProductX(

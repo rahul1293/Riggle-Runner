@@ -28,15 +28,18 @@ import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
 import com.rk_tech.riggle_runner.ui.main.cart_fragment.CartFragment
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.ui.main.neworder.brand_category.BrandCategoryFragment
+import com.rk_tech.riggle_runner.ui.main.neworder.product_list.ProductListActivity
 import com.rk_tech.riggle_runner.ui.main.neworder.product_list.scheme_sheet.ProductChooseListener
 import com.rk_tech.riggle_runner.ui.main.neworder.product_list.scheme_sheet.SchemeBottomSheet
+import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.CallBackBlurry
 import com.rk_tech.riggle_runner.ui.main.search_store.SearchStoreFragment
 import com.rk_tech.riggle_runner.utils.event.SingleLiveEvent
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.bs_create_mix.view.*
 
 @AndroidEntryPoint
-class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
+class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>(), CallBackBlurry {
     val viewModel: NewOrderFragmentVM by viewModels()
 
 
@@ -252,21 +255,34 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
         ) { v, m, pos ->
             when (v.id) {
                 R.id.tvDetails -> {
-                    binding.tvCreateNew.visibility = View.VISIBLE
+                    /*binding.tvCreateNew.visibility = View.VISIBLE
                     binding.rvRetailerList.adapter = dummyAdapter
-                    secondAdapterSet = true
+                    secondAdapterSet = true*/
+                    mainActivity?.addSubFragment(TAG, ProductListActivity.newIntent(m.id, m.name))
+                    /*val intent = ProductListActivity.newIntent(requireActivity())
+                    intent.putExtra("brand_id",m.id)
+                    intent.putExtra("brand_name",m.name)
+                    *//*retailer?.let {
+                        intent.putExtra("retailer_id",it.id)
+                        intent.putExtra("retailer_name",it.name)
+                    }*//*
+                    startActivity(intent)*/
                 }
                 R.id.tvBulkOffer -> {
                     val sheet = SchemeBottomSheet()
+                    sheet.setListenerOne(this)
                     val bundle = Bundle()
-                    bundle.putInt("product_id", id)
+                    bundle.putInt("brand_id", m.id)
                     sheet.arguments = bundle
                     sheet.show(childFragmentManager, sheet.tag)
-                    sheet.setListener(object : ProductChooseListener {
+                    /*sheet.setListener(object : ProductChooseListener {
                         override fun itemUpdated(scheme: Schemes, pos: Int) {
 
                         }
-                    })
+                    })*/
+                    sheet.isCancelable = false
+                    index = binding.clMain.childCount
+                    Blurry.with(activity).sampling(1).onto(binding.clMain)
                 }
             }
         }
@@ -279,6 +295,13 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>() {
         binding.rvRetailerList.adapter = searchAdapter
         secondAdapterSet = false
         binding.tvCreateNew.visibility = View.GONE
+    }
+
+    var index = 0
+    override fun isExpand(isOpen: Boolean) {
+        if (index < binding.clMain.childCount) {
+            binding.clMain.removeViewAt(index)
+        }
     }
 
 }

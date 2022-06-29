@@ -11,7 +11,7 @@ data class OfferResult(
     val available_quantity: Int,
     val brand: Int,
     val code: String,
-    val company: Int,
+    val company: Any,
     val created_at: String,
     val description: String,
     val discount_amount: Int,

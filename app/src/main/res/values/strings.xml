@@ -105,5 +105,7 @@
     <string name="otp_sent">OTP Sent</string>
     <string name="please_enter_otp">Please enter otp</string>
     <string name="verify">Verify</string>
+    <string name="you_do_not_have_any_trips_nassigned_on_this_day">You do not have any trips\nassigned on this day</string>
+    <string name="create_mix">Create Mix</string>
 
 </resources>

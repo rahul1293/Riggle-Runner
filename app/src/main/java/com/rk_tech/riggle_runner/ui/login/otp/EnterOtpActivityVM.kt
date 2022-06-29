@@ -12,6 +12,8 @@ import com.rk_tech.riggle_runner.utils.event.SingleRequestEvent
 import com.rk_tech.riggle_runner.utils.extension.parseException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.ResponseBody
+import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,7 +35,7 @@ class EnterOtpActivityVM @Inject constructor(private val apiHelper: ApiHelper) :
                             )
                         )
                     } else {
-                        obrSendOtp.postValue(Resource.warn(null, it.message()))
+                        obrSendOtp.postValue(Resource.warn(null, getErrorMessage(it.errorBody())))
                     }
                 }
             } catch (e: Exception) {
@@ -57,7 +59,7 @@ class EnterOtpActivityVM @Inject constructor(private val apiHelper: ApiHelper) :
                             )
                         )
                     } else {
-                        obrOtpVerify.postValue(Resource.warn(null, it.message()))
+                        obrOtpVerify.postValue(Resource.warn(null, getErrorMessage(it.errorBody())))
                     }
                 }
             } catch (e: Exception) {

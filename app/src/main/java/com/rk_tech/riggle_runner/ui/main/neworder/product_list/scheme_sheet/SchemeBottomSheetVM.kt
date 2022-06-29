@@ -1,10 +1,10 @@
-package com.rk_tech.riggle_runner.ui.main.cart_fragment
+package com.rk_tech.riggle_runner.ui.main.neworder.product_list.scheme_sheet
 
 import androidx.lifecycle.viewModelScope
 import com.rk_tech.riggle_runner.data.api.ApiHelper
 import com.rk_tech.riggle_runner.data.model.helper.Resource
-import com.rk_tech.riggle_runner.data.model.response_v2.CartResponse
-import com.rk_tech.riggle_runner.data.model.response_v2.GetRetailsListItem
+import com.rk_tech.riggle_runner.data.model.response_v2.BrandOfferResponse
+import com.rk_tech.riggle_runner.data.model.response_v2.OfferResult
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
 import com.rk_tech.riggle_runner.utils.event.SingleRequestEvent
 import com.rk_tech.riggle_runner.utils.extension.parseException
@@ -13,33 +13,31 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CartFragmentVM @Inject constructor(private val apiHelper: ApiHelper) : BaseViewModel() {
-
-    var obrCartList = SingleRequestEvent<CartResponse>()
-    fun getCartData(authorization: String) {
-        val queryMap = HashMap<String, String>()
-        queryMap["expand"] = "products.product"
+class SchemeBottomSheetVM @Inject constructor(private val apiHelper: ApiHelper) : BaseViewModel() {
+    var obrBrandOffer = SingleRequestEvent<List<OfferResult>>()
+    fun getBrandOffer(authorization: String, brandId: Int) {
+        val data = HashMap<String, String>()
+        data["brand"] = brandId.toString()
         viewModelScope.launch {
-            obrCartList.postValue(Resource.loading(null))
+            obrBrandOffer.postValue(Resource.loading(null))
             try {
-                //apiHelper.getServiceHubList(authorization, userId)
-                apiHelper.getCartResponse(authorization, queryMap).let {
+                apiHelper.getBrandOffer(authorization, data).let {
                     if (it.isSuccessful) {
                         it.body()?.let { results ->
-                            obrCartList.postValue(Resource.success(results, "Success"))
+                            obrBrandOffer.postValue(Resource.success(results.results, "Success"))
                         }
                     } else {
-                        obrCartList.postValue(
+                        obrBrandOffer.postValue(
                             Resource.warn(
                                 null,
-                                getErrorMessage(it.errorBody())
+                                it.errorBody()?.string().toString()
                             )
                         )
                     }
                 }
             } catch (e: Exception) {
                 parseException(e.cause)?.let {
-                    obrCartList.postValue(Resource.error(null, it))
+                    obrBrandOffer.postValue(Resource.error(null, it))
                 }
             }
         }

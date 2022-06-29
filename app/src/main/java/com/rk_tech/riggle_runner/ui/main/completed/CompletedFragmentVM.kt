@@ -82,7 +82,7 @@ class CompletedFragmentVM @Inject constructor(private val apiHelper: ApiHelper) 
                             obrDashboard.postValue(Resource.success(results, "Success"))
                         }
                     } else {
-                        obrDashboard.postValue(Resource.warn(null, it.message()))
+                        obrDashboard.postValue(Resource.warn(null, getErrorMessage(it.errorBody())))
                     }
                 }
             } catch (e: Exception) {
@@ -103,7 +103,7 @@ class CompletedFragmentVM @Inject constructor(private val apiHelper: ApiHelper) 
                             obrTripList.postValue(Resource.success(results, "Success"))
                         }
                     } else {
-                        obrTripList.postValue(Resource.warn(null, it.message()))
+                        obrTripList.postValue(Resource.warn(null, getErrorMessage(it.errorBody())))
                     }
                 }
             } catch (e: Exception) {

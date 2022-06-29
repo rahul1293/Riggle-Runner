@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.data.model.request.LoginRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
 import com.rk_tech.riggle_runner.databinding.ActivityLoginBinding
 import com.rk_tech.riggle_runner.ui.base.BaseActivity
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
@@ -16,6 +17,7 @@ import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import com.rk_tech.riggle_runner.utils.extension.showInfoToast
+import com.rk_tech.riggle_runner.utils.extension.successToast
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.blurry.Blurry
 
@@ -58,13 +60,35 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                                 binding.etPassword.text.toString().trim()
                             )
                         )*/
-                        val intent =
-                            EnterOtpActivity.newIntent(this, binding.etEmail.text.toString().trim())
-                        startActivity(intent)
+                        viewModel.sendOtp(SendOtpRequest(binding.etEmail.text.toString().trim()))
                     }
                 }
             }
         }
+
+
+        viewModel.obrSendOtp.observe(this, Observer {
+            when (it?.status) {
+                Status.LOADING -> {
+                    showHideLoader(true)
+                }
+                Status.SUCCESS -> {
+                    showHideLoader(false)
+                    successToast(it.message)
+                    val intent =
+                        EnterOtpActivity.newIntent(this, binding.etEmail.text.toString().trim())
+                    startActivity(intent)
+                }
+                Status.WARN -> {
+                    showHideLoader(false)
+                    showInfoToast(it.message)
+                }
+                Status.ERROR -> {
+                    showHideLoader(false)
+                    showErrorToast(it.message)
+                }
+            }
+        })
 
         viewModel.obrLogin.observe(this, Observer {
             when (it?.status) {

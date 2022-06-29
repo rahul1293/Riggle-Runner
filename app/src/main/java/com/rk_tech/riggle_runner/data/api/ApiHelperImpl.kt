@@ -3,6 +3,7 @@ package com.rk_tech.riggle_runner.data.api
 import com.rk_tech.riggle_runner.data.model.User
 import com.rk_tech.riggle_runner.data.model.request.LoginRequest
 import com.rk_tech.riggle_runner.data.model.request.OrderRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.EditProductRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.VerifyOtpRequest
 import com.rk_tech.riggle_runner.data.model.response.*
@@ -10,7 +11,6 @@ import com.rk_tech.riggle_runner.data.model.response_v2.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.QueryMap
 import javax.inject.Inject
 
 class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : ApiHelper {
@@ -68,6 +68,58 @@ class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : Ap
         query: Map<String, String>
     ): Response<BrandOfferResponse> {
         return apiService.getBrandOffer(header, query)
+    }
+
+    override suspend fun editProductItem(
+        header: String,
+        orderId: Int?,
+        data: EditProductRequest
+    ): Response<ProductResponse> {
+        return apiService.editProductItem(header, orderId, data)
+    }
+
+    override suspend fun getBrandProductList(
+        header: String,
+        query: Map<String, String>
+    ): Response<BrandProductResponse> {
+        return apiService.getBrandProductList(header, query)
+    }
+
+    override suspend fun getCartResponse(
+        header: String,
+        query: Map<String, String>
+    ): Response<CartResponse> {
+        return apiService.getCartResponse(header, query)
+    }
+
+    override suspend fun addCartProduct(
+        header: String,
+        orderId: Int?,
+        request: EditProductRequest
+    ): Response<AddCartResponse> {
+        return apiService.addCartProduct(header, orderId, request)
+    }
+
+    override suspend fun getUserList(
+        header: String,
+        query: Map<String, String>
+    ): Response<UserDeliverifyResponse> {
+        return apiService.getUserList(header, query)
+    }
+
+    override suspend fun getRetailersList(
+        header: String,
+        id: Int,
+        query: Map<String, String>
+    ): Response<List<GetRetailsListItem>> {
+        return apiService.getRetailersList(header, id, query)
+    }
+
+    override suspend fun createRetailer(
+        header: String,
+        data: Map<String, String>
+    ): Response<CreateRetailerResponse> {
+        return apiService.createRetailer(header, data)
     }
 
     /**
@@ -153,15 +205,6 @@ class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : Ap
         hubId: Int
     ): Response<SettlementsResponse> {
         return apiService.getPaymentHistory(header, hubId)
-    }
-
-    override suspend fun editProductItem(
-        header: String,
-        orderId: Int?,
-        productId: Int?,
-        data: Map<String, String>
-    ): Response<ProductResponse> {
-        return apiService.editProductItem(header, orderId, productId, data)
     }
 
     override suspend fun getOtpList(header: String, hubId: Int?): Response<OtpResponse> {

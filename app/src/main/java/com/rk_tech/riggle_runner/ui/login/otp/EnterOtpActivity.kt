@@ -107,7 +107,7 @@ class EnterOtpActivity : BaseActivity<ActivityEnterOtpBinding>() {
     }
 
     private fun sendOTP() {
-        callOTPApi()
+        //callOTPApi()
         binding.otpView.otpListener = object : OTPListener {
             override fun onInteractionListener() {
                 deactivateBtn()

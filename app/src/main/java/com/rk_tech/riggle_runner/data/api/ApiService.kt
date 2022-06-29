@@ -3,6 +3,7 @@ package com.rk_tech.riggle_runner.data.api
 import com.rk_tech.riggle_runner.data.model.User
 import com.rk_tech.riggle_runner.data.model.request.LoginRequest
 import com.rk_tech.riggle_runner.data.model.request.OrderRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.EditProductRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.VerifyOtpRequest
 import com.rk_tech.riggle_runner.data.model.response.*
@@ -85,6 +86,59 @@ interface ApiService {
         @QueryMap query: Map<String, String>
     ): Response<BrandOfferResponse>
 
+    @Headers("x-app-name:runner")
+    @FormUrlEncoded
+    @PATCH("core/orders/{id}/update_products/")
+    suspend fun editProductItem(
+        @Header("Authorization") header: String,
+        @Path("id") orderId: Int?,
+        @Body data: EditProductRequest
+    ): Response<ProductResponse>
+
+    @Headers("x-app-name:runner")
+    @GET("core/products/?")
+    suspend fun getBrandProductList(
+        @Header("Authorization") header: String,
+        @QueryMap query: Map<String, String>
+    ): Response<BrandProductResponse>
+
+    @Headers("x-app-name:runner")
+    @GET("core/cart/?")
+    suspend fun getCartResponse(
+        @Header("Authorization") header: String,
+        @QueryMap query: Map<String, String>
+    ): Response<CartResponse>
+
+    @Headers("x-app-name:runner")
+    @PATCH("core/cart/{id}/update_products/")
+    suspend fun addCartProduct(
+        @Header("Authorization") header: String,
+        @Path("id") orderId: Int?,
+        @Body request: EditProductRequest
+    ): Response<AddCartResponse>
+
+    @Headers("x-app-name:runner")
+    @GET("user/users/?")
+    suspend fun getUserList(
+        @Header("Authorization") header: String,
+        @QueryMap query: Map<String, String>
+    ): Response<UserDeliverifyResponse>
+
+    @Headers("x-app-name:runner")
+    @GET("core/companies/{id}/buyers/?")
+    suspend fun getRetailersList(
+        @Header("Authorization") header: String,
+        @Path("id") id: Int,
+        @QueryMap query: Map<String, String>
+    ): Response<List<GetRetailsListItem>>
+
+    @Headers("x-app-name:runner")
+    @POST("core/companies/")
+    suspend fun createRetailer(
+        @Header("Authorization") header: String,
+        @FieldMap data: Map<String, String>
+    ): Response<CreateRetailerResponse>
+
     /**
      * Old api's
      */
@@ -157,15 +211,6 @@ interface ApiService {
         @Header("Authorization") header: String,
         @Path("id") hubId: Int
     ): Response<SettlementsResponse>
-
-    @FormUrlEncoded
-    @PATCH("core/orders/{id}/products/{pId}/")
-    suspend fun editProductItem(
-        @Header("Authorization") header: String,
-        @Path("id") orderId: Int?,
-        @Path("pId") productId: Int?,
-        @FieldMap data: Map<String, String>
-    ): Response<ProductResponse>
 
     @GET("user/service-hubs/{id}/active_pincodes/")
     suspend fun getOtpList(

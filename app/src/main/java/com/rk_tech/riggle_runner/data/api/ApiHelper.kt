@@ -3,6 +3,7 @@ package com.rk_tech.riggle_runner.data.api
 import com.rk_tech.riggle_runner.data.model.User
 import com.rk_tech.riggle_runner.data.model.request.LoginRequest
 import com.rk_tech.riggle_runner.data.model.request.OrderRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.EditProductRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.VerifyOtpRequest
 import com.rk_tech.riggle_runner.data.model.response.*
@@ -10,6 +11,7 @@ import com.rk_tech.riggle_runner.data.model.response_v2.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
+import retrofit2.http.*
 
 interface ApiHelper {
 
@@ -53,6 +55,42 @@ interface ApiHelper {
         header: String,
         query: Map<String, String>
     ): Response<BrandOfferResponse>
+
+    suspend fun editProductItem(
+        header: String, orderId: Int?, data: EditProductRequest
+    ): Response<ProductResponse>
+
+    suspend fun getBrandProductList(
+        header: String,
+        query: Map<String, String>
+    ): Response<BrandProductResponse>
+
+    suspend fun getCartResponse(
+        header: String,
+        query: Map<String, String>
+    ): Response<CartResponse>
+
+    suspend fun addCartProduct(
+        header: String,
+        orderId: Int?,
+        request: EditProductRequest
+    ): Response<AddCartResponse>
+
+    suspend fun getUserList(
+        header: String,
+        query: Map<String, String>
+    ): Response<UserDeliverifyResponse>
+
+    suspend fun getRetailersList(
+        header: String,
+        id: Int,
+        query: Map<String, String>
+    ): Response<List<GetRetailsListItem>>
+
+    suspend fun createRetailer(
+        header: String,
+        data: Map<String, String>
+    ): Response<CreateRetailerResponse>
 
     /**
      * Old Calls
@@ -107,10 +145,6 @@ interface ApiHelper {
     suspend fun getPaymentHistory(
         header: String, hubId: Int
     ): Response<SettlementsResponse>
-
-    suspend fun editProductItem(
-        header: String, orderId: Int?, productId: Int?, data: Map<String, String>
-    ): Response<ProductResponse>
 
     suspend fun getOtpList(
         header: String, hubId: Int?

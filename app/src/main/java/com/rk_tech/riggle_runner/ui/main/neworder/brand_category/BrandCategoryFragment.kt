@@ -74,14 +74,14 @@ class BrandCategoryFragment constructor(val retailer: RetailerDetails?) :
             ) { v, m, pos ->
                 when (v.id) {
                     R.id.rlMain -> {
-                        val intent = ProductListActivity.newIntent(requireActivity())
+                        /*val intent = ProductListActivity.newIntent(requireActivity())
                         intent.putExtra("brand_id",m.id)
                         intent.putExtra("brand_name",m.name)
                         retailer?.let {
                             intent.putExtra("retailer_id",it.id)
                             intent.putExtra("retailer_name",it.name)
                         }
-                        startActivity(intent)
+                        startActivity(intent)*/
                     }
                 }
             }

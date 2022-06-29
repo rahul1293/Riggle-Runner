@@ -63,10 +63,10 @@ internal constructor(
             holder.tvMRP.text =
                 String.format(
                     mContext.getString(R.string.rupees_value),
-                    data.base_rate?.toFloat().roundToInt()/*data.retailer_price*/
+                    data.base_rate?.toFloat()?.roundToInt()/*data.retailer_price*/
                 )
 
-            val strikePrice: Int? = data.base_rate?.toFloat().roundToInt()
+            val strikePrice: Int? = data.base_rate?.toFloat()?.roundToInt()
             if (strikePrice != null) {
                 holder.tvStrikePrice.text =
                     String.format(
@@ -182,7 +182,7 @@ internal constructor(
                             it[0].rate
                         ) + ""
 
-                    val profit: Double? = data.base_rate?.toFloat() - it[0].rate
+                    val profit: Double? = data.base_rate?.toFloat()!! - it[0].rate
                     if (profit != null) {
                         holder.tvProfit.text =
                             String.format(mContext.getString(R.string.rupees_value_profits), profit)

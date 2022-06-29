@@ -14,6 +14,7 @@ import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.data.model.response.Admin
 import com.rk_tech.riggle_runner.data.model.response.DummyData
+import com.rk_tech.riggle_runner.data.model.response_v2.ResultDeliverify
 import com.rk_tech.riggle_runner.databinding.BottomSheetCallDeliverifyBinding
 import com.rk_tech.riggle_runner.databinding.FragmentSettingsBinding
 import com.rk_tech.riggle_runner.databinding.ListCallDeliverifyBinding
@@ -24,15 +25,16 @@ import com.rk_tech.riggle_runner.ui.main.pending.payment_details.PaymentDetailsA
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.bottom_sheet_call_deliverify.view.*
 
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
-    private var sheetAdapter: SimpleRecyclerViewAdapter<DummyData, ListCallDeliverifyBinding>? =
+    private var sheetAdapter: SimpleRecyclerViewAdapter<ResultDeliverify, ListCallDeliverifyBinding>? =
         null
     val viewModel: SettingsFragmentVM by viewModels()
-    private var admins: List<Admin>? = null
-
+    private var admins: List<ResultDeliverify>? = null
+    var index = 0
     companion object {
         fun newInstance(): Fragment {
             return SettingsFragment()
@@ -71,12 +73,17 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                     val bt = view.findViewById<ImageView>(R.id.iv)
                     view.rvContact.adapter = sheetAdapter
                     bt.setOnClickListener {
+                        if (index < binding.clMain.childCount) {
+                            binding.clMain.removeViewAt(index)
+                        }
                         dialog.dismiss()
                     }
 
-                    dialog.setCancelable(true)
+                    dialog.setCancelable(false)
                     dialog.setContentView(view)
                     dialog.show()
+                    index = binding.clMain.childCount
+                    Blurry.with(activity).sampling(1).onto(binding.clMain)
                     //inItBottomSheet()
                 }
                 R.id.tvLogout -> {
@@ -146,7 +153,8 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                     showHideLoader(true)
                 }
                 Status.SUCCESS -> {
-                    admins = it.data?.admins
+                    admins = it.data
+                    sheetAdapter?.list = admins
                     showHideLoader(false)
                 }
                 Status.WARN -> {
@@ -159,7 +167,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 }
             }
         })
-
+        viewModel.getServiceHubDetails(getAuthorization())
         /*details?.user?.service_hub?.id?.let {
             viewModel.getServiceHubDetails(getAuthorization(), it.toString())
         }*/
@@ -170,7 +178,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
             BottomSheet<BottomSheetCallDeliverifyBinding>(R.layout.bottom_sheet_call_deliverify)
 */
         sheetAdapter =
-            SimpleRecyclerViewAdapter<DummyData, ListCallDeliverifyBinding>(
+            SimpleRecyclerViewAdapter<ResultDeliverify, ListCallDeliverifyBinding>(
                 R.layout.list_call_deliverify, BR.bean
             ) { v, m, pos ->
                 when (v.id) {
@@ -180,10 +188,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
                 }
             }
-        val dummyList = ArrayList<DummyData>()
-        dummyList.add(DummyData("", ""))
-        dummyList.add(DummyData("", ""))
-        sheetAdapter?.list = dummyList
         bottomSheet?.binding?.rvContact?.adapter = sheetAdapter
         //   bottomSheet.show(parentFragmentManager, "")
     }

@@ -9,8 +9,7 @@
 
         <variable
             name="bean"
-            type="com.rk_tech.riggle_runner.data.model.MenuBean" />
-        <!--type="com.rk_tech.riggle_runner.data.model.response.Product"-->
+            type="com.rk_tech.riggle_runner.data.model.response_v2.Product" />
 
         <variable
             name="pos"
@@ -47,7 +46,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_toEndOf="@+id/ivImg"
                 android:fontFamily="@font/font_medium"
-                android:text="Product Name"
+                android:text="@{bean.product.name}"
                 android:textColor="@color/black_85"
                 android:textSize="12sp" />
             <!--android:text="@{bean.products==null?bean.product.name:bean.name}"-->
@@ -74,6 +73,7 @@
                 android:text="1 Free, Product Name"
                 android:textColor="@color/profit_color"
                 android:textSize="12sp"
+                android:visibility="@{bean.free_product==null?View.INVISIBLE:View.VISIBLE}"
                 android:textStyle="bold"
                 tools:text="1 Free, Product Name" />
             <!--android:visibility="@{bean.free_product==null?View.INVISIBLE:View.VISIBLE}"-->
@@ -113,6 +113,7 @@
                 android:layout_marginStart="6dp"
                 android:layout_marginTop="6dp"
                 android:layout_toEndOf="@+id/tvMoq"
+                app:bean="@{bean}"
                 app:callback="@{callback}"
                 app:pos="@{pos}" />
             <!--app:bean="@{bean}"-->

@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.rk_tech.riggle_runner.utils.event.SingleActionEvent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import okhttp3.ResponseBody
+import org.json.JSONObject
 
 open class BaseViewModel : ViewModel() {
     open val TAG: String = this.javaClass.simpleName
@@ -24,6 +26,19 @@ open class BaseViewModel : ViewModel() {
 
     open fun onClick(view: View) {
         onClick.value = view
+    }
+
+    public fun getErrorMessage(errorBody: ResponseBody?): String {
+        val text: String? = errorBody?.string()
+        if (!text.isNullOrEmpty()) {
+            return try {
+                val obj = JSONObject(text)
+                obj.getString("message")
+            } catch (e: Exception) {
+                return text
+            }
+        }
+        return errorBody.toString()
     }
 
 }

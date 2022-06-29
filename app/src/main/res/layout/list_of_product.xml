@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
 
         <variable
             name="pos"
@@ -11,7 +13,7 @@
 
         <variable
             name="bean"
-            type="com.rk_tech.riggle_runner.data.model.response.DummyData" />
+            type="com.rk_tech.riggle_runner.data.model.response_v2.ProductResult" />
 
         <variable
             name="callback"
@@ -38,10 +40,9 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="Diet chivda 100 grms"
+            android:text="@{bean.name}"
             android:textColor="@color/black_85"
             android:textSize="14sp" />
-
 
         <TextView
             android:id="@+id/tvPrice_1"
@@ -53,9 +54,10 @@
             android:ellipsize="end"
             android:fontFamily="@font/gilroy_regular"
             android:maxLines="1"
-            android:text="Cost : 22.87"
+            android:text='@{"Cost : "+bean.base_rate}'
             android:textColor="@color/black_85"
-            android:textSize="11sp" />
+            android:textSize="11sp"
+            tools:text="Cost : 22.87" />
 
         <TextView
             android:id="@+id/tv_createMix"
@@ -67,13 +69,13 @@
             android:layout_marginEnd="10dp"
             android:ellipsize="end"
             android:fontFamily="@font/font_medium"
-            android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
             android:lines="1"
-            android:text="Create Mix"
+            android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+            android:text="@string/create_mix"
             android:textAllCaps="true"
             android:textColor="@color/orange"
-            android:textSize="@dimen/_9ssp" />
-
+            android:textSize="@dimen/_9ssp"
+            android:visibility='@{bean.combo_products==null?View.GONE:(bean.combo_products.isEmpty?View.GONE:View.VISIBLE)}' />
 
         <TextView
             android:id="@+id/tv_view"
@@ -108,7 +110,19 @@
             android:textColor="@color/black_85"
             android:textSize="11sp" />
 
-        <LinearLayout
+        <include
+            android:id="@+id/updateQty"
+            layout="@layout/layout_plus_minus_item_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvQty"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_5sdp"
+            app:bean="@{bean}"
+            app:callback="@{callback}"
+            app:pos="@{pos}" />
+
+        <!--<LinearLayout
             android:id="@+id/ll_qty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -209,16 +223,15 @@
 
             </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <ImageView
             android:id="@+id/iv_dot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ll_qty"
+            android:layout_below="@id/updateQty"
             android:layout_marginTop="@dimen/_5sdp"
             android:src="@drawable/dot_line" />
-
 
     </RelativeLayout>
 

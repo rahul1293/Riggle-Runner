@@ -109,6 +109,7 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
                 }
                 Status.SUCCESS -> {
                     showHideLoader(false)
+
                     if (page == 1)
                         ordersAdapter?.clearList()
 
@@ -119,17 +120,28 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
                         page = 1
                     }
                     ordersAdapter?.addToList(it.data)
+
+                    if (ordersAdapter?.list?.isEmpty() == true)
+                        binding.flowEmpty.visibility = View.VISIBLE
+                    else
+                        binding.flowEmpty.visibility = View.GONE
                 }
                 Status.WARN -> {
                     showHideLoader(false)
+                    if (ordersAdapter?.list?.isEmpty() == true)
+                        binding.flowEmpty.visibility = View.VISIBLE
                     //showErrorToast(it.message)
                 }
                 Status.ERROR -> {
                     showHideLoader(false)
+                    if (ordersAdapter?.list?.isEmpty() == true)
+                        binding.flowEmpty.visibility = View.VISIBLE
                     //showErrorToast(it.message)
                 }
                 else -> {
                     showHideLoader(false)
+                    if (ordersAdapter?.list?.isEmpty() == true)
+                        binding.flowEmpty.visibility = View.VISIBLE
                 }
             }
         })

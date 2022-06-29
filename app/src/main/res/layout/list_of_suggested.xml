@@ -11,7 +11,7 @@
 
         <variable
             name="bean"
-            type="com.rk_tech.riggle_runner.data.model.response.DummyData" />
+            type="com.rk_tech.riggle_runner.data.model.response_v2.GetRetailsListItem" />
 
         <variable
             name="callback"
@@ -38,10 +38,9 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="Ekveera General Store"
+            android:text="@{bean.name}"
             android:textColor="@color/black_85"
             android:textSize="@dimen/_13ssp" />
-
 
         <TextView
             android:id="@+id/tvDetails"
@@ -53,10 +52,9 @@
             android:ellipsize="end"
             android:fontFamily="@font/gilroy_medium"
             android:maxLines="1"
-            android:text="Saat rasta, Byculla - 400012"
+            android:text="@{bean.full_address}"
             android:textColor="@color/dark_gray"
             android:textSize="@dimen/_9ssp" />
-
 
     </RelativeLayout>
 

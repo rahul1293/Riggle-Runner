@@ -285,5 +285,39 @@
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flowEmpty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_100sdp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:constraint_referenced_ids="ivEmpty,tvEmptyCart"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_empty_box_svg" />
+
+        <TextView
+            android:id="@+id/tvEmptyCart"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/font_regular"
+            android:maxLines="2"
+            android:paddingStart="@dimen/_2sdp"
+            android:paddingEnd="@dimen/_2sdp"
+            android:text="@string/you_do_not_have_any_trips_nassigned_on_this_day"
+            android:textAlignment="center"
+            android:textColor="@color/black_85"
+            android:textSize="@dimen/_9ssp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

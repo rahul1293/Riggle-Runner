@@ -4,6 +4,8 @@ import android.location.Location
 import androidx.lifecycle.viewModelScope
 import com.rk_tech.riggle_runner.data.api.ApiHelper
 import com.rk_tech.riggle_runner.data.model.helper.Resource
+import com.rk_tech.riggle_runner.data.model.request_v2.EditProductRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.ProductEditData
 import com.rk_tech.riggle_runner.data.model.response.*
 import com.rk_tech.riggle_runner.data.model.response_v2.OrderDetailResponse
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
@@ -80,25 +82,28 @@ class OrderDetailsActivityVM @Inject constructor(private val apiHelper: ApiHelpe
     }
 
     fun editProductQty(authorization: String, orderId: Int, productId: Int, quantity: Int) {
-        val data = HashMap<String, String>()
-        data["quantity"] = quantity.toString()
+        /*val data = HashMap<String, String>()
+        data["quantity"] = quantity.toString()*/
+        val prodData = ArrayList<ProductEditData>()
+        prodData.add(ProductEditData(productId, quantity))
         viewModelScope.launch {
             obrEditProduct.postValue(Resource.loading(null))
             try {
-                apiHelper.editProductItem(authorization, orderId, productId, data).let {
-                    if (it.isSuccessful) {
-                        it.body()?.let { results ->
-                            obrEditProduct.postValue(Resource.success(results, "Success"))
-                        }
-                    } else {
-                        obrEditProduct.postValue(
-                            Resource.warn(
-                                null,
-                                it.errorBody()?.string().toString()
+                apiHelper.editProductItem(authorization, orderId, EditProductRequest(prodData))
+                    .let {
+                        if (it.isSuccessful) {
+                            it.body()?.let { results ->
+                                obrEditProduct.postValue(Resource.success(results, "Success"))
+                            }
+                        } else {
+                            obrEditProduct.postValue(
+                                Resource.warn(
+                                    null,
+                                    it.errorBody()?.string().toString()
+                                )
                             )
-                        )
+                        }
                     }
-                }
             } catch (e: Exception) {
                 parseException(e.cause)?.let {
                     obrEditProduct.postValue(Resource.error(null, it))
