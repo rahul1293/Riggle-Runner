@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
+import com.rk_tech.riggle_runner.data.model.request_v2.PlaceOrderRequest
+import com.rk_tech.riggle_runner.data.model.response_v2.CreateRetailerResponse
 import com.rk_tech.riggle_runner.databinding.FragmentCreateStoreBinding
 import com.rk_tech.riggle_runner.ui.base.BaseFragment
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
@@ -18,7 +20,13 @@ import com.rk_tech.riggle_runner.ui.main.cart_fragment.CartFragment
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.ui.main.neworder.NewOrderFragment
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
+import com.rk_tech.riggle_runner.utils.extension.showErrorToast
+import com.rk_tech.riggle_runner.utils.extension.showInfoToast
+import com.rk_tech.riggle_runner.utils.extension.successToast
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 
 @AndroidEntryPoint
@@ -75,13 +83,13 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>() {
                 }
                 R.id.tvNewStore -> {
                     if (isEmptyField()) {
-                        val data = HashMap<String,String>()
+                        val data = HashMap<String, String>()
                         data["name"] = binding.etSearchStore.text.toString()
                         data["mobile"] = binding.etOwnerName.text.toString()
                         data["full_name"] = binding.etSearchStore.text.toString()
                         data["pincode"] = binding.etPinCode.text.toString()
                         data["type"] = "retailer"
-                        viewModel.createStore(getAuthorization(),data)
+                        viewModel.createStore(getAuthorization(), data)
                     }
                 }
             }
@@ -100,9 +108,52 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>() {
                 }
                 Status.WARN -> {
                     showHideLoader(false)
+                    showInfoToast(it.message)
                 }
                 Status.ERROR -> {
                     showHideLoader(false)
+                    showErrorToast(it.message)
+                }
+            }
+        })
+
+        viewModel.obrRetailer.observe(viewLifecycleOwner, Observer {
+            when (it?.status) {
+                Status.LOADING -> {
+                    showHideLoader(true)
+                }
+                Status.SUCCESS -> {
+                    showHideLoader(false)
+                    successToast(it.message)
+                    placeOrder(it.data)
+                }
+                Status.WARN -> {
+                    showHideLoader(false)
+                    showInfoToast(it.message)
+                }
+                Status.ERROR -> {
+                    showHideLoader(false)
+                    showErrorToast(it.message)
+                }
+            }
+        })
+
+        viewModel.obrPlaceOrder.observe(viewLifecycleOwner, Observer {
+            when (it?.status) {
+                Status.LOADING -> {
+                    showHideLoader(true)
+                }
+                Status.SUCCESS -> {
+                    showHideLoader(false)
+                    successToast(it.message)
+                }
+                Status.WARN -> {
+                    showHideLoader(false)
+                    showInfoToast(it.message)
+                }
+                Status.ERROR -> {
+                    showHideLoader(false)
+                    showErrorToast(it.message)
                 }
             }
         })
@@ -113,6 +164,24 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>() {
                 user.user.id
             )
         }
+    }
+
+    private var cal = Calendar.getInstance()
+    private fun placeOrder(data: CreateRetailerResponse?) {
+        cal.timeInMillis = cal.timeInMillis + (2 * 24 * 60 * 60 * 1000)
+        val date: String = updateDate(cal)
+        data?.let { user ->
+            viewModel.placeOrder(
+                getAuthorization(),
+                PlaceOrderRequest(user.id, date)
+            )
+        }
+    }
+
+    private fun updateDate(cal: Calendar): String {
+        val myFormat = "yyyy-MM-dd" // mention the format you need
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        return sdf.format(cal.time)
     }
 
     private fun isEmptyField(): Boolean {
@@ -128,7 +197,7 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>() {
             binding.etOwnerName.error = "Select Pin Code"
             return false
         }
-        if (binding.etOwnerName.text.toString().length < 10 ) {
+        if (binding.etOwnerName.text.toString().length < 10) {
             binding.etOwnerName.error = "Enter Valid Number"
             return false
         }

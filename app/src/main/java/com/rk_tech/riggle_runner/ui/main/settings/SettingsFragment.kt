@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -92,6 +93,9 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                     val view = layoutInflater.inflate(R.layout.bs_logout, null)
                     val bt = view.findViewById<TextView>(R.id.tvLogout)
                     bt.setOnClickListener {
+                        if (index < binding.clMain.childCount) {
+                            binding.clMain.removeViewAt(index)
+                        }
                         dialog.dismiss()
                         SharedPrefManager.clear()
                         val intent = LoginActivity.newIntent(requireActivity())
@@ -100,12 +104,23 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                     }
                     val btCancel = view.findViewById<TextView>(R.id.tvCancel)
                     btCancel.setOnClickListener {
+                        if (index < binding.clMain.childCount) {
+                            binding.clMain.removeViewAt(index)
+                        }
                         dialog.dismiss()
                     }
-                    dialog.setCancelable(true)
+                    val btClose = view.findViewById<CardView>(R.id.card)
+                    btClose.setOnClickListener {
+                        if (index < binding.clMain.childCount) {
+                            binding.clMain.removeViewAt(index)
+                        }
+                        dialog.dismiss()
+                    }
+                    dialog.setCancelable(false)
                     dialog.setContentView(view)
                     dialog.show()
-
+                    index = binding.clMain.childCount
+                    Blurry.with(activity).sampling(1).onto(binding.clMain)
                 }
                 R.id.tvContactUs -> {
                     val intentDial =

@@ -3,6 +3,8 @@ package com.rk_tech.riggle_runner.ui.main.search_store
 import androidx.lifecycle.viewModelScope
 import com.rk_tech.riggle_runner.data.api.ApiHelper
 import com.rk_tech.riggle_runner.data.model.helper.Resource
+import com.rk_tech.riggle_runner.data.model.request_v2.PlaceOrderRequest
+import com.rk_tech.riggle_runner.data.model.response.CancelOrderResponse
 import com.rk_tech.riggle_runner.data.model.response_v2.CreateRetailerResponse
 import com.rk_tech.riggle_runner.data.model.response_v2.GetRetailsListItem
 import com.rk_tech.riggle_runner.data.model.response_v2.ResultDeliverify
@@ -46,6 +48,33 @@ class SearchStoreVM @Inject constructor(
             } catch (e: Exception) {
                 parseException(e.cause)?.let {
                     obrRetailerList.postValue(Resource.error(null, it))
+                }
+            }
+        }
+    }
+
+    var obrPlaceOrder = SingleRequestEvent<CancelOrderResponse>()
+    fun placeOrder(authorization: String, placeOrderRequest: PlaceOrderRequest) {
+        viewModelScope.launch {
+            obrPlaceOrder.postValue(Resource.loading(null))
+            try {
+                apiHelper.placeOrder(authorization, placeOrderRequest).let {
+                    if (it.isSuccessful) {
+                        it.body()?.let { results ->
+                            obrPlaceOrder.postValue(Resource.success(results, "Successfully Placed"))
+                        }
+                    } else {
+                        obrPlaceOrder.postValue(
+                            Resource.warn(
+                                null,
+                                getErrorMessage(it.errorBody())
+                            )
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                parseException(e.cause)?.let {
+                    obrPlaceOrder.postValue(Resource.error(null, it))
                 }
             }
         }

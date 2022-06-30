@@ -3,10 +3,7 @@ package com.rk_tech.riggle_runner.data.api
 import com.rk_tech.riggle_runner.data.model.User
 import com.rk_tech.riggle_runner.data.model.request.LoginRequest
 import com.rk_tech.riggle_runner.data.model.request.OrderRequest
-import com.rk_tech.riggle_runner.data.model.request_v2.EditProductRequest
-import com.rk_tech.riggle_runner.data.model.request_v2.RevisitRequest
-import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
-import com.rk_tech.riggle_runner.data.model.request_v2.VerifyOtpRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.*
 import com.rk_tech.riggle_runner.data.model.response.*
 import com.rk_tech.riggle_runner.data.model.response_v2.*
 import okhttp3.MultipartBody
@@ -133,6 +130,13 @@ class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : Ap
 
     override suspend fun getActivePinCodes(header: String, id: Int): Response<List<String>> {
         return apiService.getActivePinCodes(header, id)
+    }
+
+    override suspend fun placeOrder(
+        header: String,
+        request: PlaceOrderRequest
+    ): Response<CancelOrderResponse> {
+        return apiService.placeOrder(header, request)
     }
 
     /**

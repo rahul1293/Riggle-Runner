@@ -3,10 +3,7 @@ package com.rk_tech.riggle_runner.data.api
 import com.rk_tech.riggle_runner.data.model.User
 import com.rk_tech.riggle_runner.data.model.request.LoginRequest
 import com.rk_tech.riggle_runner.data.model.request.OrderRequest
-import com.rk_tech.riggle_runner.data.model.request_v2.EditProductRequest
-import com.rk_tech.riggle_runner.data.model.request_v2.RevisitRequest
-import com.rk_tech.riggle_runner.data.model.request_v2.SendOtpRequest
-import com.rk_tech.riggle_runner.data.model.request_v2.VerifyOtpRequest
+import com.rk_tech.riggle_runner.data.model.request_v2.*
 import com.rk_tech.riggle_runner.data.model.response.*
 import com.rk_tech.riggle_runner.data.model.response_v2.*
 import okhttp3.MultipartBody
@@ -154,6 +151,13 @@ interface ApiService {
         @Header("Authorization") header: String,
         @Path("id") id: Int
     ): Response<List<String>>
+
+    @Headers("x-app-name:runner")
+    @POST("core/orders/")
+    suspend fun placeOrder(
+        @Header("Authorization") header: String,
+        @Body request: PlaceOrderRequest
+    ): Response<CancelOrderResponse>
 
     /**
      * Old api's

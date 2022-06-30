@@ -188,7 +188,7 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
             viewModel.getDashBoard(
                 getAuthorization(),
                 it.user.company.id,
-                SimpleDateFormat("yyyy-dd-MM").format(time)
+                SimpleDateFormat("yyyy-MM-dd").format(time)
             )
         }
 

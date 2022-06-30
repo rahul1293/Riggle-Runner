@@ -152,7 +152,7 @@ class PendingOrdersFragment : BaseFragment<FragmentPendingOrdersBinding>(),
             viewModel.getDashBoard(
                 getAuthorization(),
                 it.user.company.id,
-                SimpleDateFormat("yyyy-dd-MM").format(today.time)
+                SimpleDateFormat("yyyy-MM-dd").format(today.time)
             )
         }
 
