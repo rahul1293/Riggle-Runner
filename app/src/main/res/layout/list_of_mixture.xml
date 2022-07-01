@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -11,7 +12,7 @@
 
         <variable
             name="bean"
-            type="com.rk_tech.riggle_runner.data.model.response.DummyData" />
+            type="com.rk_tech.riggle_runner.data.model.response_v2.ProductResult" />
 
         <variable
             name="callback"
@@ -38,10 +39,10 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="Diet chivda 100 grms"
+            android:text="@{bean.name}"
+            tools:text="Diet chivda 100 grms"
             android:textColor="@color/black_85"
             android:textSize="14sp" />
-
 
         <TextView
             android:id="@+id/tvPrice_1"
@@ -56,9 +57,6 @@
             android:text="Cost : 22.87"
             android:textColor="@color/black_85"
             android:textSize="11sp" />
-
-
-
 
         <TextView
             android:id="@+id/tv_view"
@@ -121,7 +119,6 @@
                 app:cardCornerRadius="@dimen/_6sdp"
                 app:cardElevation="@dimen/_5sdp">
 
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -147,12 +144,13 @@
 
             <TextView
                 android:id="@+id/tvshowQty"
-                android:layout_width="@dimen/_18sdp"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/_18sdp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="18"
-
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_9ssp" />
 
@@ -163,11 +161,9 @@
                 android:layout_weight="1"
                 android:background="@color/light_gray"
                 android:backgroundTint="@color/light_gray"
-
                 android:paddingStart="@dimen/_2sdp"
                 android:paddingEnd="@dimen/_2sdp"
                 app:cardElevation="@dimen/_5sdp">
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -188,9 +184,7 @@
                         android:scaleType="centerInside"
                         android:src="@drawable/ic_plus" />
 
-
                 </RelativeLayout>
-
 
             </androidx.cardview.widget.CardView>
 
@@ -203,7 +197,6 @@
             android:layout_below="@id/ll_qty"
             android:layout_marginTop="@dimen/_5sdp"
             android:src="@drawable/dot_line" />
-
 
     </RelativeLayout>
 

@@ -19,6 +19,7 @@ import com.rk_tech.riggle_runner.data.model.request_v2.ProductEditData
 import com.rk_tech.riggle_runner.data.model.response.DummyData
 import com.rk_tech.riggle_runner.data.model.response.Schemes
 import com.rk_tech.riggle_runner.data.model.response_v2.CartResponse
+import com.rk_tech.riggle_runner.data.model.response_v2.ComboProduct
 import com.rk_tech.riggle_runner.data.model.response_v2.ProductResult
 import com.rk_tech.riggle_runner.databinding.ActivityProductListBinding
 import com.rk_tech.riggle_runner.databinding.ListOfMixtureBinding
@@ -35,6 +36,7 @@ import com.rk_tech.riggle_runner.utils.event.SingleRequestEvent
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import com.rk_tech.riggle_runner.utils.extension.showInfoToast
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.bs_create_mix.view.*
 
 @AndroidEntryPoint
@@ -42,6 +44,7 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
     val viewModel: ProductListActivityVM by viewModels()
     private var mainActivity: MainActivity? = null
     var cartResponse: CartResponse? = null
+    var index = 0
 
     companion object {
         fun newIntent(id: Int, name: String): Fragment {
@@ -151,34 +154,64 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
 
                 }
                 R.id.tv_createMix -> {
-                    val dialog =
-                        BottomSheetDialog(requireActivity(), R.style.CustomBottomSheetDialogTheme)
-                    val view = layoutInflater.inflate(R.layout.bs_create_mix, null)
-                    val bt = view.findViewById<CardView>(R.id.card)
-                    view.rvMixture.adapter = mixtureAdpater!!
-                    bt.setOnClickListener {
-                        dialog.dismiss()
+                    m.combo_products?.let { comboList->
+                        createMixBox(comboList)
                     }
-                    dialog.setCancelable(true)
-                    dialog.setContentView(view)
-                    dialog.show()
                 }
                 R.id.tvAdd -> {
-                    val qty = m.quantity + m.retailer_moq
-                    updateListQty(qty, m, pos)
+                    if (m.combo_products != null && m.combo_products.isNotEmpty()) {
+                        m.combo_products?.let { comboList->
+                            createMixBox(comboList)
+                        }
+                    } else {
+                        val qty = m.quantity + m.retailer_moq
+                        updateListQty(qty, m, pos)
+                    }
                 }
                 R.id.ivMinus -> {
-                    val qty = m.quantity - m.retailer_moq
-                    updateListQty(qty, m, pos)
+                    if (m.combo_products != null && m.combo_products.isNotEmpty()) {
+                        m.combo_products?.let { comboList->
+                            createMixBox(comboList)
+                        }
+                    } else {
+                        val qty = m.quantity - m.retailer_moq
+                        updateListQty(qty, m, pos)
+                    }
                 }
                 R.id.ivPlus -> {
-                    val qty = m.quantity + m.retailer_moq
-                    updateListQty(qty, m, pos)
+                    if (m.combo_products != null && m.combo_products.isNotEmpty()) {
+                        m.combo_products?.let { comboList->
+                            createMixBox(comboList)
+                        }
+                    } else {
+                        val qty = m.quantity + m.retailer_moq
+                        updateListQty(qty, m, pos)
+                    }
                 }
             }
         }
         binding.rvProductList.adapter = productAdapter
         //productAdapter?.list = dummyList
+    }
+
+    private fun createMixBox(comboList: List<ComboProduct>) {
+        val dialog =
+            BottomSheetDialog(requireActivity(), R.style.CustomBottomSheetDialogTheme)
+        val view = layoutInflater.inflate(R.layout.bs_create_mix, null)
+        val cardCancel = view.findViewById<CardView>(R.id.card)
+        view.rvMixture.adapter = mixtureAdpater!!
+        cardCancel.setOnClickListener {
+            if (index < binding.clMain.childCount) {
+                binding.clMain.removeViewAt(index)
+            }
+            dialog.dismiss()
+        }
+        dialog.setCancelable(false)
+        dialog.setContentView(view)
+        dialog.show()
+        index = binding.clMain.childCount
+        Blurry.with(activity).sampling(1).onto(binding.clMain)
+        mixtureAdpater?.list = comboList[0].products
     }
 
     private fun updateListQty(qty: Int, productResult: ProductResult?, pos: Int) {
@@ -197,14 +230,14 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
         }
     }
 
-    private var mixtureAdpater: SimpleRecyclerViewAdapter<DummyData, ListOfMixtureBinding>? = null
+    private var mixtureAdpater: SimpleRecyclerViewAdapter<ProductResult, ListOfMixtureBinding>? = null
     private fun initMixAdapter() {
         mixtureAdpater = SimpleRecyclerViewAdapter(R.layout.list_of_mixture, BR.bean) { i, v, pos ->
         }
-        val dummyList = ArrayList<DummyData>()
+        /*val dummyList = ArrayList<DummyData>()
         dummyList.add(DummyData("", ""))
         dummyList.add(DummyData("", ""))
-        mixtureAdpater?.list = dummyList
+        mixtureAdpater?.list = dummyList*/
     }
 
     override fun onCreateView(view: View) {
@@ -341,8 +374,7 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
                 }
             }
         })
-
         viewModel.getCartData(getAuthorization())
-
     }
+
 }

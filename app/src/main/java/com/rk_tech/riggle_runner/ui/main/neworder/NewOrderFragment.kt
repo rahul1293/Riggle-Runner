@@ -7,19 +7,16 @@ import android.os.Looper
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.widget.SearchView
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.data.model.response.DummyData
 import com.rk_tech.riggle_runner.data.model.response.RetailerDetails
-import com.rk_tech.riggle_runner.data.model.response.Schemes
 import com.rk_tech.riggle_runner.data.model.response_v2.BrandResult
 import com.rk_tech.riggle_runner.databinding.*
 import com.rk_tech.riggle_runner.ui.base.BaseFragment
@@ -29,14 +26,12 @@ import com.rk_tech.riggle_runner.ui.main.cart_fragment.CartFragment
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.ui.main.neworder.brand_category.BrandCategoryFragment
 import com.rk_tech.riggle_runner.ui.main.neworder.product_list.ProductListActivity
-import com.rk_tech.riggle_runner.ui.main.neworder.product_list.scheme_sheet.ProductChooseListener
 import com.rk_tech.riggle_runner.ui.main.neworder.product_list.scheme_sheet.SchemeBottomSheet
 import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.CallBackBlurry
 import com.rk_tech.riggle_runner.ui.main.search_store.SearchStoreFragment
 import com.rk_tech.riggle_runner.utils.event.SingleLiveEvent
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.blurry.Blurry
-import kotlinx.android.synthetic.main.bs_create_mix.view.*
 
 @AndroidEntryPoint
 class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>(), CallBackBlurry {
@@ -66,19 +61,8 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>(), CallBackBlurr
 
     override fun onCreateView(view: View) {
         mainActivity = requireActivity() as MainActivity
-        initMixAdapter()
         createMixClick.observe(requireActivity()) {
-            val dialog =
-                BottomSheetDialog(requireActivity(), R.style.CustomBottomSheetDialogTheme)
-            val view = layoutInflater.inflate(R.layout.bs_create_mix, null)
-            val bt = view.findViewById<CardView>(R.id.card)
-            view.rvMixture.adapter = mixtureAdpater!!
-            bt.setOnClickListener {
-                dialog.dismiss()
-            }
-            dialog.setCancelable(true)
-            dialog.setContentView(view)
-            dialog.show()
+
         }
         viewModel.onClick.observe(requireActivity()) {
             when (it.id) {
@@ -161,18 +145,6 @@ class NewOrderFragment : BaseFragment<FragmentNewOrdersBinding>(), CallBackBlurr
         setUpProductAdatper()
         setUpRecyclerView()
         viewModel.getBrandList(getAuthorization())
-    }
-
-    private var mixtureAdpater: SimpleRecyclerViewAdapter<DummyData, ListOfMixtureBinding>? = null
-    private fun initMixAdapter() {
-        mixtureAdpater = SimpleRecyclerViewAdapter(R.layout.list_of_mixture, BR.bean) { i, v, pos ->
-        }
-        val dummyList = ArrayList<DummyData>()
-        dummyList.add(DummyData("", ""))
-        dummyList.add(DummyData("", ""))
-        mixtureAdpater?.list = dummyList
-
-
     }
 
     private fun openSubFragment(retailer: RetailerDetails?) {
