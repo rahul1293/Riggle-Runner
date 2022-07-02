@@ -56,11 +56,12 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
             return intent
         }
 
-        fun newInstance(id: Int, name: String): Fragment {
+        fun newInstance(id: Int, name: String, type: Int): Fragment {
             val fragment = OrderDetailsActivity()
             val bundle = Bundle()
             bundle?.putInt("order_id", id)
             bundle?.putString("store_name", name)
+            bundle?.putInt("is_from", type)
             fragment.arguments = bundle
             return fragment
         }
@@ -83,6 +84,9 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
         binding.header.tvTitle.text = getString(R.string.retailer_orders)
         arguments?.getString("store_name")?.let {
             binding.tvStoreName.text = it
+        }
+        arguments?.getInt("is_from", 2)?.let {
+            binding.type = it
         }
         binding.header.type = 0
         viewModel.onClick.observe(viewLifecycleOwner) {
@@ -120,10 +124,14 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                     val bundle = Bundle()
                     arguments?.getInt("order_id", 0)?.let { id ->
                         bundle.putInt("order_id", id)
+                        binding.bean?.let { bean ->
+                            bundle.putString("pending_amount", bean.pending_amount.toString())
+                            bundle.putInt("retailer_id", bean.buyer.id)
+                        }
                     }
                     paymentSheet.arguments = bundle
                     paymentSheet.show(childFragmentManager, paymentSheet.tag)
-                    paymentSheet.isCancelable = true
+                    paymentSheet.isCancelable = false
                     index = binding.clMain.childCount
                     Handler(Looper.getMainLooper()).postDelayed({
                         Blurry.with(activity).sampling(1).onto(binding.clMain)
@@ -287,6 +295,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
     }
 
     var productAdapter: SimpleRecyclerViewAdapter<Product, ListMyOrderDetailBinding>? = null
+
     @SuppressLint("NotifyDataSetChanged")
     private fun setUpOrderProductList() {
         productAdapter = SimpleRecyclerViewAdapter<Product, ListMyOrderDetailBinding>(
@@ -299,7 +308,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                         showComboSheet(m)
                     } else {
                         if (m.quantity > 0) {
-                            m.quantity = m.quantity - m.product?.base_quantity!!
+                            m.quantity = m.quantity - m.product?.retailer_moq!!
                         }
                         productAdapter?.notifyDataSetChanged()
                         viewModel.editProductQty(getAuthorization(), orderId, m.id, m.quantity)
@@ -309,7 +318,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                     if (m.products != null) {
                         showComboSheet(m)
                     } else {
-                        m.quantity = m.quantity + m.product?.base_quantity!!
+                        m.quantity = m.quantity + m.product?.retailer_moq!!
                         productAdapter?.notifyDataSetChanged()
                         viewModel.editProductQty(getAuthorization(), orderId, m.id, m.quantity)
                     }

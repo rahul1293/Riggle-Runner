@@ -1,13 +1,13 @@
 package com.rk_tech.riggle_runner.data.model.response_v2
 
-data class AddCartResponse(
-    val assigned_runner: Any,
-    val buyer: Any,
-    val cart_user: Int,
+data class CollectPaymentResponse(
+    val assigned_runner: Int,
+    val buyer: Int,
+    val cart_user: Any,
     val challan_file: Any,
     val code: Any,
     val created_at: String,
-    val delivery_date: Any,
+    val delivery_date: String,
     val earned_coins: Int,
     val final_amount: Double,
     val id: Int,

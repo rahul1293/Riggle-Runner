@@ -2,7 +2,9 @@ package com.rk_tech.riggle_runner.ui.main.neworder.product_list
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -16,7 +18,6 @@ import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.data.model.request.VariantUpdate
 import com.rk_tech.riggle_runner.data.model.request_v2.EditProductRequest
 import com.rk_tech.riggle_runner.data.model.request_v2.ProductEditData
-import com.rk_tech.riggle_runner.data.model.response.DummyData
 import com.rk_tech.riggle_runner.data.model.response.Schemes
 import com.rk_tech.riggle_runner.data.model.response_v2.CartResponse
 import com.rk_tech.riggle_runner.data.model.response_v2.ComboProduct
@@ -45,6 +46,17 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
     private var mainActivity: MainActivity? = null
     var cartResponse: CartResponse? = null
     var index = 0
+
+    /**
+     * for mix box calculation
+     */
+
+    private var final_combo_count: Int = 0
+    private var moqStep: Int = 0
+    private var moqSteper: Int = 0
+    private var productComboId: Int = 0
+    private var count = 1
+    private var check = false
 
     companion object {
         fun newIntent(id: Int, name: String): Fragment {
@@ -154,13 +166,13 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
 
                 }
                 R.id.tv_createMix -> {
-                    m.combo_products?.let { comboList->
+                    m.combo_products?.let { comboList ->
                         createMixBox(comboList)
                     }
                 }
                 R.id.tvAdd -> {
                     if (m.combo_products != null && m.combo_products.isNotEmpty()) {
-                        m.combo_products?.let { comboList->
+                        m.combo_products?.let { comboList ->
                             createMixBox(comboList)
                         }
                     } else {
@@ -170,7 +182,7 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
                 }
                 R.id.ivMinus -> {
                     if (m.combo_products != null && m.combo_products.isNotEmpty()) {
-                        m.combo_products?.let { comboList->
+                        m.combo_products?.let { comboList ->
                             createMixBox(comboList)
                         }
                     } else {
@@ -180,7 +192,7 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
                 }
                 R.id.ivPlus -> {
                     if (m.combo_products != null && m.combo_products.isNotEmpty()) {
-                        m.combo_products?.let { comboList->
+                        m.combo_products?.let { comboList ->
                             createMixBox(comboList)
                         }
                     } else {
@@ -194,24 +206,115 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
         //productAdapter?.list = dummyList
     }
 
+    private var mixtureAdpater: SimpleRecyclerViewAdapter<ProductResult, ListOfMixtureBinding>? =
+        null
+    var tvCancel: TextView? = null
+    var tvMix: TextView? = null
+    var dialog: BottomSheetDialog? = null
     private fun createMixBox(comboList: List<ComboProduct>) {
-        val dialog =
+        dialog =
             BottomSheetDialog(requireActivity(), R.style.CustomBottomSheetDialogTheme)
         val view = layoutInflater.inflate(R.layout.bs_create_mix, null)
         val cardCancel = view.findViewById<CardView>(R.id.card)
+        tvCancel = view.findViewById(R.id.tvCancel)
+        tvMix = view.findViewById(R.id.tvMix)
+
+        mixtureAdpater = SimpleRecyclerViewAdapter(R.layout.list_of_mixture, BR.bean) { v, m, pos ->
+            when (v?.id) {
+                R.id.card_minus -> {
+                    if (m.quantity > 1) {
+                        m.quantity = m.quantity - 1
+                        mixtureAdpater?.notifyItemChanged(pos)
+                        variantAdded()
+                    }
+                }
+                R.id.card_plus -> {
+                    m.quantity = m.quantity + 1
+                    mixtureAdpater?.notifyItemChanged(pos)
+                    variantAdded()
+                }
+            }
+        }
         view.rvMixture.adapter = mixtureAdpater!!
+        mixtureAdpater?.list = comboList[0].products
+        if (comboList[0].products.isNotEmpty()) {
+            moqStep = comboList[0].products[0].retailer_moq
+            moqSteper = comboList[0].products[0].retailer_moq
+            productComboId = comboList[0].id
+            variantAdded()
+        }
         cardCancel.setOnClickListener {
             if (index < binding.clMain.childCount) {
                 binding.clMain.removeViewAt(index)
             }
-            dialog.dismiss()
+            dialog?.dismiss()
         }
-        dialog.setCancelable(false)
-        dialog.setContentView(view)
-        dialog.show()
+        tvCancel?.setOnClickListener {
+            if (comboList[0].products.isNotEmpty()) {
+                val product = ArrayList<ProductEditData>()
+                for (index in comboList[0].products) {
+                    if (index.quantity > 0) {
+                        product.add(ProductEditData(index.id, index.quantity, productComboId))
+                    }
+                }
+                cartResponse?.let {
+                    viewModel.updateCartProduct(
+                        getAuthorization(),
+                        it.id,
+                        EditProductRequest(product)
+                    )
+                }
+            }
+        }
+        dialog?.setCancelable(false)
+        dialog?.setContentView(view)
+        dialog?.show()
         index = binding.clMain.childCount
         Blurry.with(activity).sampling(1).onto(binding.clMain)
-        mixtureAdpater?.list = comboList[0].products
+    }
+
+    private fun variantAdded() {
+        final_combo_count = 0
+        mixtureAdpater?.list?.let {
+            for (index in it.indices) {
+                final_combo_count += it[index].quantity
+            }
+
+            if (!check) {
+                val c = final_combo_count / moqStep
+                if (c > 0 && final_combo_count % moqStep == 0) {
+                    moqStep = c * it[0].retailer_moq
+                    moqSteper = it[0].retailer_moq
+                    count = c
+                }
+            }
+
+            val dividend: Float = final_combo_count.toFloat() / moqSteper.toFloat()
+            val reminder: Float = final_combo_count.toFloat() % moqSteper.toFloat()
+            var step = 0
+            if (reminder == 0f) {
+                tvCancel?.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.orange
+                    )
+                )
+                tvCancel?.isEnabled = true
+                step = if (final_combo_count == 0) 1 else (dividend).toInt()
+            } else {
+                tvCancel?.setBackgroundColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.medium_gray
+                    )
+                )
+                tvCancel?.isEnabled = false
+                step = (dividend + 1).toInt()
+            }
+            tvMix?.text =
+                "MOQ : " + final_combo_count + "/" + (step * moqSteper)
+
+        }
     }
 
     private fun updateListQty(qty: Int, productResult: ProductResult?, pos: Int) {
@@ -223,34 +326,24 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
         productAdapter?.notifyItemChanged(pos)
 
         val product = ArrayList<ProductEditData>()
-        product.add(ProductEditData(qty, productResult?.id!!))
+        product.add(ProductEditData(productResult?.id!!, qty, null))
 
         cartResponse?.let {
             viewModel.updateCartProduct(getAuthorization(), it.id, EditProductRequest(product))
         }
     }
 
-    private var mixtureAdpater: SimpleRecyclerViewAdapter<ProductResult, ListOfMixtureBinding>? = null
-    private fun initMixAdapter() {
-        mixtureAdpater = SimpleRecyclerViewAdapter(R.layout.list_of_mixture, BR.bean) { i, v, pos ->
-        }
-        /*val dummyList = ArrayList<DummyData>()
-        dummyList.add(DummyData("", ""))
-        dummyList.add(DummyData("", ""))
-        mixtureAdpater?.list = dummyList*/
-    }
-
     override fun onCreateView(view: View) {
         mainActivity = requireActivity() as MainActivity
-        initMixAdapter()
-        binding.header.type = 1
-        binding.header.ivNotification.setImageResource(R.drawable.ic_shopping_cart)
+        binding.header.type = 2
+        binding.header.cardCart.visibility = View.VISIBLE
+        //binding.header.ivNotification.setImageResource(R.drawable.ic_shopping_cart)
         viewModel.onClick.observe(viewLifecycleOwner) {
             when (it?.id) {
                 R.id.ivBack -> {
                     mainActivity?.onBackPressed()
                 }
-                R.id.ivNotification -> {
+                R.id.card_cart -> {
                     /*AlertDialog.Builder(requireActivity())
                         .setTitle("Delivery Order")
                         .setMessage("Are you sure want to deliver this order?")
@@ -362,14 +455,25 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
         viewModel.obrCartUpdate.observe(viewLifecycleOwner, Observer {
             when (it.status) {
                 Status.LOADING -> {
+                    if (dialog?.isShowing == true) {
+                        showHideLoader(true)
+                    }
                 }
                 Status.SUCCESS -> {
-
+                    if (dialog?.isShowing == true) {
+                        if (index < binding.clMain.childCount) {
+                            binding.clMain.removeViewAt(index)
+                        }
+                        dialog?.dismiss()
+                    }
+                    showHideLoader(false)
                 }
                 Status.WARN -> {
+                    showHideLoader(false)
                     showInfoToast(it.message)
                 }
                 Status.ERROR -> {
+                    showHideLoader(false)
                     showErrorToast(it.message)
                 }
             }

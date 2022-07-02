@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="type"
             type="Integer" />
@@ -105,11 +107,11 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/font_medium"
-                android:text="2,356"
                 android:textColor="@color/black_85"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvAmountTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/tvAmountTitle"
+                tools:text="2,356" />
 
             <TextView
                 android:id="@+id/tvModeType"
@@ -228,7 +230,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvSendOtp" />
 
             <EditText
-                android:id="@+id/etEnterOtp"
+                android:id="@+id/etPayableAmount"
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -240,6 +242,8 @@
                 android:gravity="center_horizontal"
                 android:padding="12dp"
                 android:text=""
+                android:inputType="numberDecimal"
+                android:imeOptions="actionDone"
                 android:textAllCaps="false"
                 android:textColor="@color/black_85"
                 android:textSize="16sp"
@@ -255,7 +259,8 @@
                 android:layout_marginEnd="20dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/etEnterOtp">
+                android:visibility='@{(type==1 || type==2)?View.VISIBLE:View.GONE}'
+                app:layout_constraintTop_toBottomOf="@+id/etPayableAmount">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -435,6 +440,147 @@
 
             <TextView
                 android:id="@+id/btnConfirm"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/btn_rounded_corner_6dp"
+                android:fontFamily="@font/font_medium"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center_horizontal"
+                android:padding="12dp"
+                android:text="@string/confirm"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clRevisit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/_20sdp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cvTop">
+
+            <RelativeLayout
+                android:id="@+id/llMainTwo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvTitleTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/font_bold"
+                    android:text="@string/partial_payment_detected"
+                    android:textColor="@color/black_85"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/vDividerTwo"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGreyTrackingStatus"
+                app:layout_constraintTop_toBottomOf="@+id/llMainTwo" />
+
+            <TextView
+                android:id="@+id/tvRevisit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/font_medium"
+                android:text="@string/revisit_date"
+                android:textColor="@color/black_85"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vDividerTwo" />
+
+            <TextView
+                android:id="@+id/tvRevisitDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/font_medium"
+                android:hint="YYYY-MM-DD"
+                android:padding="6dp"
+                android:textColor="@color/black_85"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRevisit" />
+
+            <TextView
+                android:id="@+id/tvReason"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/font_medium"
+                android:text="@string/reason_for_late_payment"
+                android:textColor="@color/black_85"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRevisitDate" />
+
+            <TextView
+                android:id="@+id/tvReasonType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/btn_rounded_corner_6dp"
+                android:backgroundTint="#F1EDEB"
+                android:drawableRight="@drawable/ic_drop_down_icon"
+                android:fontFamily="@font/font_medium"
+                android:padding="10dp"
+                android:textColor="@color/black_85"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvReason" />
+
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                app:constraint_referenced_ids="btnConfirmOne"
+                app:flow_horizontalGap="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvReasonType" />
+
+            <TextView
+                android:id="@+id/btnConfirmOne"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"

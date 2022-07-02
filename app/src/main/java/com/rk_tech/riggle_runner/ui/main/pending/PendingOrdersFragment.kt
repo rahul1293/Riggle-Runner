@@ -208,7 +208,7 @@ class PendingOrdersFragment : BaseFragment<FragmentPendingOrdersBinding>(),
                 else -> {
                     mainActivity?.addSubFragment(
                         TAG,
-                        OrderDetailsActivity.newInstance(m.id, m.buyer.name)
+                        OrderDetailsActivity.newInstance(m.id, m.buyer.name,2)
                     )
                     /*if (m.status.equals("delivered", true)) {
                         val intent = CollectPaymentActivity.newIntent(requireActivity())

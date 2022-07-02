@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:elevation="2dp"
+        android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
         android:paddingTop="8dp"
         android:paddingBottom="@dimen/_5sdp">
 

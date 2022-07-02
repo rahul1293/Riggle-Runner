@@ -113,5 +113,10 @@
     <string name="pincode">Pincode</string>
     <string name="owner_number">Owner Number</string>
     <string name="shop_name">Shop Name</string>
+    <string name="net_payment_value">Net Payment Value</string>
+    <string name="add_to_order">Add to Order</string>
+    <string name="partial_payment_detected">Partial Payment Detected</string>
+    <string name="revisit_date">Revisit Date</string>
+    <string name="reason_for_late_payment">Reason for Late Payment</string>
 
 </resources>

@@ -105,6 +105,13 @@ interface ApiHelper {
         request: PlaceOrderRequest
     ): Response<CancelOrderResponse>
 
+    suspend fun collectPayment(
+        header: String,
+        id: Int,
+        partMap: Map<String, @JvmSuppressWildcards RequestBody>,
+        receipt: MultipartBody.Part?
+    ): Response<CollectPaymentResponse>
+
     /**
      * Old Calls
      */

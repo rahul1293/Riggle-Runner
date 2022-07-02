@@ -1,16 +1,19 @@
 package com.rk_tech.riggle_runner.ui.main.search_store
 
-
+import android.Manifest
+import android.content.Context
+import android.location.Location
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.TextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.data.model.request_v2.PlaceOrderRequest
-import com.rk_tech.riggle_runner.data.model.response.DummyData
 import com.rk_tech.riggle_runner.data.model.response_v2.GetRetailsListItem
 import com.rk_tech.riggle_runner.databinding.FragmentSearchStoreBinding
 import com.rk_tech.riggle_runner.databinding.ListOfSearchItemsBinding
@@ -18,6 +21,10 @@ import com.rk_tech.riggle_runner.databinding.ListOfSuggestedBinding
 import com.rk_tech.riggle_runner.ui.base.BaseFragment
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
 import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
+import com.rk_tech.riggle_runner.ui.base.location.LocationHandler
+import com.rk_tech.riggle_runner.ui.base.location.LocationResultListener
+import com.rk_tech.riggle_runner.ui.base.permission.PermissionHandler
+import com.rk_tech.riggle_runner.ui.base.permission.Permissions
 import com.rk_tech.riggle_runner.ui.main.cart_fragment.CartFragment
 import com.rk_tech.riggle_runner.ui.main.create_store.CreateStoreFragment
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
@@ -28,15 +35,19 @@ import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import com.rk_tech.riggle_runner.utils.extension.showInfoToast
 import com.rk_tech.riggle_runner.utils.extension.successToast
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.blurry.Blurry
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
-class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>() {
+class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>(), LocationResultListener {
 
+    private var store_name = ""
     private var mainActivity: MainActivity? = null
     private val viewModel: SearchStoreVM by viewModels()
+
+    private var locationHandler: LocationHandler? = null
+    private var mCurrentLocation: Location? = null
 
     companion object {
         @JvmStatic
@@ -54,8 +65,8 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>() {
         return viewModel
     }
 
-
     override fun onCreateView(view: View) {
+        checkLocation()
         setUpRecyclerView()
         mainActivity = activity as MainActivity
         binding.etSearchStore.addTextChangedListener(object : TextWatcher {
@@ -145,6 +156,7 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>() {
                 Status.SUCCESS -> {
                     showHideLoader(false)
                     successToast(it.message)
+                    it.data?.final_amount?.let { it1 -> showConfirmation(it1) }
                 }
                 Status.WARN -> {
                     showHideLoader(false)
@@ -162,23 +174,49 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>() {
         }
     }
 
-    private var searchAdapter: SimpleRecyclerViewAdapter<GetRetailsListItem, ListOfSearchItemsBinding>? =
-        null
-
-    private fun filterList(text: String): ArrayList<DummyData> {
-        val list = ArrayList<DummyData>()
-        nameList?.let {
-            for (i in nameList?.indices!!) {
-                if (nameList?.get(i)?.name?.contains(text, true) == true) {
-                    list.add(nameList?.get(i)!!)
+    private fun checkLocation() {
+        Permissions.check(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            0,
+            object : PermissionHandler() {
+                override fun onGranted() {
+                    createLocationHandler()
                 }
-            }
-            return list
-        }
-        return list
+
+                override fun onDenied(
+                    context: Context?,
+                    deniedPermissions: ArrayList<String>?
+                ) {
+                    super.onDenied(context, deniedPermissions)
+                    showErrorToast("Need to enable the location permission")
+                }
+            })
     }
 
-    private var nameList: ArrayList<DummyData>? = null
+    var index = 0
+    private fun showConfirmation(finalAmount: Double) {
+        val dialog =
+            BottomSheetDialog(requireActivity(), R.style.CustomBottomSheetDialogTheme)
+        val view = layoutInflater.inflate(R.layout.bs_order_created, null)
+        val bt = view.findViewById<TextView>(R.id.tvCollectPayment)
+        val tvText = view.findViewById<TextView>(R.id.tvText)
+        tvText.text = "Order created for $store_name amounting to $finalAmount"
+        bt.setOnClickListener {
+            if (index < binding.clMain.childCount) {
+                binding.clMain.removeViewAt(index)
+            }
+            dialog.dismiss()
+        }
+        dialog.setCancelable(true)
+        dialog.setContentView(view)
+        dialog.show()
+        index = binding.clMain.childCount
+        Blurry.with(activity).sampling(1).onto(binding.clMain)
+    }
+
+    private var searchAdapter: SimpleRecyclerViewAdapter<GetRetailsListItem, ListOfSearchItemsBinding>? =
+        null
     var suggestedAdapter: SimpleRecyclerViewAdapter<GetRetailsListItem, ListOfSuggestedBinding>? =
         null
 
@@ -190,42 +228,41 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>() {
                 R.id.rlMain -> {
                     binding.etSearchStore.setText(m?.name!!)
                     binding.rvSearchAdapter.visibility = View.GONE
+                    store_name = m.name
                     placeOrder(m)
                 }
 
             }
         }
         binding.rvSearchAdapter.adapter = searchAdapter
-        /*nameList = ArrayList<DummyData>()
-        nameList?.add(DummyData("Sandeep", ""))
-        nameList?.add(DummyData("Rahul", ""))
-        searchAdapter?.list = nameList*/
 
         suggestedAdapter =
             SimpleRecyclerViewAdapter<GetRetailsListItem, ListOfSuggestedBinding>(
                 R.layout.list_of_suggested, BR.bean
             ) { v, m, pos ->
                 when (v.id) {
-                    R.id.rlMain -> {
+                    R.id.rlProduct -> {
+                        store_name = m?.name!!
                         placeOrder(m)
                     }
                 }
-                /*  val layout = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-                  binding.rvSuggested.layoutManager = layout*/
-
             }
         binding.rvSuggested.adapter = suggestedAdapter
-        //suggestedAdapter?.list = dummyList
     }
 
     private var cal = Calendar.getInstance()
     private fun placeOrder(data: GetRetailsListItem?) {
-        cal.timeInMillis = cal.timeInMillis + (2 * 24 * 60 * 60 * 1000)
-        val date: String = updateDate(cal)
+        //cal.timeInMillis = cal.timeInMillis + (2 * 24 * 60 * 60 * 1000)
+        //val date: String = updateDate(cal)
+        var locationCo = ""
+        mCurrentLocation?.let { location ->
+            locationCo =
+                location.latitude.toString() + ":" + location.longitude.toString()
+        }
         data?.let { user ->
             viewModel.placeOrder(
                 getAuthorization(),
-                PlaceOrderRequest(user.id, date)
+                PlaceOrderRequest(user.id, locationCo)
             )
         }
     }
@@ -234,6 +271,16 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>() {
         val myFormat = "yyyy-MM-dd" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         return sdf.format(cal.time)
+    }
+
+    private fun createLocationHandler() {
+        locationHandler = LocationHandler(requireActivity(), this)
+        locationHandler?.getUserLocation()
+        locationHandler?.removeLocationUpdates()
+    }
+
+    override fun getLocation(location: Location) {
+        this.mCurrentLocation = location
     }
 
 }

@@ -6,5 +6,6 @@ data class EditProductRequest(
 
 data class ProductEditData(
     val product: Int,
-    val quantity: Int
+    val quantity: Int,
+    val product_combo: Int?
 )

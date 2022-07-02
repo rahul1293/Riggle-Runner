@@ -14,9 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
-import com.rk_tech.riggle_runner.data.model.response.Admin
-import com.rk_tech.riggle_runner.data.model.response.Results
-import com.rk_tech.riggle_runner.data.model.response.Retailer
 import com.rk_tech.riggle_runner.data.model.response_v2.Result
 import com.rk_tech.riggle_runner.databinding.FragmentCompletedBinding
 import com.rk_tech.riggle_runner.databinding.ListCompletedItemBinding
@@ -24,9 +21,7 @@ import com.rk_tech.riggle_runner.ui.base.BaseFragment
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
 import com.rk_tech.riggle_runner.ui.base.SimpleRecyclerViewAdapter
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
-import com.rk_tech.riggle_runner.ui.main.pending.PendingOrdersFragment
 import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.OrderDetailsActivity
-import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.collect_payment.CollectPaymentActivity
 import com.rk_tech.riggle_runner.ui.main.pending.payment_details.PaymentDetailsActivity
 import com.rk_tech.riggle_runner.utils.Constants
 import com.rk_tech.riggle_runner.utils.VerticalPagination
@@ -210,9 +205,8 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
         ) { v, m, pos ->
             when (v?.id) {
                 R.id.tvDetails -> {
-                    mainActivity?.addSubFragment(
-                        PendingOrdersFragment.TAG,
-                        OrderDetailsActivity.newInstance(m.id, m.buyer.name)
+                    mainActivity?.addSubFragment(TAG,
+                        OrderDetailsActivity.newInstance(m.id, m.buyer.name, 1)
                     )
                 }
                 R.id.ivNavigate -> {

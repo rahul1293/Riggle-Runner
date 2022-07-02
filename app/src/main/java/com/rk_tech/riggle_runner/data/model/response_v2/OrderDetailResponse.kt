@@ -8,17 +8,17 @@ data class OrderDetailResponse(
     val created_at: String,
     val delivery_date: String,
     val earned_coins: Int,
-    val final_amount: Int,
+    val final_amount: Double,
     val id: Int,
     val is_cart: Boolean,
-    val paid_amount: Int,
-    val pending_amount: Int,
-    val product_amount: Int,
+    val paid_amount: Double,
+    val pending_amount: Double,
+    val product_amount: Double,
     val products: List<Product>,
     val redeemed_coins: Int,
     val seller: Any,
     var status: String,
-    val total_discount_amount: Int,
+    val total_discount_amount: Double,
     val update_url: String,
     val updated_at: String
 )
@@ -46,7 +46,7 @@ data class BuyerOne(
 )
 
 data class Product(
-    val amount: Int,
+    val amount: Double,
     val coins: Int,
     val created_at: String,
     val free_product: Any,

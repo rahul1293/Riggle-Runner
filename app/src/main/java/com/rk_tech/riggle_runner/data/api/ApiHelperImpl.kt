@@ -139,6 +139,15 @@ class ApiHelperImpl @Inject constructor(private val apiService: ApiService) : Ap
         return apiService.placeOrder(header, request)
     }
 
+    override suspend fun collectPayment(
+        header: String,
+        id: Int,
+        partMap: Map<String, RequestBody>,
+        receipt: MultipartBody.Part?
+    ): Response<CollectPaymentResponse> {
+        return apiService.collectPayment(header, id, partMap, receipt)
+    }
+
     /**
      * Old implementation
      */

@@ -40,9 +40,9 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@{bean.name}"
-            tools:text="Diet chivda 100 grms"
             android:textColor="@color/black_85"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:text="Diet chivda 100 grms" />
 
         <TextView
             android:id="@+id/tvPrice_1"
@@ -114,6 +114,7 @@
                 android:layout_weight="1"
                 android:background="@color/light_gray"
                 android:backgroundTint="@color/light_gray"
+                android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
                 android:paddingStart="@dimen/_2sdp"
                 android:paddingEnd="@dimen/_2sdp"
                 app:cardCornerRadius="@dimen/_6sdp"
@@ -148,9 +149,9 @@
                 android:layout_height="@dimen/_18sdp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="18"
                 android:paddingStart="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_5sdp"
+                android:text='@{String.valueOf(bean.quantity)}'
                 android:textColor="@color/black"
                 android:textSize="@dimen/_9ssp" />
 
@@ -161,6 +162,7 @@
                 android:layout_weight="1"
                 android:background="@color/light_gray"
                 android:backgroundTint="@color/light_gray"
+                android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
                 android:paddingStart="@dimen/_2sdp"
                 android:paddingEnd="@dimen/_2sdp"
                 app:cardElevation="@dimen/_5sdp">

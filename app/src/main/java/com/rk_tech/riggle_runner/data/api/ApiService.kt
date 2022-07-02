@@ -130,6 +130,7 @@ interface ApiService {
         @QueryMap query: Map<String, String>
     ): Response<List<GetRetailsListItem>>
 
+    @FormUrlEncoded
     @Headers("x-app-name:runner")
     @POST("core/companies/")
     suspend fun createRetailer(
@@ -158,6 +159,16 @@ interface ApiService {
         @Header("Authorization") header: String,
         @Body request: PlaceOrderRequest
     ): Response<CancelOrderResponse>
+
+    @Headers("x-app-name:runner")
+    @Multipart
+    @PATCH("core/orders/{id}/payment/")
+    suspend fun collectPayment(
+        @Header("Authorization") header: String,
+        @Path("id") id: Int,
+        @PartMap partMap: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part receipt: MultipartBody.Part?
+    ): Response<CollectPaymentResponse>
 
     /**
      * Old api's

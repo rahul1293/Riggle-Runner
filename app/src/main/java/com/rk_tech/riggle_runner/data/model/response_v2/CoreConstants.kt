@@ -15,7 +15,8 @@ data class CoreConstants(
     val region_types: List<RegionType>,
     val retailer_order_cancellation_reasons: List<RetailerOrderCancellationReason>,
     val runner_order_cancellation_reasons: List<RunnerOrderCancellationReason>,
-    val runner_payment_modes: List<RunnerPaymentMode>
+    val runner_payment_modes: List<RunnerPaymentMode>,
+    val runner_payment_reschedule_reasons: List<PaymentRescheduleReason>
 )
 
 data class BaseUnit(

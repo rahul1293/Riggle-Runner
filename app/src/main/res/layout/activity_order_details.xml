@@ -5,6 +5,12 @@
 
     <data>
 
+        <import type="android.view.View" />
+
+        <variable
+            name="type"
+            type="Integer" />
+
         <variable
             name="bean"
             type="com.rk_tech.riggle_runner.data.model.response_v2.OrderDetailResponse" />
@@ -62,7 +68,7 @@
 
                         <TextView
                             android:id="@+id/tvOrderStatus"
-                            update_status_color='@{"pending"}'
+                            update_status_color='@{type==2?"pending":"completed"}'
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -240,7 +246,8 @@
                     android:text="@string/cancel_order"
                     android:textAllCaps="true"
                     android:textColor="@color/color_D64A5B"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility='@{type==1?View.GONE:View.VISIBLE}' />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -262,7 +269,8 @@
                         android:text="Collect Payment"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility='@{type==1?View.GONE:View.VISIBLE}' />
 
                 </LinearLayout>
 

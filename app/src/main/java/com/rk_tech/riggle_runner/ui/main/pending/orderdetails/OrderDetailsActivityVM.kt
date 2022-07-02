@@ -85,7 +85,7 @@ class OrderDetailsActivityVM @Inject constructor(private val apiHelper: ApiHelpe
         /*val data = HashMap<String, String>()
         data["quantity"] = quantity.toString()*/
         val prodData = ArrayList<ProductEditData>()
-        prodData.add(ProductEditData(productId, quantity))
+        prodData.add(ProductEditData(productId, quantity,null))
         viewModelScope.launch {
             obrEditProduct.postValue(Resource.loading(null))
             try {

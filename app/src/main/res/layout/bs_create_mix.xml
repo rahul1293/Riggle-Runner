@@ -47,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fillViewport="true">
+
                 <RelativeLayout
                     android:id="@+id/chooseOwmer"
                     android:layout_width="match_parent"
@@ -97,10 +98,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tv_text"
+                        android:nestedScrollingEnabled="false"
                         android:padding="@dimen/_5sdp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="2"
-                        android:nestedScrollingEnabled="false"
                         tools:listitem="@layout/list_of_mixture" />
 
                     <TextView
@@ -118,28 +119,30 @@
                         android:textColor="@color/secondary_red"
                         android:textSize="14sp" />
 
-                    <TextView
-                        android:id="@+id/tvCancel"
-                        android:layout_width="0dp"
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tvMix"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentEnd="true"
                         android:layout_marginStart="@dimen/_35sdp"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginEnd="@dimen/_35sdp"
                         android:layout_marginBottom="@dimen/_15sdp"
-                        android:background="@drawable/bg_round_corner"
-                        android:backgroundTint="@color/medium_gray"
-                        android:fontFamily="@font/font_medium"
-                        android:includeFontPadding="false"
-                        android:padding="@dimen/_5sdp"
-                        android:text="Add to Order"
-                        android:textAlignment="center"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:cardCornerRadius="6dp">
+
+                        <TextView
+                            android:id="@+id/tvCancel"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/medium_gray"
+                            android:fontFamily="@font/font_medium"
+                            android:includeFontPadding="false"
+                            android:padding="@dimen/_5sdp"
+                            android:enabled="false"
+                            android:text="@string/add_to_order"
+                            android:textAlignment="center"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+                    </androidx.cardview.widget.CardView>
 
                 </RelativeLayout>
             </androidx.core.widget.NestedScrollView>

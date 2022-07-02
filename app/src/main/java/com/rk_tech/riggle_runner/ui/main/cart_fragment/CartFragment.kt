@@ -2,15 +2,12 @@ package com.rk_tech.riggle_runner.ui.main.cart_fragment
 
 import android.annotation.SuppressLint
 import android.view.View
-import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.rk_tech.riggle_runner.BR
 import com.rk_tech.riggle_runner.R
 import com.rk_tech.riggle_runner.data.model.helper.Status
-import com.rk_tech.riggle_runner.data.model.response.DummyData
 import com.rk_tech.riggle_runner.data.model.response_v2.CartResponse
 import com.rk_tech.riggle_runner.data.model.response_v2.Product
 import com.rk_tech.riggle_runner.databinding.*
@@ -21,7 +18,6 @@ import com.rk_tech.riggle_runner.utils.BackStackManager
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import com.rk_tech.riggle_runner.utils.extension.showInfoToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.bottom_sheet_call_deliverify.view.*
 
 @AndroidEntryPoint
 class CartFragment : BaseFragment<FragmentCartBinding>() {
@@ -32,11 +28,8 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
 
             }
     }
-
-    private var sheetAdapter: SimpleRecyclerViewAdapter<DummyData, ListCallDeliverifyBinding>? =
-        null
+    
     val viewModel: CartFragmentVM by viewModels()
-
     var cartResponse: CartResponse? = null
 
     override fun getLayoutResource(): Int {
@@ -50,7 +43,6 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
     private var mainActivity: MainActivity? = null
     override fun onCreateView(view: View) {
         mainActivity = requireActivity() as MainActivity
-        showBottomSheet()
         viewModel.onClick.observe(requireActivity()) {
             when (it.id) {
                 R.id.iv_back -> {
@@ -70,9 +62,10 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                 Status.SUCCESS -> {
                     showHideLoader(false)
                     cartResponse = it.data
-                    it.data?.products?.let {
-                        cartAdapter?.list = it
-                        if (it.isEmpty()) {
+                    binding.bean = cartResponse
+                    it.data?.products?.let { list->
+                        cartAdapter?.list = list
+                        if (list.isEmpty()) {
                             binding.rvRetailerList.visibility = View.GONE
                             binding.rlAmount.visibility = View.GONE
                             binding.ivEmpty.visibility = View.VISIBLE
@@ -102,42 +95,6 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         viewModel.getCartData(getAuthorization())
     }
 
-    private fun showBottomSheet() {
-        /* val bottomSheet =
-             BottomSheet<BottomSheetCallDeliverifyBinding>(R.layout.bottom_sheet_call_deliverify)*/
-        sheetAdapter =
-            SimpleRecyclerViewAdapter<DummyData, ListCallDeliverifyBinding>(
-                R.layout.list_call_deliverify, BR.bean
-            ) { v, m, pos ->
-                when (v.id) {
-                    R.id.rlMain -> {
-                    }
-
-                }
-            }
-        val dummyList = ArrayList<DummyData>()
-        dummyList.add(DummyData("", ""))
-        dummyList.add(DummyData("", ""))
-        sheetAdapter?.list = dummyList
-        bottomSheet?.binding?.rvContact?.adapter = sheetAdapter
-        //   bottomSheet.show(parentFragmentManager, "")
-    }
-
-    private var bottomSheet: BaseCustomBottomSheet<BottomSheetCallDeliverifyBinding>? = null
-    private fun inItBottomSheet() {
-        bottomSheet =
-            BaseCustomBottomSheet(
-                requireActivity(), R.layout.bottom_sheet_call_deliverify
-            ) {
-                when (it.id) {
-                    R.id.ivCancel -> {
-
-                    }
-                }
-            }
-        bottomSheet?.show()
-    }
-
     @SuppressLint("SetTextI18n")
     private fun emptyCart(emptyCart: Boolean) {
         if (binding.tvNext.text.toString().equals("Add Item", true)) {
@@ -153,7 +110,6 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         }
     }
 
-
     private var cartAdapter: SimpleRecyclerViewAdapter<Product, CartItemLayoutBinding>? = null
     private fun setUpRecyclerView() {
         val layoutManager = LinearLayoutManager(requireContext())
@@ -168,9 +124,5 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
         }
         binding.rvRetailerList.layoutManager = layoutManager
         binding.rvRetailerList.adapter = cartAdapter
-        /*val dummyList = ArrayList<DummyData>()
-        dummyList.add(DummyData("", ""))
-        dummyList.add(DummyData("", ""))
-        cartAdapter?.list = dummyList*/
     }
 }
