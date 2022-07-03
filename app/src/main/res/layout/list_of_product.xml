@@ -88,9 +88,10 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginEnd="10dp"
             android:ellipsize="end"
+            android:visibility="invisible"
             android:fontFamily="@font/gilroy_semibold"
             android:lines="1"
-            android:text="View Bulk Size"
+            android:text="@string/view_bulk_size"
             android:textAllCaps="true"
             android:textColor="@color/orange"
             android:textSize="@dimen/_7ssp" />
@@ -106,7 +107,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/gilroy_regular"
             android:maxLines="1"
-            android:text="Qty :"
+            android:text="@string/qty"
             android:textColor="@color/black_85"
             android:textSize="11sp" />
 
@@ -225,7 +226,7 @@
 
         </LinearLayout>-->
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_dot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

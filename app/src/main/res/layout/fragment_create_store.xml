@@ -145,6 +145,7 @@
             android:id="@+id/acsPinCode"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="@+id/etPinCode"
             app:layout_constraintStart_toStartOf="@+id/etPinCode"
             app:layout_constraintTop_toTopOf="@+id/etPinCode" />

@@ -85,7 +85,6 @@ interface ApiService {
     ): Response<BrandOfferResponse>
 
     @Headers("x-app-name:runner")
-    @FormUrlEncoded
     @PATCH("core/orders/{id}/update_products/")
     suspend fun editProductItem(
         @Header("Authorization") header: String,

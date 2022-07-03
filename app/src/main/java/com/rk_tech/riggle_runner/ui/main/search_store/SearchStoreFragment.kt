@@ -3,6 +3,9 @@ package com.rk_tech.riggle_runner.ui.main.search_store
 import android.Manifest
 import android.content.Context
 import android.location.Location
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -28,7 +31,8 @@ import com.rk_tech.riggle_runner.ui.base.permission.Permissions
 import com.rk_tech.riggle_runner.ui.main.cart_fragment.CartFragment
 import com.rk_tech.riggle_runner.ui.main.create_store.CreateStoreFragment
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
-import com.rk_tech.riggle_runner.ui.main.neworder.NewOrderFragment
+import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.CallBackBlurry
+import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.payment_sheet.PaymentBottomSheet
 import com.rk_tech.riggle_runner.utils.BackStackManager
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
@@ -40,9 +44,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>(), LocationResultListener {
+class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>(), LocationResultListener,
+    CallBackBlurry {
 
     private var store_name = ""
+    private var store_id = 0
     private var mainActivity: MainActivity? = null
     private val viewModel: SearchStoreVM by viewModels()
 
@@ -95,7 +101,11 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>(), Location
         viewModel.onClick.observe(requireActivity()) {
             when (it.id) {
                 R.id.card_cart -> {
-                    mainActivity?.addSubFragment(NewOrderFragment.TAG, CartFragment())
+                    BackStackManager.getInstance(requireActivity()).currentTab?.let { it1 ->
+                        mainActivity?.addSubFragment(
+                            it1, CartFragment()
+                        )
+                    }
                 }
                 R.id.iv_back -> {
                     mainActivity?.onBackPressed()
@@ -156,7 +166,7 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>(), Location
                 Status.SUCCESS -> {
                     showHideLoader(false)
                     successToast(it.message)
-                    it.data?.final_amount?.let { it1 -> showConfirmation(it1) }
+                    it.data?.final_amount?.let { it1 -> showConfirmation(it1, it.data.id) }
                 }
                 Status.WARN -> {
                     showHideLoader(false)
@@ -195,7 +205,7 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>(), Location
     }
 
     var index = 0
-    private fun showConfirmation(finalAmount: Double) {
+    private fun showConfirmation(finalAmount: Double, id: Int) {
         val dialog =
             BottomSheetDialog(requireActivity(), R.style.CustomBottomSheetDialogTheme)
         val view = layoutInflater.inflate(R.layout.bs_order_created, null)
@@ -206,13 +216,37 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>(), Location
             if (index < binding.clMain.childCount) {
                 binding.clMain.removeViewAt(index)
             }
+            openPaymentSheet(finalAmount, id)
             dialog.dismiss()
         }
         dialog.setCancelable(true)
         dialog.setContentView(view)
         dialog.show()
         index = binding.clMain.childCount
-        Blurry.with(activity).sampling(1).onto(binding.clMain)
+        try {
+            Blurry.with(activity).sampling(1).onto(binding.clMain)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun openPaymentSheet(finalAmount: Double, id: Int) {
+        val paymentSheet = PaymentBottomSheet()
+        paymentSheet.setListener(this)
+        val bundle = Bundle()
+        bundle.putInt("order_id", id)
+        finalAmount.let { finalAmount ->
+            bundle.putString("pending_amount", finalAmount.toString())
+            bundle.putInt("retailer_id", store_id)
+        }
+
+        paymentSheet.arguments = bundle
+        paymentSheet.show(childFragmentManager, paymentSheet.tag)
+        paymentSheet.isCancelable = false
+        index = binding.clMain.childCount
+        Handler(Looper.getMainLooper()).postDelayed({
+            Blurry.with(activity).sampling(1).onto(binding.clMain)
+        }, 500)
     }
 
     private var searchAdapter: SimpleRecyclerViewAdapter<GetRetailsListItem, ListOfSearchItemsBinding>? =
@@ -229,6 +263,7 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>(), Location
                     binding.etSearchStore.setText(m?.name!!)
                     binding.rvSearchAdapter.visibility = View.GONE
                     store_name = m.name
+                    store_id = m.id
                     placeOrder(m)
                 }
 
@@ -243,6 +278,7 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>(), Location
                 when (v.id) {
                     R.id.rlProduct -> {
                         store_name = m?.name!!
+                        store_id = m.id
                         placeOrder(m)
                     }
                 }
@@ -281,6 +317,12 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>(), Location
 
     override fun getLocation(location: Location) {
         this.mCurrentLocation = location
+    }
+
+    override fun isExpand(isOpen: Boolean) {
+        if (index < binding.clMain.childCount) {
+            binding.clMain.removeViewAt(index)
+        }
     }
 
 }

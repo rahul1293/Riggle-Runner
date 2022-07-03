@@ -83,7 +83,7 @@
                     android:fontFamily="@font/font_medium"
                     android:includeFontPadding="false"
                     android:padding="@dimen/_5sdp"
-                    android:text="Collect Payment"
+                    android:text="@string/collect_payment"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="14sp"

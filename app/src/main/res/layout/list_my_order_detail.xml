@@ -46,7 +46,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_toEndOf="@+id/ivImg"
                 android:fontFamily="@font/font_medium"
-                android:text="@{bean.product.name}"
+                android:text="@{bean.products==null?bean.product.name:bean.name}"
                 android:textColor="@color/black_85"
                 android:textSize="12sp" />
             <!--android:text="@{bean.products==null?bean.product.name:bean.name}"-->
@@ -58,7 +58,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_toEndOf="@+id/ivImg"
                 android:fontFamily="@font/font_regular"
-                android:text="prduct variant"
+                android:text="product variant"
                 android:textSize="12sp"
                 android:visibility="invisible" />
 
@@ -73,8 +73,8 @@
                 android:text="1 Free, Product Name"
                 android:textColor="@color/profit_color"
                 android:textSize="12sp"
-                android:visibility="@{bean.free_product==null?View.INVISIBLE:View.VISIBLE}"
                 android:textStyle="bold"
+                android:visibility="@{bean.free_product==null?View.INVISIBLE:View.VISIBLE}"
                 tools:text="1 Free, Product Name" />
             <!--android:visibility="@{bean.free_product==null?View.INVISIBLE:View.VISIBLE}"-->
             <!--@{bean.free_product_quantity+" Free, "+bean.free_product.name}-->
@@ -96,12 +96,15 @@
                 android:id="@+id/tvProductQuant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvFreeProductName"
+                android:layout_below ="@+id/tvFreeProductName"
                 android:layout_marginTop="12dp"
                 android:layout_toEndOf="@+id/tvMoq"
                 android:fontFamily="@font/font_medium"
                 android:textColor="@color/black_85"
+                android:visibility="invisible"
+                android:text='@{String.valueOf(bean.quantity)}'
                 android:textSize="12sp" />
+            <!--android:visibility="@{bean.products==null?View.GONE:View.VISIBLE}"-->
             <!--set_visibility="@{String.valueOf(bean.quantity)}"
             android:text='@{String.valueOf(bean.quantity)}'-->
             <include
@@ -116,6 +119,23 @@
                 app:bean="@{bean}"
                 app:callback="@{callback}"
                 app:pos="@{pos}" />
+
+            <TextView
+                android:id="@+id/tv_createMix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/plusMinus"
+                android:layout_marginTop="@dimen/_3sdp"
+                android:layout_toEndOf="@+id/tvMoq"
+                android:fontFamily="@font/font_medium"
+                android:lines="1"
+                android:layout_marginStart="10dp"
+                android:text="@string/update_mix"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_9ssp"
+                android:visibility="@{bean.products==null?View.GONE:View.VISIBLE}" />
+
+            <!--android:visibility="@{bean.products==null?View.VISIBLE:View.GONE}"-->
             <!--app:bean="@{bean}"-->
             <!--set_visibility_two="@{String.valueOf(bean.quantity)}"-->
             <!--bean.quantity.toString()-->
@@ -129,7 +149,7 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/font_medium"
                 android:maxLines="1"
-                android:text="₹ 2,765"
+                android:text='@{"₹ "+String.valueOf(bean.amount)}'
                 android:textColor="@color/black_54"
                 android:textSize="14sp"
                 tools:text="@string/rupees_value" />

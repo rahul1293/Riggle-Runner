@@ -25,6 +25,7 @@ class OrderDetailsActivityVM @Inject constructor(private val apiHelper: ApiHelpe
     var obrEditMixBox = SingleRequestEvent<List<ComboUpdateResponse>>()
     fun getOrderDetails(authorization: String, orderId: Int) {
         val query = HashMap<String, String>()
+        query["build_edit_view"] = "true"
         query["expand"] = "buyer,products.product,products.free_product"
         //https://stag.api.riggleapp.in/api/v1/core/orders/429/?expand=service_hub%2Cproducts.product.banner_image%2Cproducts.free_product%2Cproducts.product_combo
         viewModelScope.launch {
@@ -38,8 +39,7 @@ class OrderDetailsActivityVM @Inject constructor(private val apiHelper: ApiHelpe
                     } else {
                         obrOrderDetails.postValue(
                             Resource.warn(
-                                null,
-                                it.errorBody()?.string().toString()
+                                null, getErrorMessage(it.errorBody())
                             )
                         )
                     }
@@ -81,15 +81,15 @@ class OrderDetailsActivityVM @Inject constructor(private val apiHelper: ApiHelpe
         }
     }
 
-    fun editProductQty(authorization: String, orderId: Int, productId: Int, quantity: Int) {
+    fun editProductQty(authorization: String, orderId: Int, editProductRequest: EditProductRequest,) {
         /*val data = HashMap<String, String>()
         data["quantity"] = quantity.toString()*/
-        val prodData = ArrayList<ProductEditData>()
-        prodData.add(ProductEditData(productId, quantity,null))
+        //val prodData = ArrayList<ProductEditData>()
+        //prodData.add(ProductEditData(productId, quantity, null))
         viewModelScope.launch {
             obrEditProduct.postValue(Resource.loading(null))
             try {
-                apiHelper.editProductItem(authorization, orderId, EditProductRequest(prodData))
+                apiHelper.editProductItem(authorization, orderId, editProductRequest)
                     .let {
                         if (it.isSuccessful) {
                             it.body()?.let { results ->
@@ -99,7 +99,7 @@ class OrderDetailsActivityVM @Inject constructor(private val apiHelper: ApiHelpe
                             obrEditProduct.postValue(
                                 Resource.warn(
                                     null,
-                                    it.errorBody()?.string().toString()
+                                    getErrorMessage(it.errorBody())
                                 )
                             )
                         }

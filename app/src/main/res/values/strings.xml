@@ -52,7 +52,7 @@
 
     <string name="rupees_value_profits">₹%.2f Profit</string>
     <string name="enter_phone_number">Enter Phone Number</string>
-    <string name="qty">Qty:</string>
+    <string name="qty">Qty :</string>
     <string name="total_collection">Total Collection</string>
     <string name="settlement_with_sp">Settlement with SP</string>
     <string name="upi_scanner">UPI Scanner</string>
@@ -118,5 +118,8 @@
     <string name="partial_payment_detected">Partial Payment Detected</string>
     <string name="revisit_date">Revisit Date</string>
     <string name="reason_for_late_payment">Reason for Late Payment</string>
+    <string name="collect_payment">Collect Payment</string>
+    <string name="view_bulk_size">View Bulk Size</string>
+    <string name="update_mix">Update Mix</string>
 
 </resources>

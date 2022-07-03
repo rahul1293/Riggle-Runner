@@ -49,10 +49,9 @@
             android:layout_toEndOf="@+id/ivImg"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="@{bean.product.name}"
+            android:text='@{bean.products!=null?bean.name:bean.product.name}'
             android:textColor="@color/black_85"
             android:textSize="14sp" />
-
 
         <TextView
             android:id="@+id/tvPrice_1"
@@ -95,6 +94,7 @@
                 android:paddingStart="@dimen/_2sdp"
                 android:paddingEnd="@dimen/_2sdp"
                 app:cardCornerRadius="@dimen/_6sdp"
+                android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
                 app:cardElevation="@dimen/_5sdp">
 
                 <RelativeLayout
@@ -141,6 +141,7 @@
                 android:background="@color/light_gray"
                 android:backgroundTint="@color/light_gray"
                 android:paddingStart="@dimen/_2sdp"
+                android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
                 android:paddingEnd="@dimen/_2sdp"
                 app:cardElevation="@dimen/_5sdp">
 

@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.TextUtils
 import android.view.View
 import android.widget.AdapterView
@@ -26,7 +28,9 @@ import com.rk_tech.riggle_runner.ui.base.permission.PermissionHandler
 import com.rk_tech.riggle_runner.ui.base.permission.Permissions
 import com.rk_tech.riggle_runner.ui.main.cart_fragment.CartFragment
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
-import com.rk_tech.riggle_runner.ui.main.neworder.NewOrderFragment
+import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.CallBackBlurry
+import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.payment_sheet.PaymentBottomSheet
+import com.rk_tech.riggle_runner.utils.BackStackManager
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import com.rk_tech.riggle_runner.utils.extension.showInfoToast
@@ -40,12 +44,14 @@ import kotlin.collections.HashMap
 
 
 @AndroidEntryPoint
-class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), LocationResultListener {
+class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), LocationResultListener,
+    CallBackBlurry {
 
     var index = 0
     private var mainActivity: MainActivity? = null
     private val viewModel: CreateStoreVM by viewModels()
     private var store_name = ""
+    private var store_id = 0
 
     private var locationHandler: LocationHandler? = null
     private var mCurrentLocation: Location? = null
@@ -75,7 +81,11 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Location
         viewModel.onClick.observe(requireActivity()) {
             when (it.id) {
                 R.id.card_cart -> {
-                    mainActivity?.addSubFragment(NewOrderFragment.TAG, CartFragment())
+                    BackStackManager.getInstance(requireActivity()).currentTab?.let { it1 ->
+                        mainActivity?.addSubFragment(
+                            it1, CartFragment()
+                        )
+                    }
                 }
                 R.id.iv_back -> {
                     mainActivity?.onBackPressed()
@@ -131,6 +141,9 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Location
                     it.data?.name?.let { name ->
                         store_name = name
                     }
+                    it.data?.id?.let { id ->
+                        store_id = id
+                    }
                     placeOrder(it.data)
                 }
                 Status.WARN -> {
@@ -152,7 +165,7 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Location
                 Status.SUCCESS -> {
                     showHideLoader(false)
                     successToast(it.message)
-                    it.data?.final_amount?.let { it1 -> showConfirmation(it1) }
+                    it.data?.final_amount?.let { it1 -> showConfirmation(it1, it.data.id) }
                 }
                 Status.WARN -> {
                     showHideLoader(false)
@@ -174,7 +187,7 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Location
     }
 
     @SuppressLint("SetTextI18n")
-    private fun showConfirmation(finalAmount: Double) {
+    private fun showConfirmation(finalAmount: Double, id: Int) {
         val dialog =
             BottomSheetDialog(requireActivity(), R.style.CustomBottomSheetDialogTheme)
         val view = layoutInflater.inflate(R.layout.bs_order_created, null)
@@ -186,12 +199,31 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Location
                 binding.clMain.removeViewAt(index)
             }
             dialog.dismiss()
+            openPaymentSheet(finalAmount, id)
         }
         dialog.setCancelable(true)
         dialog.setContentView(view)
         dialog.show()
         index = binding.clMain.childCount
         Blurry.with(activity).sampling(1).onto(binding.clMain)
+    }
+
+    private fun openPaymentSheet(finalAmount: Double, id: Int) {
+        val paymentSheet = PaymentBottomSheet()
+        paymentSheet.setListener(this)
+        val bundle = Bundle()
+        bundle.putInt("order_id", id)
+        finalAmount.let { finalAmount ->
+            bundle.putString("pending_amount", finalAmount.toString())
+            bundle.putInt("retailer_id", store_id)
+        }
+        paymentSheet.arguments = bundle
+        paymentSheet.show(childFragmentManager, paymentSheet.tag)
+        paymentSheet.isCancelable = false
+        index = binding.clMain.childCount
+        Handler(Looper.getMainLooper()).postDelayed({
+            Blurry.with(activity).sampling(1).onto(binding.clMain)
+        }, 500)
     }
 
     private var cal = Calendar.getInstance()
@@ -291,5 +323,11 @@ class CreateStoreFragment : BaseFragment<FragmentCreateStoreBinding>(), Location
 
     override fun getLocation(location: Location) {
         this.mCurrentLocation = location
+    }
+
+    override fun isExpand(isOpen: Boolean) {
+        if (index < binding.clMain.childCount) {
+            binding.clMain.removeViewAt(index)
+        }
     }
 }

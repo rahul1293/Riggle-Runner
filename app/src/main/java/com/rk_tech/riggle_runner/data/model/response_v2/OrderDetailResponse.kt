@@ -2,7 +2,7 @@ package com.rk_tech.riggle_runner.data.model.response_v2
 
 data class OrderDetailResponse(
     val assigned_runner: Int,
-    val buyer: BuyerOne,
+    val buyer: Int/*BuyerOne*/,
     val challan_file: Any,
     val code: Any,
     val created_at: String,
@@ -59,9 +59,10 @@ data class Product(
     val product_combo: Any,
     var quantity: Int,
     val rate: Float,
+    val name: String?,
     val update_url: String,
     val updated_at: String,
-    val products: Any
+    val products: List<Product>?
 )
 
 data class ProductX(
