@@ -27,7 +27,6 @@ import com.rk_tech.riggle_runner.data.model.MenuBean
 import com.rk_tech.riggle_runner.data.model.helper.Status
 import com.rk_tech.riggle_runner.data.model.request_v2.RevisitRequest
 import com.rk_tech.riggle_runner.data.model.response_v2.PaymentRescheduleReason
-import com.rk_tech.riggle_runner.data.model.response_v2.RunnerOrderCancellationReason
 import com.rk_tech.riggle_runner.data.model.response_v2.UserLoginResponse
 import com.rk_tech.riggle_runner.databinding.BottomSheetPaymentBinding
 import com.rk_tech.riggle_runner.databinding.ItemImageListBinding
@@ -38,7 +37,6 @@ import com.rk_tech.riggle_runner.ui.base.permission.PermissionHandler
 import com.rk_tech.riggle_runner.ui.base.permission.Permissions
 import com.rk_tech.riggle_runner.ui.main.main.MainActivity
 import com.rk_tech.riggle_runner.ui.main.pending.orderdetails.CallBackBlurry
-import com.rk_tech.riggle_runner.ui.main.pending.payment_details.cancel_order.CancelOrderSheet
 import com.rk_tech.riggle_runner.utils.BackStackManager
 import com.rk_tech.riggle_runner.utils.FileUtil
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
@@ -73,6 +71,8 @@ class PaymentBottomSheet : BottomSheetDialogFragment(), LocationResultListener {
     private var locationHandler: LocationHandler? = null
     private var mCurrentLocation: Location? = null
     var scheduleReason = ArrayList<PaymentRescheduleReason>()
+    private var store_name = ""
+    private var payment_type = "Cash"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -122,6 +122,9 @@ class PaymentBottomSheet : BottomSheetDialogFragment(), LocationResultListener {
             binding.tvAmount.text = pending
             binding.etPayableAmount.setText(pending)
         }
+        arguments?.getString("retailer_name")?.let { name ->
+            store_name = name
+        }
 
         ivCross.setOnClickListener {
             mlistener?.isExpand(false)
@@ -130,15 +133,19 @@ class PaymentBottomSheet : BottomSheetDialogFragment(), LocationResultListener {
 
         tvUpi.setOnClickListener {
             binding.type = 1
+            payment_type = "UPI"
         }
         tvCheck.setOnClickListener {
             binding.type = 2
+            payment_type = "Cheque"
         }
         tvCash.setOnClickListener {
             binding.type = 3
+            payment_type = "Cash"
         }
         tvCredit.setOnClickListener {
             binding.type = 4
+            payment_type = "Credit"
         }
 
         btnContinue.setOnClickListener {
@@ -150,19 +157,19 @@ class PaymentBottomSheet : BottomSheetDialogFragment(), LocationResultListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 binding.tvDetails.text = Html.fromHtml(
                     "You are about to collect <b>" + binding.etPayableAmount.text.toString()
-                        .trim() + "</b> \n through <b>cheque</b> from <b>Janta General Store</b>",
+                        .trim() + "</b> \n through <b>" + payment_type + "</b> from <b>" + store_name + "</b>",
                     Html.FROM_HTML_MODE_COMPACT
                 )
             } else {
                 binding.tvDetails.text = Html.fromHtml(
                     "You are about to collect <b>" + binding.etPayableAmount.text.toString()
-                        .trim() + "</b> \n through <b>cheque</b> from <b>Janta General Store</b>"
+                        .trim() + "</b> \n through <b>" + payment_type + "</b> from <b>" + store_name + "</b>"
                 )
             }
         }
 
         btnDone.setOnClickListener {
-            BackStackManager.getInstance(requireActivity()).clear()
+;           BackStackManager.getInstance(requireActivity()).clear()
             val intent = MainActivity.newIntent(requireActivity())
             startActivity(intent)
         }

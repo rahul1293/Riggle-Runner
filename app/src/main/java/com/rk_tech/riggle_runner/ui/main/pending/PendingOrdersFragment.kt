@@ -65,7 +65,7 @@ class PendingOrdersFragment : BaseFragment<FragmentPendingOrdersBinding>(),
             }
         }
         details?.let {
-            binding.tvHeroName.text = it.user.full_name
+            binding.tvServiceHub.text = it.user.full_name
             //binding.tvServiceHub.text = it.user.service_hub.name
         }
 

@@ -121,5 +121,6 @@
     <string name="collect_payment">Collect Payment</string>
     <string name="view_bulk_size">View Bulk Size</string>
     <string name="update_mix">Update Mix</string>
+    <string name="remove">Remove</string>
 
 </resources>

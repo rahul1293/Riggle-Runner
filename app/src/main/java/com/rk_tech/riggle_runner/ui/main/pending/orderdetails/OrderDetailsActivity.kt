@@ -100,6 +100,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
         }
         arguments?.getInt("is_from", 2)?.let {
             binding.type = it
+            Constants.isDeliver = it == 1
         }
         binding.header.type = 0
         viewModel.onClick.observe(viewLifecycleOwner) {
@@ -140,6 +141,9 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                         binding.bean?.let { bean ->
                             bundle.putString("pending_amount", bean.pending_amount.toString())
                             bundle.putInt("retailer_id", bean.buyer/*.id*/)
+                        }
+                        arguments?.getString("store_name")?.let { name ->
+                            bundle.putString("retailer_name", name)
                         }
                     }
                     paymentSheet.arguments = bundle
@@ -206,7 +210,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                 Status.SUCCESS -> {
                     binding.bean = it.data
                     it.data?.let { bean ->
-                        Constants.isDeliver = bean.status.equals("delivered", true)
+                        //Constants.isDeliver = bean.status.equals("delivered", true)
                     }
                     setUpAdapter(it.data?.products)
                     showHideLoader(false)
@@ -326,7 +330,11 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                         productAdapter?.notifyDataSetChanged()
                         val prodData = ArrayList<ProductEditData>()
                         prodData.add(ProductEditData(m.id, m.quantity, null))
-                        viewModel.editProductQty(getAuthorization(), orderId,EditProductRequest(prodData))
+                        viewModel.editProductQty(
+                            getAuthorization(),
+                            orderId,
+                            EditProductRequest(prodData)
+                        )
                     }
                 }
                 R.id.ivPlus, R.id.tvAdd -> {
@@ -337,7 +345,11 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                         productAdapter?.notifyDataSetChanged()
                         val prodData = ArrayList<ProductEditData>()
                         prodData.add(ProductEditData(m.id, m.quantity, null))
-                        viewModel.editProductQty(getAuthorization(), orderId,EditProductRequest(prodData))
+                        viewModel.editProductQty(
+                            getAuthorization(),
+                            orderId,
+                            EditProductRequest(prodData)
+                        )
                     }
                 }
             }
@@ -401,7 +413,11 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                             product.add(ProductEditData(index.id, index.quantity, mixBox.id))
                         }
                     }
-                    viewModel.editProductQty(getAuthorization(), orderId,EditProductRequest(product))
+                    viewModel.editProductQty(
+                        getAuthorization(),
+                        orderId,
+                        EditProductRequest(product)
+                    )
                 }
             }
             dialog?.setCancelable(false)

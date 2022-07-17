@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -91,10 +90,10 @@
                 android:layout_width="@dimen/_18sdp"
                 android:layout_height="@dimen/_18sdp"
                 android:layout_weight="1"
+                android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
                 android:paddingStart="@dimen/_2sdp"
                 android:paddingEnd="@dimen/_2sdp"
                 app:cardCornerRadius="@dimen/_6sdp"
-                android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
                 app:cardElevation="@dimen/_5sdp">
 
                 <RelativeLayout
@@ -140,8 +139,8 @@
                 android:layout_weight="1"
                 android:background="@color/light_gray"
                 android:backgroundTint="@color/light_gray"
-                android:paddingStart="@dimen/_2sdp"
                 android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+                android:paddingStart="@dimen/_2sdp"
                 android:paddingEnd="@dimen/_2sdp"
                 app:cardElevation="@dimen/_5sdp">
 
@@ -202,7 +201,8 @@
             android:ellipsize="end"
             android:fontFamily="@font/gilroy_semibold"
             android:lines="1"
-            android:text="Remove"
+            android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
+            android:text="@string/remove"
             android:textAllCaps="true"
             android:textColor="@color/colorError"
             android:textSize="@dimen/_7ssp" />

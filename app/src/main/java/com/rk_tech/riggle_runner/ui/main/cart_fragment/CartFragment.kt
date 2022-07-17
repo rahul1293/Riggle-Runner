@@ -173,7 +173,10 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                         }
                         cartAdapter?.notifyDataSetChanged()
                         val prodData = ArrayList<ProductEditData>()
-                        prodData.add(ProductEditData(m.id, m.quantity, null))
+                        m.product?.id?.let {
+                            prodData.add(ProductEditData(it,  m.quantity, null))
+                        }
+                        //prodData.add(ProductEditData(m.id, m.quantity, null))
                         viewModel.editProductQty(
                             getAuthorization(), cartResponse?.id,
                             EditProductRequest(prodData)
@@ -187,7 +190,40 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                         m.quantity = m.quantity + m.product?.retailer_moq!!
                         cartAdapter?.notifyDataSetChanged()
                         val prodData = ArrayList<ProductEditData>()
-                        prodData.add(ProductEditData(m.id, m.quantity, null))
+                        m.product?.id?.let {
+                            prodData.add(ProductEditData(it, m.quantity, null))
+                        }
+                        //prodData.add(ProductEditData(m.id, m.quantity, null))
+                        viewModel.editProductQty(
+                            getAuthorization(),
+                            cartResponse?.id,
+                            EditProductRequest(prodData)
+                        )
+                    }
+                }
+                R.id.tv_view -> {
+                    if (m.products != null) {
+                        // for combo
+                        if (m.products?.isNotEmpty() == true) {
+                            val product = ArrayList<ProductEditData>()
+                            for (index in m.products) {
+                                if (index.quantity > 0) {
+                                    index.product?.id?.let { id->
+                                        product.add(ProductEditData(id, 0, m.id))
+                                    }
+                                }
+                            }
+                            viewModel.editProductQty(
+                                getAuthorization(),
+                                cartResponse?.id,
+                                EditProductRequest(product)
+                            )
+                        }
+                    } else {
+                        // for single
+                        val prodData = ArrayList<ProductEditData>()
+                        m.product?.id?.let { ProductEditData(it, 0, null) }
+                            ?.let { prodData.add(it) }
                         viewModel.editProductQty(
                             getAuthorization(),
                             cartResponse?.id,
@@ -250,9 +286,16 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
             tvCancel?.setOnClickListener {
                 if (mixBox.products?.isNotEmpty() == true) {
                     val product = ArrayList<ProductEditData>()
-                    for (index in mixBox.products) {
+                    /*for (index in mixBox.products) {
                         if (index.quantity > 0) {
                             product.add(ProductEditData(index.id, index.quantity, mixBox.id))
+                        }
+                    }*/
+                    for (index in mixBox.products) {
+                        if (index.quantity > 0) {
+                            index.product?.id?.let { id->
+                                product.add(ProductEditData(id, index.quantity, mixBox.id))
+                            }
                         }
                     }
                     viewModel.editProductQty(

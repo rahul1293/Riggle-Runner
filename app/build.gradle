@@ -19,6 +19,7 @@ android {
 
         //buildConfigField 'String', 'BASE_URL', "\"https://api.riggleapp.in/api/v1/\""
         buildConfigField 'String', 'BASE_URL', "\"https://stag.api.riggleapp.in/api/v1/\""
+        //buildConfigField 'String', 'BASE_URL', "\"https://localriggleserver.loca.lt/api/v1/\""
 
     }
 

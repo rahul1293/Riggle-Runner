@@ -216,7 +216,7 @@ object ImageBindingAdapter {
     @BindingAdapter(value = ["set_visibility_two"])
     fun setVisibilityTwo(view: View, empty: String?) {
         if (Constants.isDeliver) {
-            view.visibility = View.GONE
+            view.visibility = View.INVISIBLE
         } else {
             view.visibility = View.VISIBLE
         }

@@ -27,10 +27,11 @@
                 android:id="@+id/iv_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{v->vm.onClick(v)}"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_17sdp"
+                android:onClick="@{v->vm.onClick(v)}"
                 android:src="@drawable/ic_back_svg"
+                android:visibility="gone"
                 app:tint="@color/white" />
 
             <TextView

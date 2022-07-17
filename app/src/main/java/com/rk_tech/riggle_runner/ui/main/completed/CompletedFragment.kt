@@ -83,7 +83,7 @@ class CompletedFragment : BaseFragment<FragmentCompletedBinding>(),
             }
         }
         details?.let {
-            //binding.tvServiceHub.text = it.user.service_hub.name
+            binding.tvServiceHub.text = it.user.full_name
         }
 
         binding.srl.setOnRefreshListener {
