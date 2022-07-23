@@ -121,7 +121,7 @@ class CancelOrderSheet : BottomSheetDialogFragment() {
                 }
                 Status.SUCCESS -> {
                     showSuccessToast("Cancelled")
-                    requireActivity().finish()
+                    dismiss()
                 }
                 Status.WARN -> {
                     showErrorToast(it.message)

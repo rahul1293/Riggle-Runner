@@ -4,7 +4,7 @@ data class OrderDetailResponse(
     val assigned_runner: Int,
     val buyer: Int/*BuyerOne*/,
     val challan_file: Any,
-    val code: Any,
+    val code: String?,
     val created_at: String,
     val delivery_date: String,
     val earned_coins: Int,

@@ -298,7 +298,14 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
 
     override fun onResume() {
         super.onResume()
-        getDashBoardData(today.time)
+        //getDashBoardData(today.time)
+        details?.let {
+            viewModel.getDashBoard(
+                getAuthorization(),
+                it.user.company.id,
+                ""
+            )
+        }
     }
 
 }

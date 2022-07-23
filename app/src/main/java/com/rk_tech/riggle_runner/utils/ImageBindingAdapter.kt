@@ -161,7 +161,7 @@ object ImageBindingAdapter {
                         ContextCompat.getColorStateList(textView.context, R.color.colorSuccess_30)
                 }
                 "completed", "delivered" -> {
-                    textView.text = "Completed"
+                    textView.text = "Outstanding"
                     textView.setTextColor(ContextCompat.getColor(textView.context, R.color.color_117AA7))
                     textView.backgroundTintList =
                         ContextCompat.getColorStateList(textView.context, R.color.color_117AA7_30)

@@ -124,5 +124,6 @@
     <string name="remove">Remove</string>
     <string name="trips">Trips</string>
     <string name="you_can_create_mix">You Can Create Mix</string>
+    <string name="cancellation_reason">Cancellation Reason</string>
 
 </resources>
