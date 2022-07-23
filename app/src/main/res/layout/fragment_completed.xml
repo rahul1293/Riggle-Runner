@@ -145,7 +145,7 @@
                                 android:ellipsize="end"
                                 android:fontFamily="@font/font_regular"
                                 android:maxLines="1"
-                                android:text="@string/pending"
+                                android:text="@string/completed"
                                 android:textColor="@color/white"
                                 android:textSize="12sp"
                                 app:layout_constraintStart_toEndOf="@+id/ivOne"

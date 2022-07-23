@@ -119,8 +119,8 @@ class PaymentBottomSheet : BottomSheetDialogFragment(), LocationResultListener {
         binding.type = 3
         checkLocation()
         arguments?.getString("pending_amount")?.let { pending ->
-            binding.tvAmount.text = pending
-            binding.etPayableAmount.setText(pending)
+            binding.tvAmount.setText(pending)
+            /*binding.etPayableAmount.setText(pending)*/
         }
         arguments?.getString("retailer_name")?.let { name ->
             store_name = name
@@ -147,6 +147,13 @@ class PaymentBottomSheet : BottomSheetDialogFragment(), LocationResultListener {
             binding.type = 4
             payment_type = "Credit"
         }
+        tvSendOtp.setOnClickListener {
+            binding.type = 5
+        }
+
+        tvReSendOtp.setOnClickListener {
+            binding.type = 5
+        }
 
         btnContinue.setOnClickListener {
             clCenter.visibility = View.GONE
@@ -156,20 +163,20 @@ class PaymentBottomSheet : BottomSheetDialogFragment(), LocationResultListener {
             clRevisit.visibility = View.GONE
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 binding.tvDetails.text = Html.fromHtml(
-                    "You are about to collect <b>" + binding.etPayableAmount.text.toString()
+                    "You are about to collect <b>" + binding.tvAmount.text.toString()
                         .trim() + "</b> \n through <b>" + payment_type + "</b> from <b>" + store_name + "</b>",
                     Html.FROM_HTML_MODE_COMPACT
                 )
             } else {
                 binding.tvDetails.text = Html.fromHtml(
-                    "You are about to collect <b>" + binding.etPayableAmount.text.toString()
+                    "You are about to collect <b>" + binding.tvAmount.text.toString()
                         .trim() + "</b> \n through <b>" + payment_type + "</b> from <b>" + store_name + "</b>"
                 )
             }
         }
 
         btnDone.setOnClickListener {
-;           BackStackManager.getInstance(requireActivity()).clear()
+            ; BackStackManager.getInstance(requireActivity()).clear()
             val intent = MainActivity.newIntent(requireActivity())
             startActivity(intent)
         }
@@ -360,7 +367,7 @@ class PaymentBottomSheet : BottomSheetDialogFragment(), LocationResultListener {
         }
         dataRequest["payment_mode"] =
             "cash".toRequestBody("text/plain".toMediaType())
-        dataRequest["amount"] = binding.etPayableAmount.text.toString().trim()
+        dataRequest["amount"] = binding.tvAmount.text.toString().trim()
             .toRequestBody("text/plain".toMediaType())
         if (mCurrentLocation != null) {
             dataRequest["location"] =

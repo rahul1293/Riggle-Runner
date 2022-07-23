@@ -222,7 +222,7 @@ class ProductListActivity : BaseFragment<ActivityProductListBinding>() {
         mixtureAdpater = SimpleRecyclerViewAdapter(R.layout.list_of_mixture, BR.bean) { v, m, pos ->
             when (v?.id) {
                 R.id.card_minus -> {
-                    if (m.quantity > 1) {
+                    if (m.quantity > 0) {
                         m.quantity = m.quantity - 1
                         mixtureAdpater?.notifyItemChanged(pos)
                         variantAdded()

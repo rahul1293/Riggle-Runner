@@ -43,16 +43,16 @@
                 <!--android:visibility="@{bean.quantity==0?View.GONE:View.VISIBLE}"-->
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivMinus"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_margin="1dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="2dp"
                     android:background="@drawable/rounded_7dp_border_primary_clr"
-                    android:backgroundTint="#F1EDEB"
+                    android:backgroundTint="@color/orange"
                     android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
                     android:padding="@dimen/_2sdp"
-                    android:tint="@color/black_85"
+                    android:tint="@color/white"
                     app:srcCompat="@drawable/ic_minus" />
-
+                <!--#F1EDEB-->
                 <TextView
                     android:id="@+id/tvQuantSet"
                     android:layout_width="40dp"
@@ -68,14 +68,14 @@
                 <!--android:text='@{String.valueOf(bean.quantity)}'-->
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivPlus"
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:layout_margin="1dp"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="2dp"
                     android:background="@drawable/rounded_7dp_border_primary_clr"
-                    android:backgroundTint="#F1EDEB"
+                    android:backgroundTint="@color/orange"
                     android:onClick="@{v->callback.onItemClick(v,bean,pos)}"
                     android:padding="@dimen/_3sdp"
-                    android:tint="@color/black_85"
+                    android:tint="@color/white"
                     app:srcCompat="@drawable/ic_plus" />
             </LinearLayout>
 

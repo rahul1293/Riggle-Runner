@@ -234,6 +234,12 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                 Status.SUCCESS -> {
                     showHideLoader(false)
                     viewModel.getOrderDetails(getAuthorization(), orderId)
+                    if (dialog?.isShowing == true) {
+                        if (index < binding.clMain.childCount) {
+                            binding.clMain.removeViewAt(index)
+                        }
+                        dialog?.dismiss()
+                    }
                 }
                 Status.WARN -> {
                     showHideLoader(false)
@@ -329,7 +335,9 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                         }
                         productAdapter?.notifyDataSetChanged()
                         val prodData = ArrayList<ProductEditData>()
-                        prodData.add(ProductEditData(m.id, m.quantity, null))
+                        m.product?.id?.let { id ->
+                            prodData.add(ProductEditData(id, m.quantity, null))
+                        }
                         viewModel.editProductQty(
                             getAuthorization(),
                             orderId,
@@ -344,7 +352,9 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                         m.quantity = m.quantity + m.product?.retailer_moq!!
                         productAdapter?.notifyDataSetChanged()
                         val prodData = ArrayList<ProductEditData>()
-                        prodData.add(ProductEditData(m.id, m.quantity, null))
+                        m.product?.id?.let { id ->
+                            prodData.add(ProductEditData(id, m.quantity, null))
+                        }
                         viewModel.editProductQty(
                             getAuthorization(),
                             orderId,
@@ -377,7 +387,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                 SimpleRecyclerViewAdapter(R.layout.update_create_mix, BR.bean) { v, m, pos ->
                     when (v?.id) {
                         R.id.card_minus -> {
-                            if (m.quantity > 1) {
+                            if (m.quantity > 0) {
                                 m.quantity = m.quantity - 1
                                 mixtureAdpater?.notifyItemChanged(pos)
                                 variantAdded()
@@ -410,7 +420,9 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
                     val product = ArrayList<ProductEditData>()
                     for (index in mixBox.products) {
                         if (index.quantity > 0) {
-                            product.add(ProductEditData(index.id, index.quantity, mixBox.id))
+                            index.product?.id?.let { id ->
+                                product.add(ProductEditData(id, index.quantity, mixBox.id))
+                            }
                         }
                     }
                     viewModel.editProductQty(
@@ -427,51 +439,7 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
             Blurry.with(activity).sampling(1).onto(binding.clMain)
         }
 
-        /*productAdapter?.list?.let { prod ->
-            for (index in prod) {
-                m?.product_combo?.products?.let { pro_com ->
-                    for (select in pro_com) {
-                        if (index.product?.name.equals(select.name, true)) {
-                            select.quantity = index.quantity
-                        }
-                    }
-                }
-            }
-        }*/
-        /*m?.let { m ->
-            val sheet = ComboBottomSheet()
-            sheet.show(childFragmentManager, sheet.tag)
-            val bundle = Bundle()
-            bundle.putBoolean("is_update", true)
-            m.banner_image?.image?.let {
-                bundle.putString("banner_img", it)
-            }
-            m.products?.let { products ->
-                bundle.putInt("product_id", products[0].product_combo!!)
-                bundle.putString(
-                    "scheme",
-                    Gson().toJson(ArrayList<ComboProducts>().apply {
-                        add(
-                            ComboProducts(
-                                m.code.toString(),
-                                m.created_at,
-                                products[0].product_combo!!,
-                                m.is_active,
-                                m.name.toString(),
-                                products,
-                                products[0].product?.retailer_step!!,
-                                m.update_url,
-                                m.updated_at
-                            )
-                        )
-                    })
-                )
-            }
-            sheet.arguments = bundle
-            sheet.isCancelable = false
-        }*/
     }
-
 
     private fun variantAdded() {
         final_combo_count = 0
@@ -557,5 +525,22 @@ class OrderDetailsActivity : BaseFragment<ActivityOrderDetailsBinding>(), Locati
             binding.clMain.removeViewAt(index)
         }
     }
+
+    /*Even after order is assigned, show only if pending.
+    Payment not acceptable issue.
+    In order listing, make default all if no date provided.
+    3 tabs. Pending, New Order, My Profile.
+    Order ID issue.
+    Remove number from order
+    Add date and full address in view details of order
+    Change text: Cost to Rate in new products
+    Show MOQ on top in create mix
+    Create spelling error
+    Color + - buttons orange
+    Change text: Create mix to You can create mix.
+    when choosing a store, it gives 404
+    Call Store LoGo
+
+    tell rahul to check cart logic*/
 
 }

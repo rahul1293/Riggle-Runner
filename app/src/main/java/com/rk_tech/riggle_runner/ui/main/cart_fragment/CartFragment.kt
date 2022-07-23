@@ -255,7 +255,7 @@ class CartFragment : BaseFragment<FragmentCartBinding>() {
                 SimpleRecyclerViewAdapter(R.layout.update_create_mix, BR.bean) { v, m, pos ->
                     when (v?.id) {
                         R.id.card_minus -> {
-                            if (m.quantity > 1) {
+                            if (m.quantity > 0) {
                                 m.quantity = m.quantity - 1
                                 mixtureAdpater?.notifyItemChanged(pos)
                                 variantAdded()

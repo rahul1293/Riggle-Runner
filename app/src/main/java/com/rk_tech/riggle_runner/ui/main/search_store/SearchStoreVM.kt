@@ -10,6 +10,7 @@ import com.rk_tech.riggle_runner.data.model.response_v2.GetRetailsListItem
 import com.rk_tech.riggle_runner.data.model.response_v2.ResultDeliverify
 import com.rk_tech.riggle_runner.di.module.RepositoryModule
 import com.rk_tech.riggle_runner.ui.base.BaseViewModel
+import com.rk_tech.riggle_runner.utils.event.Coroutines
 import com.rk_tech.riggle_runner.utils.event.SingleRequestEvent
 import com.rk_tech.riggle_runner.utils.extension.parseException
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +28,7 @@ class SearchStoreVM @Inject constructor(
         queryMap["search"] = search
         queryMap["suggested"] = "true"
         //queryMap["type"] = "retailer"
-        viewModelScope.launch {
+        Coroutines.io {
             obrRetailerList.postValue(Resource.loading(null))
             try {
                 //apiHelper.getServiceHubList(authorization, userId)
@@ -55,7 +56,7 @@ class SearchStoreVM @Inject constructor(
 
     var obrPlaceOrder = SingleRequestEvent<CancelOrderResponse>()
     fun placeOrder(authorization: String, placeOrderRequest: PlaceOrderRequest) {
-        viewModelScope.launch {
+        Coroutines.io {
             obrPlaceOrder.postValue(Resource.loading(null))
             try {
                 apiHelper.placeOrder(authorization, placeOrderRequest).let {

@@ -54,7 +54,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/gilroy_regular"
             android:maxLines="1"
-            android:text='@{"Cost : "+bean.rate}'
+            android:text='@{"Rate : "+bean.rate}'
             android:textColor="@color/black_85"
             android:textSize="11sp" />
 
@@ -74,7 +74,8 @@
             android:text="@string/view_bulk_size"
             android:textAllCaps="true"
             android:textColor="@color/orange"
-            android:textSize="@dimen/_7ssp" />
+            android:textSize="@dimen/_7ssp"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/tvQty"
@@ -129,7 +130,8 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:scaleType="centerInside"
-                        android:src="@drawable/ic_rectangle_light_gray_background" />
+                        android:src="@drawable/ic_rectangle_light_gray_background"
+                        app:tint="@color/orange" />
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -149,8 +151,8 @@
                 android:layout_height="@dimen/_18sdp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingStart="@dimen/_5sdp"
-                android:paddingEnd="@dimen/_5sdp"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
                 android:text='@{String.valueOf(bean.quantity)}'
                 android:textColor="@color/black"
                 android:textSize="@dimen/_9ssp" />
@@ -176,7 +178,8 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:scaleType="centerInside"
-                        android:src="@drawable/ic_rectangle_light_gray_background" />
+                        android:src="@drawable/ic_rectangle_light_gray_background"
+                        app:tint="@color/orange" />
 
                     <ImageView
                         android:layout_width="match_parent"
@@ -197,7 +200,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ll_qty"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:src="@drawable/dot_line" />
 
     </RelativeLayout>

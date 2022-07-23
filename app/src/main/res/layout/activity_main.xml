@@ -68,7 +68,7 @@
                     style="@style/TextView.Regular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pending"
+                    android:text="@string/trips"
                     android:textColor="@{type==1?@color/orange:@color/black_54}" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -78,6 +78,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:visibility="gone"
                 android:onClick="@{v->vm.onClick(v)}"
                 android:orientation="vertical">
 

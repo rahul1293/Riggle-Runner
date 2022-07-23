@@ -122,5 +122,7 @@
     <string name="view_bulk_size">View Bulk Size</string>
     <string name="update_mix">Update Mix</string>
     <string name="remove">Remove</string>
+    <string name="trips">Trips</string>
+    <string name="you_can_create_mix">You Can Create Mix</string>
 
 </resources>

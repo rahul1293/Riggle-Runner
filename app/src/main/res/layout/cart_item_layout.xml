@@ -105,6 +105,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:scaleType="centerInside"
+                        app:tint="@color/orange"
                         android:src="@drawable/ic_rectangle_light_gray_background" />
 
                     <ImageView
@@ -153,6 +154,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:scaleType="centerInside"
+                        app:tint="@color/orange"
                         android:src="@drawable/ic_rectangle_light_gray_background" />
 
                     <ImageView

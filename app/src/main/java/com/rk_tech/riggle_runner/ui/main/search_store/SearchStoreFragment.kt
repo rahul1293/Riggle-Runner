@@ -219,7 +219,7 @@ class SearchStoreFragment : BaseFragment<FragmentSearchStoreBinding>(), Location
             openPaymentSheet(finalAmount, id)
             dialog.dismiss()
         }
-        dialog.setCancelable(true)
+        dialog.setCancelable(false)
         dialog.setContentView(view)
         dialog.show()
         index = binding.clMain.childCount

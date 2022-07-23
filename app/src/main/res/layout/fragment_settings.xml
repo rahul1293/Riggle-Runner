@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="bean"
+            type="com.rk_tech.riggle_runner.data.model.response_v2.GetDashBoardResponse" />
 
         <variable
             name="vm"
@@ -14,215 +19,396 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/header"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/text_color_dark">
+            android:layout_height="match_parent"
+            tools:context=".MainActivity">
 
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
+            <!--AppBarLayout helps the toolbar and other components to react on
+                scroll changes. I am using Dark theme for AppBarLayout.
+                Inside this AppBarLayout i
+                have used CollapsingToolbarLayout. -->
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_17sdp"
-                android:src="@drawable/ic_back_svg"
-                app:tint="@color/white" />
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <TextView
-                android:id="@+id/tv_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_toEndOf="@+id/iv_back"
-                android:fontFamily="@font/gilroy_semibold"
-                android:text="Retail Order"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_15ssp"
+                <!-- In CollapsingToolbarLayout sompe important attributes are:
+                 i)  app:layout_scrollFlags which is used to specify how collapsing
+                     layout behaves when content is scrolled.I have used
+                     app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+                     so it will scroll until it's is completely collapsed.
+                 ii) app:contentScrim="@color/green" that specifies the color
+                      of the collapsed toolbar -->
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:contentScrim="@color/black_theme"
+                    app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+                    <!--app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"-->
+                    <!--app:title="@string/app_name"-->
 
-                />
+                    <!--We are adding the image that we have added earlier
+                          in the drawable folder.The attribute app:layout_collapseMode="parallax"
+                          causes the image to move when user scrolls at a specific ratio. -->
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_top_image"
+                        app:layout_collapseMode="parallax" />
+
+                    <!-- The attribute app:layout_collapseMode="pin" is set so that
+                         sticks to the top when the user scrolls the view up-->
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="?attr/actionBarSize"
+                        app:layout_collapseMode="parallax">
+
+                        <TextView
+                            android:id="@+id/tvToday"
+                            android:layout_width="@dimen/_150sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/font_regular"
+                            android:foreground="?selectableItemBackground"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:padding="@dimen/_5sdp"
+                            android:text="@string/today"
+                            android:textColor="@color/orange"
+                            android:textSize="12sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <ImageView
+                            android:id="@+id/ivPrevious"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:layout_marginEnd="@dimen/_20sdp"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:padding="@dimen/_7sdp"
+                            android:rotation="90"
+                            android:src="@drawable/ic_drop_down_icon"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvToday"
+                            app:layout_constraintEnd_toStartOf="@+id/tvToday"
+                            app:layout_constraintTop_toTopOf="@+id/tvToday" />
+
+                        <ImageView
+                            android:id="@+id/ivNext"
+                            android:layout_width="@dimen/_24sdp"
+                            android:layout_height="@dimen/_24sdp"
+                            android:layout_marginStart="@dimen/_20sdp"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:padding="@dimen/_7sdp"
+                            android:rotation="-90"
+                            android:src="@drawable/ic_drop_down_icon"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvToday"
+                            app:layout_constraintStart_toEndOf="@+id/tvToday"
+                            app:layout_constraintTop_toTopOf="@+id/tvToday" />
+
+                        <androidx.constraintlayout.helper.widget.Flow
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_40sdp"
+                            android:layout_marginTop="@dimen/_20sdp"
+                            android:layout_marginEnd="@dimen/_40sdp"
+                            android:orientation="horizontal"
+                            app:constraint_referenced_ids="clOne"
+                            app:layout_constraintTop_toBottomOf="@+id/tvToday" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/clOne"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/ivOne"
+                                android:layout_width="@dimen/_24sdp"
+                                android:layout_height="@dimen/_24sdp"
+                                android:src="@drawable/ic_trips_icon"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tvPending"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_7sdp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_regular"
+                                android:maxLines="1"
+                                android:text="@string/completed"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/ivOne"
+                                app:layout_constraintTop_toTopOf="@+id/ivOne" />
+
+                            <TextView
+                                android:id="@+id/tvTripsOne"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_7sdp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_regular"
+                                android:maxLines="1"
+                                android:text="@string/trips_"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/ivOne"
+                                app:layout_constraintTop_toBottomOf="@+id/tvPending" />
+
+                            <TextView
+                                android:id="@+id/tvCountOne"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:layout_marginEnd="8dp"
+                                android:ellipsize="end"
+                                android:fontFamily="@font/font_bold"
+                                android:maxLines="1"
+                                android:text='@{String.valueOf(bean.completed_orders.count)}'
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toEndOf="@+id/tvTripsOne"
+                                app:layout_constraintTop_toBottomOf="@+id/tvPending" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <View
+                            android:id="@+id/vOne"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@color/white"
+                            app:layout_constraintEnd_toEndOf="@+id/clOne"
+                            app:layout_constraintStart_toStartOf="@+id/clOne"
+                            app:layout_constraintTop_toBottomOf="@+id/clOne" />
+
+                        <TextView
+                            android:id="@+id/tvAmountValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/font_bold"
+                            android:maxLines="1"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:text='@{"Rs. "+bean.completed_orders.amount}'
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/_18sdp"
+                            app:layout_constraintEnd_toEndOf="@+id/vOne"
+                            app:layout_constraintStart_toStartOf="@+id/vOne"
+                            app:layout_constraintTop_toBottomOf="@+id/vOne" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize"
+                        android:background="@color/black_theme"
+                        app:layout_collapseMode="pin">
+
+                        <TextView
+                            android:id="@+id/tvServiceHub"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/font_bold"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="@string/settings"
+                            android:textSize="@dimen/_16sdp" />
+
+                      <!--  <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginEnd="16dp"
+                            android:src="@drawable/ic_account_icon" />-->
+
+                    </androidx.appcompat.widget.Toolbar>
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <!--Now add the NestedScollView-->
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_50sdp"
+                        android:background="@color/black_theme"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <RelativeLayout
+                        android:id="@+id/srl"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:background="@color/white"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:id="@+id/tvSettlement"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/round_4dp_border"
+                            android:drawableStart="@drawable/ic_rupee_icon"
+                            android:drawablePadding="24dp"
+                            android:drawableTint="#7b7b7b"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:padding="14dp"
+                            android:text="Settlement with SP"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="16sp"
+                            android:visibility="invisible"
+                            app:drawableEndCompat="@drawable/ic_arrow_right" />
+
+                        <TextView
+                            android:id="@+id/tvCallDeliverifySolution"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="25dp"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/round_4dp_border"
+                            android:drawableStart="@drawable/ic_briefcase_svg"
+                            android:drawablePadding="24dp"
+                            android:drawableTint="#7b7b7b"
+                            android:fontFamily="@font/gilroy_semibold"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:padding="14dp"
+                            android:text="Call Deliverify Solution"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tvCallSp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvSettlement"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/round_4dp_border"
+                            android:drawablePadding="24dp"
+                            android:drawableTint="#7b7b7b"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:padding="14dp"
+                            android:text="Call SP"
+                            android:textColor="@color/black_85"
+                            android:textSize="16sp"
+                            android:visibility="gone"
+                            app:drawableEndCompat="@drawable/ic_arrow_right"
+                            app:drawableStartCompat="@drawable/ic_phone" />
+
+                        <TextView
+                            android:id="@+id/tvContactUs"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/tvCallDeliverifySolution"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/round_4dp_border"
+                            android:drawablePadding="24dp"
+                            android:drawableTint="#7b7b7b"
+                            android:fontFamily="@font/gilroy_semibold"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:padding="14dp"
+                            android:text="Call Riggle Care"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="16sp"
+                            app:drawableStartCompat="@drawable/ic_call_svg" />
+
+                        <TextView
+                            android:id="@+id/tvLogout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tvContactUs"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginRight="16dp"
+                            android:background="@drawable/round_4dp_border"
+                            android:drawablePadding="24dp"
+                            android:drawableTint="#7b7b7b"
+                            android:fontFamily="@font/gilroy_semibold"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{v->vm.onClick(v)}"
+                            android:padding="14dp"
+                            android:text="Log Out"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="16sp"
+
+                            app:drawableStartCompat="@drawable/ic_log_in" />
+
+                        <TextView
+                            android:id="@+id/tvAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_above="@+id/tvWhereHouse"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="100dp"
+                            android:ellipsize="end"
+                            android:fontFamily="@font/font_bold"
+                            android:maxLines="1"
+                            android:text="Address"
+                            android:textColor="@color/black_85"
+                            android:textSize="14sp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/tvWhereHouse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignStart="@+id/tvAddress"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginBottom="16dp"
+                            android:fontFamily="@font/font_regular"
+                            android:text="@string/riggle_hero"
+                            android:textColor="@color/black_85"
+                            android:textSize="12sp"
+                            android:visibility="gone" />
+
+                    </RelativeLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
 
-        <TextView
-            android:id="@+id/tvDelivering"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/font_regular"
-            android:maxLines="1"
-            android:text="@string/riggle_hero"
-            android:textColor="@color/black_85"
-            android:textSize="12sp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tvHeroName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvDelivering"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/font_bold"
-            android:maxLines="1"
-            android:text="S.K. Madhwan"
-            android:textColor="@color/black_85"
-            android:textSize="14sp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tvServiceHub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvHeroName"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/font_regular"
-            android:maxLines="1"
-            android:text="@string/riggle_hero"
-            android:textColor="@color/profit_color"
-            android:textSize="10sp"
-            android:visibility="gone" />
-
-
-        <TextView
-            android:id="@+id/tvSettlement"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvServiceHub"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/round_4dp_border"
-            android:drawableStart="@drawable/ic_rupee_icon"
-            android:drawablePadding="24dp"
-            android:drawableTint="#7b7b7b"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:onClick="@{v->vm.onClick(v)}"
-            android:padding="14dp"
-            android:text="Settlement with SP"
-            android:textColor="@color/dark_gray"
-            android:textSize="16sp"
-            android:visibility="invisible"
-            app:drawableEndCompat="@drawable/ic_arrow_right" />
-
-        <TextView
-            android:id="@+id/tvCallDeliverifySolution"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/header"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/round_4dp_border"
-            android:drawableStart="@drawable/ic_briefcase_svg"
-            android:drawablePadding="24dp"
-            android:drawableTint="#7b7b7b"
-            android:fontFamily="@font/gilroy_semibold"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:onClick="@{v->vm.onClick(v)}"
-            android:padding="14dp"
-            android:text="Call Deliverify Solution"
-            android:textColor="@color/dark_gray"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tvCallSp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvSettlement"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/round_4dp_border"
-            android:drawablePadding="24dp"
-            android:drawableTint="#7b7b7b"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:onClick="@{v->vm.onClick(v)}"
-            android:padding="14dp"
-            android:text="Call SP"
-            android:textColor="@color/black_85"
-            android:textSize="16sp"
-            android:visibility="gone"
-            app:drawableEndCompat="@drawable/ic_arrow_right"
-            app:drawableStartCompat="@drawable/ic_phone" />
-
-        <TextView
-            android:id="@+id/tvContactUs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvCallDeliverifySolution"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/round_4dp_border"
-            android:drawablePadding="24dp"
-            android:drawableTint="#7b7b7b"
-            android:fontFamily="@font/gilroy_semibold"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:onClick="@{v->vm.onClick(v)}"
-            android:padding="14dp"
-            android:text="Call Riggle Care"
-            android:textColor="@color/dark_gray"
-            android:textSize="16sp"
-            app:drawableStartCompat="@drawable/ic_call_svg" />
-
-        <TextView
-            android:id="@+id/tvLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvContactUs"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginRight="16dp"
-            android:background="@drawable/round_4dp_border"
-            android:drawablePadding="24dp"
-            android:drawableTint="#7b7b7b"
-            android:fontFamily="@font/gilroy_semibold"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:onClick="@{v->vm.onClick(v)}"
-            android:padding="14dp"
-            android:text="Log Out"
-            android:textColor="@color/dark_gray"
-            android:textSize="16sp"
-
-            app:drawableStartCompat="@drawable/ic_log_in" />
-
-        <TextView
-            android:id="@+id/tvAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/tvWhereHouse"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="100dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/font_bold"
-            android:maxLines="1"
-            android:text="Address"
-            android:textColor="@color/black_85"
-            android:textSize="14sp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tvWhereHouse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/tvAddress"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            android:fontFamily="@font/font_regular"
-            android:text="@string/riggle_hero"
-            android:textColor="@color/black_85"
-            android:textSize="12sp"
-            android:visibility="gone" />
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     </RelativeLayout>
 </layout>

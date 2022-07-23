@@ -65,8 +65,8 @@ class PendingOrdersFragment : BaseFragment<FragmentPendingOrdersBinding>(),
             }
         }
         details?.let {
-            binding.tvServiceHub.text = it.user.full_name
-            //binding.tvServiceHub.text = it.user.service_hub.name
+            binding.tvRunnerName.text = it.user.full_name
+            binding.tvServiceHub.text = it.user.company.name
         }
 
         binding.srl.setOnRefreshListener {

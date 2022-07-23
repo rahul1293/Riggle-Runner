@@ -1,5 +1,6 @@
 package com.rk_tech.riggle_runner.ui.main.settings
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.view.View
@@ -22,11 +23,15 @@ import com.rk_tech.riggle_runner.databinding.ListCallDeliverifyBinding
 import com.rk_tech.riggle_runner.ui.base.*
 import com.rk_tech.riggle_runner.ui.login.LoginActivity
 import com.rk_tech.riggle_runner.ui.main.pending.payment_details.PaymentDetailsActivity
+import com.rk_tech.riggle_runner.utils.Constants
 import com.rk_tech.riggle_runner.utils.SharedPrefManager
 import com.rk_tech.riggle_runner.utils.extension.showErrorToast
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.blurry.Blurry
 import kotlinx.android.synthetic.main.bottom_sheet_call_deliverify.view.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
@@ -35,6 +40,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     val viewModel: SettingsFragmentVM by viewModels()
     private var admins: List<ResultDeliverify>? = null
     var index = 0
+    private var count = 0
 
     companion object {
         fun newInstance(): Fragment {
@@ -55,9 +61,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
     override fun onCreateView(view: View) {
         showBottomSheet()
         details?.let {
-            binding.tvHeroName.text = it.user.full_name
-            //binding.tvServiceHub.text = it.user.service_hub.name
-            //binding.tvWhereHouse.text = it.user.service_hub.warehouse_address
+
         }
 
         viewModel.onClick.observe(viewLifecycleOwner) {
@@ -159,6 +163,23 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                         popup.show()
                     }
                 }
+                R.id.tvToday -> {
+                    showDatePicker()
+                }
+                R.id.ivPrevious -> {
+                    count--
+                    cal.timeInMillis = today.timeInMillis + (count * 24 * 60 * 60 * 1000)
+                    updateDate(cal)
+                    getDashBoardData(cal.time)
+                }
+                R.id.ivNext -> {
+                    if (cal.time.equals(today.time))
+                        return@observe
+                    count++
+                    cal.timeInMillis = today.timeInMillis + (count * 24 * 60 * 60 * 1000)
+                    updateDate(cal)
+                    getDashBoardData(cal.time)
+                }
             }
         }
 
@@ -182,6 +203,25 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
                 }
             }
         })
+
+        viewModel.obrDashboard.observe(viewLifecycleOwner, Observer {
+            when (it?.status) {
+                Status.LOADING -> {
+                }
+                Status.SUCCESS -> {
+                    it.data?.let { data ->
+                        binding.bean = data
+                    }
+                }
+                Status.WARN -> {
+                    showErrorToast(it.message)
+                }
+                Status.ERROR -> {
+                    showErrorToast(it.message)
+                }
+            }
+        })
+
         viewModel.getServiceHubDetails(getAuthorization())
     }
 
@@ -206,4 +246,59 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>() {
         list.add(DummyData("", ""))
         return list
     }
+
+
+    private fun showDatePicker() {
+        var datePicker = DatePickerDialog(
+            requireActivity(), dateSetListener,
+            cal.get(Calendar.YEAR),
+            cal.get(Calendar.MONTH),
+            cal.get(Calendar.DAY_OF_MONTH)
+        )
+        /*datePicker.datePicker.setMinDate(System.currentTimeMillis() + 24 * 60 * 60 * 1000 - 1000)
+        datePicker.datePicker.setMaxDate(System.currentTimeMillis() + 24 * 60 * 60 * 1000 * 7 - 1000)*/
+        //datePicker.datePicker.maxDate = calendarMax.timeInMillis
+        datePicker.show()
+
+    }
+
+    private var cal = Calendar.getInstance()
+    private var today = Calendar.getInstance()
+    private val dateSetListener =
+        DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            cal.set(Calendar.YEAR, year)
+            cal.set(Calendar.MONTH, monthOfYear)
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            val myFormat = "dd-MMM-yyyy" // mention the format you need
+            val sdf = SimpleDateFormat(myFormat, Locale.US)
+            binding.tvToday.text = sdf.format(cal.time)
+            getDashBoardData(cal.time)
+        }
+
+
+    private fun getDashBoardData(time: Date) {
+        details?.let {
+            viewModel.getDashBoard(
+                getAuthorization(),
+                it.user.company.id,
+                SimpleDateFormat("yyyy-MM-dd").format(time)
+            )
+        }
+    }
+
+    private fun updateDate(cal: Calendar) {
+        if (today.time.equals(cal.time)) {
+            binding.tvToday.text = "today"
+        } else {
+            val myFormat = "dd-MMM-yyyy" // mention the format you need
+            val sdf = SimpleDateFormat(myFormat, Locale.US)
+            binding.tvToday.text = sdf.format(cal.time)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getDashBoardData(today.time)
+    }
+
 }

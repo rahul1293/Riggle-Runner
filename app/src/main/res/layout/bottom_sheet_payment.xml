@@ -97,7 +97,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/vDivider" />
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/tvAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -111,7 +111,28 @@
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvAmountTitle"
-                tools:text="2,356" />
+                tools:text="2,356" />-->
+
+            <EditText
+                android:id="@+id/tvAmount"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/btn_rounded_corner_6dp"
+                android:backgroundTint="#F1EDEB"
+                android:fontFamily="@font/font_medium"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center_horizontal"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:text=""
+                android:textAllCaps="false"
+                android:textColor="@color/black_85"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAmountTitle" />
 
             <TextView
                 android:id="@+id/tvModeType"
@@ -183,35 +204,88 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@{type==4?@drawable/round_8dp_border_select:@drawable/round_8dp_border_rec}"
+                android:background="@{(type==4 || type==5)?@drawable/round_8dp_border_select:@drawable/round_8dp_border_rec}"
                 android:fontFamily="@font/font_medium"
                 android:padding="@dimen/_10sdp"
                 android:text="@string/credit"
                 android:textColor="@color/black_85"
                 android:textSize="16sp" />
 
-
-            <TextView
-                android:id="@+id/tvSendOtp"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/llSendOtp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="12dp"
-                android:drawableLeft="@drawable/ic_log_in_icon"
-                android:drawablePadding="@dimen/_5sdp"
-                android:drawableTint="@color/orange"
-                android:ellipsize="end"
-                android:fontFamily="@font/font_medium"
-                android:foreground="?selectableItemBackground"
-                android:lines="1"
-                android:padding="@dimen/_5sdp"
-                android:text="@string/send_credit_otp"
-                android:textAllCaps="true"
-                android:textColor="@color/orange"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fMode"
-                tools:text="Send Credit Otp" />
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/fMode">
+
+                <TextView
+                    android:id="@+id/tvSendOtp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="12dp"
+                    android:drawableLeft="@drawable/ic_log_in_icon"
+                    android:drawablePadding="@dimen/_5sdp"
+                    android:drawableTint="@color/orange"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/font_medium"
+                    android:foreground="?selectableItemBackground"
+                    android:lines="1"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/send_credit_otp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/orange"
+                    android:textSize="16sp"
+                    android:visibility="@{type==4?View.VISIBLE:View.GONE}"
+                    tools:text="Send Credit Otp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{type==5?View.VISIBLE:View.GONE}">
+
+                    <TextView
+                        android:id="@+id/tvSendOtpText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="20dp"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:drawableTint="@color/orange"
+                        android:fontFamily="@font/font_medium"
+                        android:foreground="?selectableItemBackground"
+                        android:padding="@dimen/_5sdp"
+                        android:text="OTP sent on retails mobile +915434957483"
+                        android:textAllCaps="true"
+                        android:lines="2"
+                        android:textColor="@color/black_85"
+                        android:textSize="16sp"
+                        tools:text="OTP sent on retails mobile +91 5434957483" />
+
+                    <TextView
+                        android:id="@+id/tvReSendOtp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/tvSendOtpText"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="20dp"
+                        android:drawablePadding="@dimen/_5sdp"
+                        android:drawableTint="@color/orange"
+                        android:fontFamily="@font/font_medium"
+                        android:foreground="?selectableItemBackground"
+                        android:padding="@dimen/_5sdp"
+                        android:text="Resend"
+                        android:textAllCaps="true"
+                        android:textColor="@color/orange"
+                        android:textSize="16sp"
+                        tools:text="Resend" />
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <TextView
                 android:id="@+id/tvEnterOtp"
@@ -226,8 +300,9 @@
                 android:text="@string/enter_riggle_credit_otp"
                 android:textColor="@color/black_85"
                 android:textSize="14sp"
+                android:visibility="@{type==5?View.VISIBLE:View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSendOtp" />
+                app:layout_constraintTop_toBottomOf="@+id/llSendOtp" />
 
             <EditText
                 android:id="@+id/etPayableAmount"
@@ -240,13 +315,14 @@
                 android:fontFamily="@font/font_medium"
                 android:foreground="?selectableItemBackground"
                 android:gravity="center_horizontal"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
                 android:padding="12dp"
                 android:text=""
-                android:inputType="numberDecimal"
-                android:imeOptions="actionDone"
                 android:textAllCaps="false"
                 android:textColor="@color/black_85"
                 android:textSize="16sp"
+                android:visibility="@{type==5?View.VISIBLE:View.GONE}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvEnterOtp" />
 

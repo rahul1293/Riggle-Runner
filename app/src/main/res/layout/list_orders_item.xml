@@ -53,7 +53,7 @@
         <!--@{bean.retailer.name}-->
         <TextView
             android:id="@+id/tvOrderStatus"
-            update_status_color='@{"pending"}'
+            update_status_color='@{bean.status}'
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

@@ -68,7 +68,7 @@
 
                         <TextView
                             android:id="@+id/tvOrderStatus"
-                            update_status_color='@{type==2?"pending":"completed"}'
+                            update_status_color='@{bean.status}'
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -80,6 +80,7 @@
                             android:textColor="@color/black_85"
                             android:textSize="10sp"
                             tools:text="Pending" />
+                        <!--update_status_color='@{type==2?"pending":"completed"}'-->
                         <!--bean.status-->
                     </RelativeLayout>
 
@@ -94,7 +95,7 @@
                             android:layout_marginStart="12dp"
                             android:fontFamily="@font/font_regular"
                             android:lineSpacingExtra="4sp"
-                            android:text='@{"Order ID: RIG659746534"}'
+                            android:text='@{"Order ID: "+bean.id}'
                             android:textColor="@color/black_85"
                             android:textSize="12sp"
                             android:textStyle="normal"
